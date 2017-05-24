@@ -7,7 +7,7 @@
 	    		</ion-label>
 	    	</ion-col>
 	    	<ion-col col-7>
-	    		<ion-input value="80.228.110.31" [(ngModel)]="server_address"></ion-input>
+	    		<ion-input type="text" [(ngModel)]="server_address"></ion-input>
 	    	</ion-col>
 	  	</ion-row>
 
@@ -18,7 +18,7 @@
 	    		</ion-label>
 	    	</ion-col>
 	    	<ion-col col-7>
-	    		<ion-input value="Tablet Test" [(ngModel)]="server_name"></ion-input>
+	    		<ion-input type="text" [(ngModel)]="server_name"></ion-input>
 	    	</ion-col>
 	  	</ion-row>
 
@@ -29,7 +29,7 @@
 	    		</ion-label>
 	    	</ion-col>
 	    	<ion-col col-7>
-	    		<ion-input value="Test2016" [(ngModel)]="password"></ion-input>
+	    		<ion-input type="text" [(ngModel)]="password"></ion-input>
 	    	</ion-col>
 	  	</ion-row>
 
@@ -48,7 +48,7 @@
 
 	  	<ion-row class="select-box-container">
 	  		<ion-item>
-			  	<ion-select [(ngModel)]="gender">
+			  	<ion-select [(ngModel)]="select_value">
 				    <ion-option value="f">Female</ion-option>
 				    <ion-option value="m">Male</ion-option>
 			  	</ion-select>
@@ -85,7 +85,7 @@
 	    		</ion-label>
 	    	</ion-col>
 	    	<ion-col col-7>
-	    		<ion-input value="80.228.110.31" [(ngModel)]="benutzername"></ion-input>
+	    		<ion-input type="text" [(ngModel)]="benutzername"></ion-input>
 	    	</ion-col>
 	  	</ion-row>
 
@@ -107,7 +107,7 @@
 	    		</ion-label>
 	    	</ion-col>
 	    	<ion-col col-7>
-	    		<ion-input value="Test2016" [(ngModel)]="absender_email"></ion-input>
+	    		<ion-input type="email" [(ngModel)]="absender_email"></ion-input>
 	    	</ion-col>
 	  	</ion-row>
 
@@ -118,7 +118,7 @@
 	    		</ion-label>
 	    	</ion-col>
 	    	<ion-col col-7>
-	    		<ion-input value="Test2016" [(ngModel)]="empfanger_email"></ion-input>
+	    		<ion-input type="email" [(ngModel)]="empfanger_email"></ion-input>
 	    	</ion-col>
 	  	</ion-row>
 
@@ -129,13 +129,13 @@
 	    		</ion-label>
 	    	</ion-col>
 	    	<ion-col col-5>
-	    		<ion-input value="Test2016" [(ngModel)]="email_server"></ion-input>
+	    		<ion-input type="text" [(ngModel)]="email_server"></ion-input>
 	    	</ion-col>
 	    	<ion-col col-1>
 	    		<ion-label>:</ion-label>
 	    	</ion-col>
 	    	<ion-col col-1 >
-	    		<ion-input class="port-input" value="Test2016" [(ngModel)]="email_port"></ion-input>
+	    		<ion-input type="number" class="port-input" [(ngModel)]="email_port"></ion-input>
 	    	</ion-col>
 	  	</ion-row>
 	</ion-grid>

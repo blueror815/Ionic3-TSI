@@ -15,6 +15,17 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 export class ConfigModalPage {
 	public img_url = "assets/images/wrong.png";
 	public is_checked: boolean = false;
+    public server_address: string = "80.228.110.31";
+    public server_name: string = "test sever";
+    public password: string = "testpassword";
+    public select_value: string = "female";
+    public benutzername: string = "80.228.110.31";
+    public user_password: string = "testuserpassword";
+    public absender_email: string = "user@email.com";
+    public empfanger_email: string = "user@afm.com";
+    public email_server: string = "192.149.22.1";
+    public email_port: number = 22;
+
   	constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
   	}
 
