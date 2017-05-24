@@ -1,0 +1,9 @@
+page-main-tab {
+	a.tab-button {
+		background-color: lightgray;
+	}
+	.tab-button:hover:not(.disable-hover), .tabs-ios .tab-button[aria-selected=true] {
+		background-color: lightgreen !important;
+		color: white !important;
+	}
+}
