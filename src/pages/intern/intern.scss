@@ -1,0 +1,136 @@
+page-intern {
+
+	ion-grid.top-section {
+
+		ion-col[col-8] {
+			border: 1px solid black;
+			padding: 0px !important;
+			padding-top: 5px !important;
+		}
+
+		span.title {
+			margin-left: 5px !important;
+		}
+
+		ion-grid.table {
+
+			ion-row.table-header {
+				background-color: lime;
+				ion-col {
+					border-left: 1px solid black;
+					border-top: 1px solid black;
+					border-bottom: 1px solid black;
+				}
+
+				ion-col:last-child {
+					border: 1px solid black;
+				}
+			}
+
+			div.table-body {
+				height: 350px;
+				border-left: 1px solid black;
+				border-right: 1px solid black;
+				border-bottom: 1px solid black;
+			}
+
+			button.hin-submit-btn {
+				height: 25px;
+				background-color: white;
+				color: black;
+				border: 1px solid gray;
+				margin-top: 0px !important;
+			}
+
+			div.sum-row {
+				text-align: center;
+	    		margin-top: 299px;
+			    height: 25px;
+			    font-size: 18px;
+	    		border: 1px solid black;
+			}
+		}
+
+		ion-grid.datum-section {
+			border: 1px solid black;
+			margin-top: -5px;
+
+			input {
+				border: 2px solid black;
+				// box-shadow:inset 0 0 5px 5px #888;
+	  			background: #fff;
+			    border-radius: 4px;
+			    margin-top: 5px;
+			    margin-right: 0px;
+			    width: 100%;
+			    padding-left: 10px;
+	    		padding-top: 5px;
+	    		padding-bottom: 5px;
+			}
+
+			ion-label {
+				font-size: 12px;
+    			margin-right: -10px;
+			}
+		}	
+
+		ion-row.empfanger-email-container {
+			input.empfanger-email {
+				box-shadow:inset 0 0 1px 1px #ccc;
+				// border: 1px solid black;
+				background: #fff;
+			    border-radius: 4px;
+			    margin-top: 5px;
+			    margin-right: 0px;
+			    width: 100%;
+			    padding-left: 10px;
+	    		padding-top: 5px;
+	    		padding-bottom: 5px;
+			}
+		}
+
+		button.emp-button {
+			height: 30px;
+			padding: 0px !important;
+			color: black;
+			border: 1px solid gray;
+			font-size: 13px;
+			width: 100px;
+			background: #b3dced; /* Old browsers */
+			background: -moz-linear-gradient(top, #b3dced 0%, #29b8e5 6%, #bce0ee 100%); /* FF3.6-15 */
+			background: -webkit-linear-gradient(top, #b3dced 0%,#29b8e5 6%,#bce0ee 100%); /* Chrome10-25,Safari5.1-6 */
+			background: linear-gradient(to bottom, #b3dced 0%,#29b8e5 6%,#bce0ee 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+		}
+	}
+
+	ion-grid.bottom-section {
+
+		ion-row.empfanger-email-container {
+			input.empfanger-email {
+				box-shadow:inset 0 0 1px 1px #ccc;
+				// border: 1px solid black;
+				background: #fff;
+			    border-radius: 4px;
+			    margin-top: 5px;
+			    margin-right: 0px;
+			    width: 100%;
+			    padding-left: 10px;
+	    		padding-top: 5px;
+	    		padding-bottom: 5px;
+			}
+		}
+
+		button.emp-button {
+			height: 30px;
+			padding: 0px !important;
+			color: black;
+			border: 1px solid gray;
+			font-size: 13px;
+			width: 100px;
+			background: #b3dced; /* Old browsers */
+			background: -moz-linear-gradient(top, #b3dced 0%, #29b8e5 6%, #bce0ee 100%); /* FF3.6-15 */
+			background: -webkit-linear-gradient(top, #b3dced 0%,#29b8e5 6%,#bce0ee 100%); /* Chrome10-25,Safari5.1-6 */
+			background: linear-gradient(to bottom, #b3dced 0%,#29b8e5 6%,#bce0ee 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+		}
+	}	
+}
