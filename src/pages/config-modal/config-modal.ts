@@ -47,8 +47,16 @@ export class ConfigModalPage {
   		}
   	}
 
-    openGallery = () => {
-      this.imagePicker.getPictures({}).then((results) => {
+    onOpenGallery = () => {
+      
+      let options = {
+        maximumImagesCount : 1,
+        width : 80,
+        height : 80,
+        quality : 80
+      };
+
+      this.imagePicker.getPictures(options).then((results) => {
         this.dialogs.alert(results[0]);
         this.img_background_url = results[0];
       }, (err) => {
