@@ -3,6 +3,9 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { ImagePicker } from '@ionic-native/image-picker';
+import { Dialogs } from '@ionic-native/dialogs';
+
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { MyApp } from './app.component';
@@ -32,6 +35,8 @@ import { MyApp } from './app.component';
   providers: [
     StatusBar,
     SplashScreen,
+    ImagePicker,
+    Dialogs,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
