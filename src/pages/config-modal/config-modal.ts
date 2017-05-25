@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Dialogs } from '@ionic-native/dialogs';
 
+import { Ftp } from '../../../plugins/cordova-plugin-ftp/types/ftp';
+
 /**
  * Generated class for the ConfigModalPage page.
  *
@@ -30,7 +32,7 @@ export class ConfigModalPage {
     public email_server: string = "192.149.22.1";
     public email_port: number = 22;
 
-  	constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public dialogs: Dialogs, public imagePicker: ImagePicker) {
+  	constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public dialogs: Dialogs, public imagePicker: ImagePicker, public ftp: Ftp) {
   	}
 
   	ionViewDidLoad() {
@@ -38,7 +40,26 @@ export class ConfigModalPage {
   	}
 
   	onCheck = () => {
-  		if(!this.is_checked) {
+      Ftp.isAvailible().then(() => {
+            this.dialogs.alert("ok");
+        }, () => {
+            // ups... FTP plugin is not available...
+            this.dialogs.alert("error");
+      });
+
+      // this.ftp.connect(this.server_address, this.server_name, this.password, function (response) {
+         
+      //    this.dialogs.alert("ok"); 
+      //    console.log("Ftp resposne :", response);
+
+            
+      // }, function(error) {
+      //    this.dialogs.alert("error"); 
+      //    console.log("Ftp error :", error);
+         
+      // });
+  		
+      if(!this.is_checked) {
   			this.img_url = "assets/images/right.png";
   			this.is_checked = true;
   		} else {

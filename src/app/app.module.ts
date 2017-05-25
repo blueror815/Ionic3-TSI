@@ -6,6 +6,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Dialogs } from '@ionic-native/dialogs';
 
+import { Ftp } from '../../plugins/cordova-plugin-ftp/types/ftp';
+
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { MyApp } from './app.component';
@@ -37,6 +39,7 @@ import { MyApp } from './app.component';
     SplashScreen,
     ImagePicker,
     Dialogs,
+    Ftp,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
