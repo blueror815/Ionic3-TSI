@@ -4,7 +4,7 @@ page-main-tab {
 		position: absolute;
 	    right: 20px;
 	    z-index: 100;
-	    top: 5px;
+	    top: 20px;
 	    font-size: 10px;
 	}
 
@@ -12,13 +12,14 @@ page-main-tab {
 		top: 0px;
 	    padding-left: 30px;
 	    padding-right: 30px;
-	    padding-top: 20px;
+	    padding-top: 40px;
 	    border-bottom: 2px solid black;
 	    background: url(../assets/images/bg_oben.png) no-repeat center center; 
 		-webkit-background-size: cover;
 		-moz-background-size: cover;
 		-o-background-size: cover;
 		background-size: cover;
+		border-bottom: 2px solid black !important;
 	}
 
 	a.tab-button {
