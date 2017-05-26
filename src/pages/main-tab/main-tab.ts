@@ -21,6 +21,7 @@ export class MainTabPage {
   	constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {
   		this.tab1 = 'KundenPage';
     	this.tab2 = 'StartPage';
+      this.tab6 = 'InfoPage';
       this.tab7 = 'InternPage';
 
     	this.presentConfigModal();
