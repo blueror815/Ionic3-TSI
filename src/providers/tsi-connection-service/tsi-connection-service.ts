@@ -88,29 +88,5 @@ export class TsiConnectionServiceProvider {
     });
   }
 
-    
-  	// Ftp.ls('/').then((fileList) => {
-	  // 		console.log("Ftp ls success :", "");
-			  
-   //      if (fileList && fileList.length > 0) {
-   //        // code...
-
-   //        for (var i = 0; i <= fileList.length; i++) {
-   //            if (fileList[i].name.match("[A-Z][0-9][0-9]|")) {
-   //              // code...
-   //              files.push(fileList[i].name);
-   //            }
-   //        }
-
-   //        return files;
-   //      }
-
-	  // 	}, (error) => {
-	  // 		console.log("Ftp ls error :", "");
-	  // 		console.log("Ftp ls :", JSON.stringify(error));
-
-   //      return files;
-	  // });
-  }
-
 }
+
