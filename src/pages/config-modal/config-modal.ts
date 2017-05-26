@@ -24,10 +24,12 @@ export class ConfigModalPage {
 	  public img_url = "assets/images/wrong.png";
 	  public img_background_url = "assets/images/not_avalible.png";
     public is_checked: boolean = false;
-    public server_address: string = "80.228.110.31";
+    public server_address: string = "80.228.113.30";
     public server_name: string = "Tablet_Test";
     public password: string = "test2016";
-    public select_value: string = "female";
+
+    public select_folder: string;
+    public folders: any;
     public benutzername: string = "80.228.110.31";
     public user_password: string = "testuserpassword";
     public absender_email: string = "user@email.com";
@@ -46,21 +48,39 @@ export class ConfigModalPage {
 
   	onCheck = () => {
 
-      this.is_checked = this.connectionService.checkFTP(this.server_address, this.server_name, this.password);
+      this.connectionService.checkFTP(this.server_address, this.server_name, this.password).then((res) => {
 
-      if (this.is_checked) {
-        // code...
-        this.img_url = "assets/images/right.png";
+          this.is_checked = res;
+          
+          if (this.is_checked) {
+            // code...
+            this.img_url = "assets/images/right.png";
 
-        this.connectionService.server = this.server_address;
-        this.connectionService.username = this.server_name;
-        this.connectionService.password = this.password;
+            this.connectionService.server = this.server_address;
+            this.connectionService.username = this.server_name;
+            this.connectionService.password = this.password;
 
-        //this.connectionService.getFtpFiles('');
-      }
-      else {
-        this.img_url = "assets/images/wrong.png";
-      }
+            this.connectionService.getFtpFiles('').then((fileList) => {
+              
+                this.folders = fileList;
+
+                console.log('Folders :' , this.folders);
+
+                if (this.folders && this.folders.length > 0) {
+                  // code...
+                  this.select_folder = this.folders[0];
+                }
+
+                
+            });
+          }
+          else {
+            this.img_url = "assets/images/wrong.png";
+          }
+        } 
+      )
+
+      
     }
 
     onImageDownload = (element) => {

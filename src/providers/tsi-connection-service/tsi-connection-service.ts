@@ -20,44 +20,97 @@ export class TsiConnectionServiceProvider {
     console.log('Hello TsiConnectionServiceProvider Provider');
   }
 
-  public checkFTP(server: string, username: string, password: string) : boolean {
-  	var isConnect = true;
+  public checkFTP(server: string, username: string, password: string) : Promise<any> {
 
-  	Ftp.connect(server, username, password).then((response) => {
-         
-         console.log("Ftp resposne :", response);
+    return new Promise((resolve) => {
+        Ftp.connect(server, username, password).then((response) => {
+             
+             console.log("Ftp resposne :", response);
 
-         Ftp.ls('').then((success) => {
-            console.log("Ftp ls success :", "");
-            console.log("Ftp ls :", JSON.stringify(success));
+             resolve(true);
+                
           }, (error) => {
-            console.log("Ftp ls error :", "");
-            console.log("Ftp ls :", JSON.stringify(error));
+
+             console.log("Ftp error :", error);
+             
+             resolve(false);
         });
-         
-         isConnect = true;
-            
-      }, (error) => {
-
-         console.log("Ftp error :", error);
-         
-         isConnect = false;
     });
-
-    return isConnect;
   }
 
-  public getFtpFiles(url : string) {
+  public getFtpFiles(url : string) : Promise<any> {
 
-  	console.log("Ftp get files :", url);
+    let files = [];
 
-  	Ftp.ls('').then((success) => {
-	  		console.log("Ftp ls success :", "");
-			  console.log("Ftp ls :", JSON.stringify(success));
-	  	}, (error) => {
-	  		console.log("Ftp ls error :", "");
-	  		console.log("Ftp ls :", JSON.stringify(error));
-	  });
+    return new Promise((resolve) => {
+        Ftp.ls('/').then((fileList) => {
+        
+        if (fileList && fileList.length > 0) {
+
+            let rx = new RegExp(/[A-Z][0-9][0-9]|/);
+
+            for (let i = 0; i < fileList.length; i++) {
+
+                if (fileList[i].name) {
+                    // code...
+                    let foldername = fileList[i].name;
+
+                    if (foldername.match(rx) && foldername.match(rx)[0] != '') {
+                        files.push(foldername);
+                    }
+                }
+            }
+        }
+
+        console.log("Ftp get files :", files);
+            
+        resolve(files);
+
+        }, (error) => {
+            console.log("Ftp ls error :", "");
+            console.log("Ftp ls :", JSON.stringify(error));
+
+            resolve(files);
+        });
+    });
+  }
+
+  public getImageCount(url : string) : Promise<any> {
+    let count = 0;
+
+    return new Promise((resolve) => {
+        Ftp.ls(url).then((fileList) => {
+            count = fileList.length;
+            resolve(count);  
+        }, (error) => {
+            resolve(count);
+        })
+    });
+  }
+
+    
+  	// Ftp.ls('/').then((fileList) => {
+	  // 		console.log("Ftp ls success :", "");
+			  
+   //      if (fileList && fileList.length > 0) {
+   //        // code...
+
+   //        for (var i = 0; i <= fileList.length; i++) {
+   //            if (fileList[i].name.match("[A-Z][0-9][0-9]|")) {
+   //              // code...
+   //              files.push(fileList[i].name);
+   //            }
+   //        }
+
+   //        return files;
+   //      }
+
+	  // 	}, (error) => {
+	  // 		console.log("Ftp ls error :", "");
+	  // 		console.log("Ftp ls :", JSON.stringify(error));
+
+   //      return files;
+	  // });
   }
 
 }
