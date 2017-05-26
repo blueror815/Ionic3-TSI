@@ -48,9 +48,8 @@
 
 	  	<ion-row class="select-box-container">
 	  		<ion-item>
-			  	<ion-select [(ngModel)]="select_value">
-				    <ion-option value="f">Female</ion-option>
-				    <ion-option value="m">Male</ion-option>
+			  	<ion-select [(ngModel)]="select_folder">
+				    <ion-option *ngFor="let folder of folders">{{folder}}</ion-option>
 			  	</ion-select>
 			</ion-item>
 	  	</ion-row>
