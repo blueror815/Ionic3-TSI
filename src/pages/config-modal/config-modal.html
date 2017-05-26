@@ -43,7 +43,7 @@
 	  	</ion-row>
 
 	  	<ion-row class="desc-container">
-	  		<span>This text should be replaced later</span>
+	  		<span>Bitte wählen Sie den KundenOrdner aus</span>
 	  	</ion-row>
 
 	  	<ion-row class="select-box-container">
@@ -58,7 +58,7 @@
 
 	<ion-grid class="gallery-section">
 		<ion-row class="desc-container">
-	  		<span>This text should be replaced later</span>
+	  		<span>Bitte wählen sie das Start-Bild aus</span>
 	  	</ion-row>
 
 	  	<ion-row class="gallery-btn-container">
@@ -72,7 +72,7 @@
 	  	</ion-row>
 
 	  	<ion-row class="bilder-btn-container">
-	  		<button class="bilder-btn">BILDER HERUNTERLADEN
+	  		<button class="bilder-btn" (click) = "onImageDownload($event.target)">BILDER HERUNTERLADEN
 	  		</button>
 	  	</ion-row>
 	</ion-grid>

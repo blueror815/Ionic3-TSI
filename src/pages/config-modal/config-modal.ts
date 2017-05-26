@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Dialogs } from '@ionic-native/dialogs';
 
-import { Ftp } from '../../../plugins/cordova-plugin-ftp/types/ftp';
+import {TsiConnectionServiceProvider} from '../../providers/tsi-connection-service/tsi-connection-service';
 
 /**
  * Generated class for the ConfigModalPage page.
@@ -12,10 +12,13 @@ import { Ftp } from '../../../plugins/cordova-plugin-ftp/types/ftp';
  * on Ionic pages and navigation.
  */
 @IonicPage()
+
 @Component({
   	selector: 'page-config-modal',
-  	templateUrl: 'config-modal.html',
+  	templateUrl: 'config-modal.html'
+    
 })
+
 export class ConfigModalPage {
 
 	  public img_url = "assets/images/wrong.png";
@@ -32,7 +35,9 @@ export class ConfigModalPage {
     public email_server: string = "192.149.22.1";
     public email_port: number = 22;
 
-  	constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public dialogs: Dialogs, public imagePicker: ImagePicker, public ftp: Ftp) {
+    public download_running : boolean = false;
+
+  	constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public dialogs: Dialogs, public imagePicker: ImagePicker, public connectionService : TsiConnectionServiceProvider) {
   	}
 
   	ionViewDidLoad() {
@@ -41,26 +46,34 @@ export class ConfigModalPage {
 
   	onCheck = () => {
 
-      Ftp.connect(this.server_address, this.server_name, this.password).then((response) => {
-         
-         this.dialogs.alert("ok"); 
-         console.log("Ftp resposne :", response);
+      this.is_checked = this.connectionService.checkFTP(this.server_address, this.server_name, this.password);
 
-            
-      }, (error) => {
-         this.dialogs.alert("error"); 
-         console.log("Ftp error :", error);
-         
-      });
-  		
-      if(!this.is_checked) {
-  			this.img_url = "assets/images/right.png";
-  			this.is_checked = true;
-  		} else {
-  			this.img_url = "assets/images/wrong.png";
-  			this.is_checked = false;
-  		}
-  	}
+      if (this.is_checked) {
+        // code...
+        this.img_url = "assets/images/right.png";
+
+        this.connectionService.server = this.server_address;
+        this.connectionService.username = this.server_name;
+        this.connectionService.password = this.password;
+
+        this.connectionService.getFtpFiles('/var/www');
+      }
+      else {
+        this.img_url = "assets/images/wrong.png";
+      }
+    }
+
+    onImageDownload = (element) => {
+      if (this.download_running) {
+        // code...
+        this.download_running = false;
+        element.textContent = "BILDER HERUNTERLADEN";
+      }
+      else {
+        this.download_running = true;
+        element.textContent = "Herunterladen abbrechen";
+      }
+    }
 
     onOpenGallery = () => {
       

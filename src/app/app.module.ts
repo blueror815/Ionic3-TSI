@@ -11,6 +11,16 @@ import { Ftp } from '../../plugins/cordova-plugin-ftp/types/ftp';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { MyApp } from './app.component';
+import { TsiClientServiceProvider } from '../providers/tsi-client-service/tsi-client-service';
+import { TsiConnectionServiceProvider } from '../providers/tsi-connection-service/tsi-connection-service';
+import { TsiCheckInternetServiceProvider } from '../providers/tsi-check-internet-service/tsi-check-internet-service';
+import { TsiDataServiceProvider } from '../providers/tsi-data-service/tsi-data-service';
+import { TsiEmailServiceProvider } from '../providers/tsi-email-service/tsi-email-service';
+import { TsiHistoryServiceProvider } from '../providers/tsi-history-service/tsi-history-service';
+import { TsiLocationServiceProvider } from '../providers/tsi-location-service/tsi-location-service';
+import { TsiParserServiceProvider } from '../providers/tsi-parser-service/tsi-parser-service';
+import { TsiShoppingCartServiceProvider } from '../providers/tsi-shopping-cart-service/tsi-shopping-cart-service';
+import { TsiSyncDataServiceProvider } from '../providers/tsi-sync-data-service/tsi-sync-data-service';
 
 
 @NgModule({
@@ -40,7 +50,18 @@ import { MyApp } from './app.component';
     ImagePicker,
     Dialogs,
     Ftp,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    TsiClientServiceProvider,
+    TsiConnectionServiceProvider,
+    TsiCheckInternetServiceProvider,
+    TsiDataServiceProvider,
+    TsiEmailServiceProvider,
+    TsiHistoryServiceProvider,
+    TsiEmailServiceProvider,
+    TsiLocationServiceProvider,
+    TsiParserServiceProvider,
+    TsiShoppingCartServiceProvider,
+    TsiSyncDataServiceProvider
   ]
 })
 export class AppModule {}
