@@ -25,8 +25,8 @@ export class ConfigModalPage {
 	  public img_background_url = "assets/images/not_avalible.png";
     public is_checked: boolean = false;
     public server_address: string = "80.228.110.31";
-    public server_name: string = "test sever";
-    public password: string = "testpassword";
+    public server_name: string = "Tablet_Test";
+    public password: string = "test2016";
     public select_value: string = "female";
     public benutzername: string = "80.228.110.31";
     public user_password: string = "testuserpassword";
@@ -56,7 +56,7 @@ export class ConfigModalPage {
         this.connectionService.username = this.server_name;
         this.connectionService.password = this.password;
 
-        this.connectionService.getFtpFiles('/var/www');
+        //this.connectionService.getFtpFiles('');
       }
       else {
         this.img_url = "assets/images/wrong.png";

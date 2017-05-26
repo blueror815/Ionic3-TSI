@@ -26,6 +26,14 @@ export class TsiConnectionServiceProvider {
   	Ftp.connect(server, username, password).then((response) => {
          
          console.log("Ftp resposne :", response);
+
+         Ftp.ls('').then((success) => {
+            console.log("Ftp ls success :", "");
+            console.log("Ftp ls :", JSON.stringify(success));
+          }, (error) => {
+            console.log("Ftp ls error :", "");
+            console.log("Ftp ls :", JSON.stringify(error));
+        });
          
          isConnect = true;
             
@@ -39,19 +47,17 @@ export class TsiConnectionServiceProvider {
     return isConnect;
   }
 
-  public getFtpFiles(url) {
+  public getFtpFiles(url : string) {
 
-  	console.log("Ftp get files :", "");
+  	console.log("Ftp get files :", url);
 
-  	var files = [];
-
-  	Ftp.ls(url).then((success) => {
+  	Ftp.ls('').then((success) => {
 	  		console.log("Ftp ls success :", "");
-			console.log("Ftp ls :", JSON.stringify(success));
+			  console.log("Ftp ls :", JSON.stringify(success));
 	  	}, (error) => {
 	  		console.log("Ftp ls error :", "");
 	  		console.log("Ftp ls :", JSON.stringify(error));
-	  	});
+	  });
   }
 
 }
