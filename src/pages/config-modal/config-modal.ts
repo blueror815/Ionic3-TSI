@@ -40,24 +40,18 @@ export class ConfigModalPage {
   	}
 
   	onCheck = () => {
-      Ftp.isAvailible().then(() => {
-            this.dialogs.alert("ok");
-        }, () => {
-            // ups... FTP plugin is not available...
-            this.dialogs.alert("error");
-      });
 
-      // this.ftp.connect(this.server_address, this.server_name, this.password, function (response) {
+      Ftp.connect(this.server_address, this.server_name, this.password).then((response) => {
          
-      //    this.dialogs.alert("ok"); 
-      //    console.log("Ftp resposne :", response);
+         this.dialogs.alert("ok"); 
+         console.log("Ftp resposne :", response);
 
             
-      // }, function(error) {
-      //    this.dialogs.alert("error"); 
-      //    console.log("Ftp error :", error);
+      }, (error) => {
+         this.dialogs.alert("error"); 
+         console.log("Ftp error :", error);
          
-      // });
+      });
   		
       if(!this.is_checked) {
   			this.img_url = "assets/images/right.png";
