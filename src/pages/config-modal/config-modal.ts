@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, LoadingController } from 'ionic-angular';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Dialogs } from '@ionic-native/dialogs';
 
 import {TsiConnectionServiceProvider} from '../../providers/tsi-connection-service/tsi-connection-service';
+import { TsiDataServiceProvider } from '../../providers/tsi-data-service/tsi-data-service';
 
 /**
  * Generated class for the ConfigModalPage page.
@@ -30,6 +31,8 @@ export class ConfigModalPage {
 
     public select_folder: string;
     public folders: any;
+    public imgCount: string = "0/0";
+
     public benutzername: string = "80.228.110.31";
     public user_password: string = "testuserpassword";
     public absender_email: string = "user@email.com";
@@ -38,8 +41,10 @@ export class ConfigModalPage {
     public email_port: number = 22;
 
     public download_running : boolean = false;
+    public server_images = [];
 
-  	constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public dialogs: Dialogs, public imagePicker: ImagePicker, public connectionService : TsiConnectionServiceProvider) {
+  	constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public dialogs: Dialogs, public imagePicker: ImagePicker, 
+      public connectionService : TsiConnectionServiceProvider,public dataService: TsiDataServiceProvider, public loadingCtrl: LoadingController) {
   	}
 
   	ionViewDidLoad() {
@@ -48,7 +53,13 @@ export class ConfigModalPage {
 
   	onCheck = () => {
 
-      this.connectionService.checkFTP(this.server_address, this.server_name, this.password).then((res) => {
+    let loader = this.loadingCtrl.create({
+      content: "Checke FTP-Server..."
+    });
+
+    loader.present();
+    
+    this.connectionService.checkFTP(this.server_address, this.server_name, this.password).then((res) => {
 
           this.is_checked = res;
           
@@ -59,6 +70,9 @@ export class ConfigModalPage {
             this.connectionService.server = this.server_address;
             this.connectionService.username = this.server_name;
             this.connectionService.password = this.password;
+
+            let serverImgCnt = 0;
+            let localImgCnt = 0;
 
             this.connectionService.getFtpFiles('').then((fileList) => {
               
@@ -71,11 +85,38 @@ export class ConfigModalPage {
                   this.select_folder = this.folders[0];
                 }
 
+                this.connectionService.getImageCount('/Grafiken/').then((res) => {
+
+                  if (res && res.length >0) {
+                    // code...
+
+                    this.server_images = res;
+                    serverImgCnt = this.server_images.length;
+
+                    console.log("Server Image count :", serverImgCnt);
+                  }
+
+                  this.dataService.getLocalImageList().then((res) => {
+                    loader.dismiss();
+
+                    if (res && res.length >0) {
+                      // code...
+                      localImgCnt = res.length;
+
+                      console.log("Local Image Count :", localImgCnt);
+                    }
+
+                  });
+
+                  this.imgCount = localImgCnt + "/" + serverImgCnt;
+
+                });
                 
             });
           }
           else {
             this.img_url = "assets/images/wrong.png";
+            loader.dismiss();
           }
         } 
       )
@@ -93,6 +134,12 @@ export class ConfigModalPage {
         this.download_running = true;
         element.textContent = "Herunterladen abbrechen";
       }
+
+
+    }
+
+    public getMissingImages() {
+      
     }
 
     onOpenGallery = () => {

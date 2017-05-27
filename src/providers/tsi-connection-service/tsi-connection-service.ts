@@ -67,7 +67,7 @@ export class TsiConnectionServiceProvider {
         resolve(files);
 
         }, (error) => {
-            console.log("Ftp ls error :", "");
+
             console.log("Ftp ls :", JSON.stringify(error));
 
             resolve(files);
@@ -76,14 +76,16 @@ export class TsiConnectionServiceProvider {
   }
 
   public getImageCount(url : string) : Promise<any> {
-    let count = 0;
+    let imgList = [];
 
     return new Promise((resolve) => {
         Ftp.ls(url).then((fileList) => {
-            count = fileList.length;
-            resolve(count);  
+
+            console.log("Ftp server image file:", fileList);
+            imgList = fileList;
+            resolve(imgList);  
         }, (error) => {
-            resolve(count);
+            resolve(imgList);
         })
     });
   }
