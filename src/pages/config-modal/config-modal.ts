@@ -149,10 +149,10 @@ export class ConfigModalPage {
       console.log("FileObject", JSON.stringify(files[this.download_index]));
       console.log("Filename ", filename);
 
-      this.connectionService.donwloadServerImage(this.dataService.file.documentsDirectory + "TSI/Data/Graphics", filename).then(
+      this.connectionService.donwloadServerImage(this.dataService.file.documentsDirectory + "TSI/Data/Graphics/", filename).then(
         (res) => {
           this.download_index ++;
-          let localImgCnt = files.length + this.download_index + 1;
+          let localImgCnt = this.server_images.length - files.length + this.download_index + 1;
           this.imgCount = localImgCnt + "/" + this.server_images.length; 
           
           if(this.download_index == files.length) {
@@ -162,6 +162,9 @@ export class ConfigModalPage {
             return;
           }
           else {
+            if (!this.download_running) {
+              return;
+            }
             this.downloadAllServerImages(element,files);
           }
         }, (err) => {

@@ -24,7 +24,7 @@ export class TsiDataServiceProvider {
 		this.file.createDir(this.file.documentsDirectory, "TSI", false).then((res) => {
 			console.log('RootStoragePath Success=> ', JSON.stringify(res));
 			this.rootPath = this.file.documentsDirectory + "TSI/";
-			resolve(this.rootPath);
+			resolve(res.nativeURL);
 		}, (err) => {
 			console.log('RootStoragePath Error => ', JSON.stringify(err));
 			resolve(this.file.documentsDirectory + "TSI/");
@@ -38,7 +38,7 @@ export class TsiDataServiceProvider {
 		  this.getRootStoragePath().then((res) => {
 			this.file.createDir(res, "Data", false).then((res) => {
 			console.log('DataStoragePath Success=> ', JSON.stringify(res));
-			resolve(res + "Data/");
+			resolve(res.nativeURL);
 			}, (err) => {
 				console.log('DataStoragePath Error => ', JSON.stringify(err));
 				resolve(this.file.documentsDirectory + "TSI/Data/")
@@ -54,7 +54,7 @@ export class TsiDataServiceProvider {
 		  this.getDataStoragePath().then((res) => {
 			this.file.createDir(res, "Graphics", false).then((res) => {
 			console.log('GraphicStoragePath Success=> ', JSON.stringify(res));
-			resolve(res + "Graphics/");
+			resolve(res.nativeURL);
 			}, (err) => {
 				resolve(this.file.documentsDirectory + "TSI/Data/Graphics/")
 			})

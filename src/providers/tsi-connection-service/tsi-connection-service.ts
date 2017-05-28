@@ -77,20 +77,19 @@ export class TsiConnectionServiceProvider {
 
   public donwloadServerImage(localPath, filename) : Promise<any> {
 
-      let path = "/Grafiken/" + filename;
-      return new Promise((resolve, reject) => {
-        //   this.file.createFile(localPath, filename, true).then((res) => {
-        //       console.log("Local Path :", JSON.stringify(res));
-
-                Ftp.download(localPath, path).then((res) => {
-                        console.log("Download Success :", res);
-                        resolve(res);
-                }, (err) => {
-                    reject(err);    
-                })    
-          //});
+    let path = "/Grafiken/" + filename;
+    return new Promise((resolve, reject) => {
           
-      });
+        let localFilePath = localPath.replace("file://", "") + filename;
+        Ftp.download(localFilePath, path).then((res) => {
+                console.log("Download Success :", res);
+                resolve(res);
+        }, (err) => {
+            reject(err);    
+        })    
+    });
+          
+      
   }
 
   public getImageCount(url : string) : Promise<any> {
