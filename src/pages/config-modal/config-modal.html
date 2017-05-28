@@ -1,146 +1,146 @@
 <ion-content padding>
-	<ion-grid class="ftp-info-section">
-	  	<ion-row class="address-container">
-	    	<ion-col col-5>
-	    		<ion-label class="title">
-	    			FTP-Server: 
-	    		</ion-label>
-	    	</ion-col>
-	    	<ion-col col-7>
-	    		<ion-input type="text" [(ngModel)]="server_address"></ion-input>
-	    	</ion-col>
-	  	</ion-row>
+    <ion-grid class="ftp-info-section">
+        <ion-row class="address-container">
+            <ion-col col-5>
+                <ion-label class="title">
+                    FTP-Server:
+                </ion-label>
+            </ion-col>
+            <ion-col col-7>
+                <ion-input type="text" [(ngModel)]="ftp_address"></ion-input>
+            </ion-col>
+        </ion-row>
 
-	  	<ion-row class="name-container">
-	    	<ion-col col-5>
-	    		<ion-label class="title">
-	    			FTP-Server-Benutzername: 
-	    		</ion-label>
-	    	</ion-col>
-	    	<ion-col col-7>
-	    		<ion-input type="text" [(ngModel)]="server_name"></ion-input>
-	    	</ion-col>
-	  	</ion-row>
+        <ion-row class="name-container">
+            <ion-col col-5>
+                <ion-label class="title">
+                    FTP-Server-Benutzername:
+                </ion-label>
+            </ion-col>
+            <ion-col col-7>
+                <ion-input type="text" [(ngModel)]="ftp_username"></ion-input>
+            </ion-col>
+        </ion-row>
 
-	  	<ion-row class="pwd-container">
-	    	<ion-col col-5>
-	    		<ion-label class="title">
-	    			FTP-Server-Passwort: 
-	    		</ion-label>
-	    	</ion-col>
-	    	<ion-col col-7>
-	    		<ion-input type="text" [(ngModel)]="password"></ion-input>
-	    	</ion-col>
-	  	</ion-row>
+        <ion-row class="pwd-container">
+            <ion-col col-5>
+                <ion-label class="title">
+                    FTP-Server-Passwort:
+                </ion-label>
+            </ion-col>
+            <ion-col col-7>
+                <ion-input type="text" [(ngModel)]="ftp_password"></ion-input>
+            </ion-col>
+        </ion-row>
 
-	  	<ion-row class="checkbox-container">
-	  		<ion-col col-8>
-			    <ion-label (click)="onCheck()">CHECK</ion-label>
-		  	</ion-col>
-		  	<ion-col col-4>
-		  		<img [src]="img_url"/>
-		  	</ion-col>
-	  	</ion-row>
+        <ion-row class="checkbox-container">
+            <ion-col col-8>
+                <ion-label (click)="onCheck()">CHECK</ion-label>
+            </ion-col>
+            <ion-col col-4>
+                <img [src]="img_url" />
+            </ion-col>
+        </ion-row>
 
-	  	<ion-row class="desc-container">
-	  		<span>Bitte wählen Sie den KundenOrdner aus</span>
-	  	</ion-row>
+        <ion-row class="desc-container">
+            <span>Bitte wählen Sie den KundenOrdner aus</span>
+        </ion-row>
 
-	  	<ion-row class="select-box-container">
-	  		<ion-item>
-			  	<ion-select [(ngModel)]="select_folder">
-				    <ion-option *ngFor="let folder of folders">{{folder}}</ion-option>
-			  	</ion-select>
-			</ion-item>
-	  	</ion-row>
-	</ion-grid>
+        <ion-row class="select-box-container">
+            <ion-item>
+                <ion-select [(ngModel)]="select_folder">
+                    <ion-option *ngFor="let folder of folders">{{folder}}</ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-row>
+    </ion-grid>
 
-	<ion-grid class="gallery-section">
-		<ion-row class="desc-container">
-	  		<span>Bitte wählen sie das Start-Bild aus</span>
-	  	</ion-row>
+    <ion-grid class="gallery-section">
+        <ion-row class="desc-container">
+            <span>Bitte wählen sie das Start-Bild aus</span>
+        </ion-row>
 
-	  	<ion-row class="gallery-btn-container">
-	  		<div class="img-container">
-	  			<img [src]="img_background_url" (click)="onOpenGallery()" />
-	  		</div>
-	  	</ion-row>
+        <ion-row class="gallery-btn-container">
+            <div class="img-container">
+                <img [src]="img_background_url" (click)="onOpenGallery()" />
+            </div>
+        </ion-row>
 
-	  	<ion-row class="desc-container" style="margin-top: 5px;">
-	  		<span>Bilder geladen: {{imgCount}}</span>
-	  	</ion-row>
+        <ion-row class="desc-container" style="margin-top: 5px;">
+            <span>Bilder geladen: {{imgCount}}</span>
+        </ion-row>
 
-	  	<ion-row class="bilder-btn-container">
-	  		<button class="bilder-btn" (click) = "onImageDownload($event.target)">BILDER HERUNTERLADEN
+        <ion-row class="bilder-btn-container">
+            <button class="bilder-btn" (click)="onImageDownload($event.target)">BILDER HERUNTERLADEN
 	  		</button>
-	  	</ion-row>
-	</ion-grid>
+        </ion-row>
+    </ion-grid>
 
-	<ion-grid class="user-info-section">
-		<ion-row class="benutzername-container">
-	    	<ion-col col-5>
-	    		<ion-label class="title">
-	    			Benutzername: 
-	    		</ion-label>
-	    	</ion-col>
-	    	<ion-col col-7>
-	    		<ion-input type="text" [(ngModel)]="benutzername"></ion-input>
-	    	</ion-col>
-	  	</ion-row>
+    <ion-grid class="user-info-section">
+        <ion-row class="benutzername-container">
+            <ion-col col-5>
+                <ion-label class="title">
+                    Benutzername:
+                </ion-label>
+            </ion-col>
+            <ion-col col-7>
+                <ion-input type="text" [(ngModel)]="user_name"></ion-input>
+            </ion-col>
+        </ion-row>
 
-	  	<ion-row class="absender-pwd-container">
-	    	<ion-col col-5>
-	    		<ion-label class="title">
-	    			Passwort: 
-	    		</ion-label>
-	    	</ion-col>
-	    	<ion-col col-7>
-	    		<ion-input value="Tablet Test" [(ngModel)]="user_password"></ion-input>
-	    	</ion-col>
-	  	</ion-row>
+        <ion-row class="absender-pwd-container">
+            <ion-col col-5>
+                <ion-label class="title">
+                    Passwort:
+                </ion-label>
+            </ion-col>
+            <ion-col col-7>
+                <ion-input value="Tablet Test" [(ngModel)]="user_password"></ion-input>
+            </ion-col>
+        </ion-row>
 
-	  	<ion-row class="absender-email-container">
-	    	<ion-col col-5>
-	    		<ion-label class="title">
-	    			Absender-Email: 
-	    		</ion-label>
-	    	</ion-col>
-	    	<ion-col col-7>
-	    		<ion-input type="email" [(ngModel)]="absender_email"></ion-input>
-	    	</ion-col>
-	  	</ion-row>
+        <ion-row class="absender-email-container">
+            <ion-col col-5>
+                <ion-label class="title">
+                    Absender-Email:
+                </ion-label>
+            </ion-col>
+            <ion-col col-7>
+                <ion-input type="email" [(ngModel)]="absender_email"></ion-input>
+            </ion-col>
+        </ion-row>
 
-	  	<ion-row class="Empfanger-email-container">
-	    	<ion-col col-5>
-	    		<ion-label class="title">
-	    			Empfanger-Email: 
-	    		</ion-label>
-	    	</ion-col>
-	    	<ion-col col-7>
-	    		<ion-input type="email" [(ngModel)]="empfanger_email"></ion-input>
-	    	</ion-col>
-	  	</ion-row>
+        <ion-row class="Empfanger-email-container">
+            <ion-col col-5>
+                <ion-label class="title">
+                    Empfanger-Email:
+                </ion-label>
+            </ion-col>
+            <ion-col col-7>
+                <ion-input type="email" [(ngModel)]="empfanger_email"></ion-input>
+            </ion-col>
+        </ion-row>
 
-	  	<ion-row class="email-server-container">
-	    	<ion-col col-5>
-	    		<ion-label class="title">
-	    			E-Mail-Server: 
-	    		</ion-label>
-	    	</ion-col>
-	    	<ion-col col-5>
-	    		<ion-input type="text" [(ngModel)]="email_server"></ion-input>
-	    	</ion-col>
-	    	<ion-col col-1>
-	    		<ion-label>:</ion-label>
-	    	</ion-col>
-	    	<ion-col col-1 >
-	    		<ion-input type="number" class="port-input" [(ngModel)]="email_port"></ion-input>
-	    	</ion-col>
-	  	</ion-row>
-	</ion-grid>
+        <ion-row class="email-server-container">
+            <ion-col col-5>
+                <ion-label class="title">
+                    E-Mail-Server:
+                </ion-label>
+            </ion-col>
+            <ion-col col-5>
+                <ion-input type="text" [(ngModel)]="email_server"></ion-input>
+            </ion-col>
+            <ion-col col-1>
+                <ion-label>:</ion-label>
+            </ion-col>
+            <ion-col col-1>
+                <ion-input type="number" class="port-input" [(ngModel)]="email_port"></ion-input>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 
-	<ion-row class="speichern-btn-container">
-  		<button (click)="dismiss()" class="speichern-btn">SPEICHERN UND DIALOG SCHLIESSEN
+    <ion-row class="speichern-btn-container">
+        <button (click)="dismiss()" class="speichern-btn">SPEICHERN UND DIALOG SCHLIESSEN
   		</button>
-  	</ion-row>
+    </ion-row>
 </ion-content>
