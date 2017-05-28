@@ -1,3 +1,117 @@
 <ion-content>
+	<ion-row class="info-container">
+		<ion-col col-6>
+			<ion-row class="img-container">
+				<img [src]="img_uri" />
+			</ion-row>
 
+			<ion-row>
+				<div class="label-container">
+					<label>{{label}}</label>
+				</div>
+			</ion-row>
+		</ion-col>
+
+		<ion-col style="padding-top: 10px;" col-4>
+			
+			<span text-wrap (click)="is_active = !is_active" [ngClass]="{active: is_active}">
+				<span>
+					AUSGANGSKORB
+					<span class="arrow-container"><ion-icon color="success" item-right [name]="is_active ? 'arrow-dropup' : 'arrow-dropdown'"></ion-icon></span>
+				</span>
+				<div class="list-view-container" [ngClass]="{active: is_active}">
+					<ion-row class="table-header">
+						<ion-col col-6>
+							<span>KUNDENNAME</span>
+						</ion-col>
+
+						<ion-col col-3>
+							<span>BETRAG</span>
+						</ion-col>
+
+						<ion-col col-3>
+							<span>TERMIN</span>
+						</ion-col>
+					</ion-row>
+
+					<ion-row class="table-row" *ngFor="let item of items">
+						<ion-col col-6>
+							great
+						</ion-col>
+
+						<ion-col col-3>
+							thanks
+						</ion-col>
+
+						<ion-col col-3>
+							mmm
+						</ion-col>
+					</ion-row>
+				</div>
+			</span>
+		
+			<div class="server-info-container">
+				<div class="server-title">	
+					<p>Stammdaten zuletzt gepruft:</p>
+				</div>
+				<br>
+				<div class="local-info">
+					<p>Lokal:</p>
+					<p>
+						ArtikeDB.psv <span>{{artikedb}}</span>
+					</p>
+					<p>
+						KundenDB.psv <span>{{kundendb}}</span>
+					</p>
+					<p>
+						KategorieDB.psv <span>{{kategorydb}}</span>
+					</p>
+					<p>
+						OrdersDB.psv <span>{{orderdb}}</span>
+					</p>
+					<p>
+						KatalogDB.psv <span>{{katalogdb}}</span>
+					</p>
+				</div>
+				<br>
+				<div class="server-info">
+					<p>Server:</p>
+					<p>
+						ArtikeDB.psv <span>{{artikedb}}</span>
+					</p>
+					<p>
+						KundenDB.psv <span>{{kundendb}}</span>
+					</p>
+					<p>
+						KategorieDB.psv <span>{{kategorydb}}</span>
+					</p>
+					<p>
+						OrdersDB.psv <span>{{orderdb}}</span>
+					</p>
+					<p>
+						KatalogDB.psv <span>{{katalogdb}}</span>
+					</p>
+				</div>
+			</div>
+		</ion-col>
+
+		<ion-col col-2>
+			<div class="btn-container">
+
+				<button class="vers-btn" ion-button full>VERSENDEN</button>
+
+				<button class="ern-btn" ion-button full>ERNEUT DE A DOEITEM</button>
+
+				<button class="auf-btn" ion-button full>AUFTRAG STRONIFDRM</button>
+
+				<button class="pru-btn" ion-button full>PRUFEN</button>
+
+				<button class="download-btn" ion-button full>DOWNLOAD</button>
+
+				<button class="bilder-btn" ion-button full>BILDER AKTLIM ISIFDEM</button>
+
+				<button class="zur-btn" ion-button full>ZURUCK</button>
+			</div>
+		</ion-col>
+	</ion-row>
 </ion-content>

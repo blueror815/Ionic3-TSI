@@ -3,5 +3,143 @@ page-info {
 		margin-top: 81px !important;
 		padding-right: 0px !important;
 		padding-left: 0px !important;
+
+		ion-row.img-container {
+			border: 1px solid black;
+			height: 300px;
+
+			img {
+				margin-left: auto;
+				margin-right: auto;
+				margin-top: 20px;
+				width: 250px;
+				height: 250px;
+			}
+		}
+
+		div.label-container {
+			height: 30px;
+		    width: 100%;
+		    border: 1px solid black;
+		    margin-top: 5px;
+		}
+
+		span.arrow-container {
+			background: #e2e2e2; /* Old browsers */
+			background: -moz-linear-gradient(top, #e2e2e2 0%, #dbdbdb 50%, #d1d1d1 51%, #fefefe 100%); /* FF3.6-15 */
+			background: -webkit-linear-gradient(top, #e2e2e2 0%,#dbdbdb 50%,#d1d1d1 51%,#fefefe 100%); /* Chrome10-25,Safari5.1-6 */
+			background: linear-gradient(to bottom, #e2e2e2 0%,#dbdbdb 50%,#d1d1d1 51%,#fefefe 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    		padding: 4px;   
+    		border: 1px solid #ccc;
+		}
+
+		span div.list-view-container {
+			margin-top: 10px;
+			position: absolute;
+			width: 100%;
+		    overflow:hidden;
+		    height: 0px;
+    		-webkit-transition: height 0.15s ease-out; /* For Safari 3.1 to 6.0 */
+    		transition: height 0.15s ease-out;
+
+    		ion-row {
+    			display: none;
+    		}
+		}
+
+		span.active div.list-view-container.active {
+			height: 280px;
+			border: 1px solid black !important;
+			-webkit-transition: height 0.25s ease-in; /* For Safari 3.1 to 6.0 */
+    		transition: height 0.25s ease-in;
+    		overflow-y: auto;
+
+			ion-row {
+				display: flex;
+			}
+
+			ion-row.table-header {
+				background-color: #CCC;
+			}
+		}
+
+		div.server-info-container {
+			border: 1px solid black;
+			position: absolute;
+			top: 320px;
+			width: 100%; 
+			padding-left: 5px;
+
+			p {
+				line-height: 0px !important;
+			}
+
+			span {
+				margin-left: 10px;
+			}
+		}
+
+		div.btn-container {
+			padding-top: 20px;
+			padding-left: 5px;
+
+			button {
+				height: 35px;
+				border-radius: 5px;
+				margin-top: 15px;
+				font-size: 14px;
+				color: black;
+				white-space: normal;
+				border: 1px solid gray;
+			}
+
+			button.vers-btn,
+			button.download-btn {
+				background: #b4e391; /* Old browsers */
+				background: -moz-linear-gradient(top, #b4e391 0%, #61c419 96%, #b4e391 100%); /* FF3.6-15 */
+				background: -webkit-linear-gradient(top, #b4e391 0%,#61c419 96%,#b4e391 100%); /* Chrome10-25,Safari5.1-6 */
+				background: linear-gradient(to bottom, #b4e391 0%,#61c419 96%,#b4e391 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			}
+
+			button.vers-btn.activated,
+			button.download-btn.activated,
+			button.auf-btn.activated,
+			button.bilder-btn.activated {
+				background: #f0b7a1; /* Old browsers */
+				background: -moz-linear-gradient(top, #f0b7a1 0%, #8c3310 50%, #752201 51%, #bf6e4e 100%); /* FF3.6-15 */
+				background: -webkit-linear-gradient(top, #f0b7a1 0%,#8c3310 50%,#752201 51%,#bf6e4e 100%); /* Chrome10-25,Safari5.1-6 */
+				background: linear-gradient(to bottom, #f0b7a1 0%,#8c3310 50%,#752201 51%,#bf6e4e 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			}
+
+			button.auf-btn,
+			button.bilder-btn {
+				background: #bfd255; /* Old browsers */
+				background: -moz-linear-gradient(top, #bfd255 0%, #8eb92a 26%, #72aa00 92%, #72aa00 92%, #9ecb2d 100%); /* FF3.6-15 */
+				background: -webkit-linear-gradient(top, #bfd255 0%,#8eb92a 26%,#72aa00 92%,#72aa00 92%,#9ecb2d 100%); /* Chrome10-25,Safari5.1-6 */
+				background: linear-gradient(to bottom, #bfd255 0%,#8eb92a 26%,#72aa00 92%,#72aa00 92%,#9ecb2d 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			}
+
+			button.ern-btn,
+			button.pru-btn,
+			button.zur-btn {
+				background: #b3dced; /* Old browsers */
+				background: -moz-linear-gradient(top, #b3dced 0%, #29b8e5 6%, #bce0ee 100%); /* FF3.6-15 */
+				background: -webkit-linear-gradient(top, #b3dced 0%,#29b8e5 6%,#bce0ee 100%); /* Chrome10-25,Safari5.1-6 */
+				background: linear-gradient(to bottom, #b3dced 0%,#29b8e5 6%,#bce0ee 100%); 
+			}
+
+			button.ern-btn.activated,
+			button.pru-btn.activated,
+			button.zur-btn.activated {
+				background: #1e5799; /* Old browsers */
+				background: -moz-linear-gradient(top, #1e5799 0%, #2989d8 50%, #207cca 51%, #7db9e8 100%); /* FF3.6-15 */
+				background: -webkit-linear-gradient(top, #1e5799 0%,#2989d8 50%,#207cca 51%,#7db9e8 100%); /* Chrome10-25,Safari5.1-6 */
+				background: linear-gradient(to bottom, #1e5799 0%,#2989d8 50%,#207cca 51%,#7db9e8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			}
+
+			button.pru-btn {
+				margin-top: 40px;
+			}
+		}
 	}
 }
