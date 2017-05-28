@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Ftp } from '../../../plugins/cordova-plugin-ftp/types/ftp';
-
+import { File } from '@ionic-native/file';
 /*
   Generated class for the TsiConnectionServiceProvider provider.
 
@@ -16,7 +16,7 @@ export class TsiConnectionServiceProvider {
   public username : string;
   public password : string;
 
-  constructor(public http: Http) {
+  constructor(public http: Http, public file: File) {
     console.log('Hello TsiConnectionServiceProvider Provider');
   }
 
@@ -67,7 +67,7 @@ export class TsiConnectionServiceProvider {
         resolve(files);
 
         }, (error) => {
-            console.log("Ftp ls error :", "");
+
             console.log("Ftp ls :", JSON.stringify(error));
 
             resolve(files);
@@ -75,15 +75,42 @@ export class TsiConnectionServiceProvider {
     });
   }
 
+  public donwloadServerImage(localPath, filename) : Promise<any> {
+
+      let path = "/Grafiken/" + filename;
+      return new Promise((resolve, reject) => {
+        //   this.file.createFile(localPath, filename, true).then((res) => {
+        //       console.log("Local Path :", JSON.stringify(res));
+
+                Ftp.download(localPath, path).then((res) => {
+                        console.log("Download Success :", res);
+                        resolve(res);
+                }, (err) => {
+                    reject(err);    
+                })    
+          //});
+          
+      });
+  }
+
   public getImageCount(url : string) : Promise<any> {
-    let count = 0;
+    let imgList = [];
 
     return new Promise((resolve) => {
         Ftp.ls(url).then((fileList) => {
-            count = fileList.length;
-            resolve(count);  
+
+            console.log("Ftp server image file:", fileList);
+            if (fileList && fileList.length > 0) {
+                for (let img of fileList) {
+                    if (img.name != "." && img.name != "..") {
+                        imgList.push(img);
+                    }
+                } 
+            }
+            
+            resolve(imgList);  
         }, (error) => {
-            resolve(count);
+            resolve(imgList);
         })
     });
   }

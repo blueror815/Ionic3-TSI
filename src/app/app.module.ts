@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Dialogs } from '@ionic-native/dialogs';
+import { File } from '@ionic-native/file';
 
 import { Ftp } from '../../plugins/cordova-plugin-ftp/types/ftp';
 
@@ -49,6 +50,7 @@ import { TsiSyncDataServiceProvider } from '../providers/tsi-sync-data-service/t
     SplashScreen,
     ImagePicker,
     Dialogs,
+    File,
     Ftp,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     TsiClientServiceProvider,

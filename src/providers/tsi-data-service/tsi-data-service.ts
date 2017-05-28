@@ -12,48 +12,80 @@ import { File } from '@ionic-native/file';
 @Injectable()
 export class TsiDataServiceProvider {
 
+  public startImgFileName = "";
+  public rootPath = "";
+
   constructor(public http: Http, public file: File) {
     console.log('Hello TsiDataServiceProvider Provider');
   }
 
-  public getDataStoragePath() {
-  	console.log('FileStoragePath => ', this.file.documentsDirectory);
-
-  	this.file.createDir(this.file.documentsDirectory, "Data", false).then((res) => {
-  		console.log('DataStoragePath => ', res);
-
-  	}, (err) => {
-  		console.log('DataStoragePath => ', err);
-  	})
-
-  	return this.file.documentsDirectory + "Data/";
+  public getRootStoragePath() : Promise<any> {
+	  return new Promise((resolve) => {
+		this.file.createDir(this.file.documentsDirectory, "TSI", false).then((res) => {
+			console.log('RootStoragePath Success=> ', JSON.stringify(res));
+			this.rootPath = this.file.documentsDirectory + "TSI/";
+			resolve(this.rootPath);
+		}, (err) => {
+			console.log('RootStoragePath Error => ', JSON.stringify(err));
+			resolve(this.file.documentsDirectory + "TSI/");
+		});
+	  });
   }
 
-  public getGraphicsStoragePath() {
-  	this.file.createDir(this.getDataStoragePath(), "Graphics", false).then((res) => {
-  		console.log('GraphicsStoragePath => ', res);
+  public getDataStoragePath() : Promise<any> {
 
-  	}, (err) => {
-  		console.log('GraphicsStoragePath => ', err);
-  	})
+	  return new Promise((resolve) => {
+		  this.getRootStoragePath().then((res) => {
+			this.file.createDir(res, "Data", false).then((res) => {
+			console.log('DataStoragePath Success=> ', JSON.stringify(res));
+			resolve(res + "Data/");
+			}, (err) => {
+				console.log('DataStoragePath Error => ', JSON.stringify(err));
+				resolve(this.file.documentsDirectory + "TSI/Data/")
+			})
+		 });
+		
+	  });
+  }
 
-  	return this.getDataStoragePath() + "Graphics/";
+  public getGraphicsStoragePath() : Promise<any> {
+
+	  return new Promise((resolve) => {
+		  this.getDataStoragePath().then((res) => {
+			this.file.createDir(res, "Graphics", false).then((res) => {
+			console.log('GraphicStoragePath Success=> ', JSON.stringify(res));
+			resolve(res + "Graphics/");
+			}, (err) => {
+				resolve(this.file.documentsDirectory + "TSI/Data/Graphics/")
+			})
+		 });
+		
+	  });
   }
 
   public getLocalImageList() : Promise<any> {
+	let images = [];
 
-  	this.getGraphicsStoragePath();
-  	
-  	let images = [];
   	return new Promise((resolve) => {
-  		this.file.listDir(this.getDataStoragePath(), "Graphics").then((res) => {
+		this.getGraphicsStoragePath().then((res) => {
+			this.file.listDir(this.file.documentsDirectory + "TSI/Data/", "Graphics").then((res) => {
 
-  			console.log('LocalImageFiles => ', res);
-  			images = res;
-  			resolve(images);
-  		}, (err) => {
-  			resolve(images);
-  		})
+				console.log('LocalImageFiles => ', JSON.stringify(res));
+
+				if (res && res.length > 0) {
+					for (let img of res) {
+						if (img.name != "." && img.name != "..") {
+							images.push(img);
+						}
+					} 
+				}
+				
+				resolve(images);
+			}, (err) => {
+				resolve(images);
+			})
+		});
+  		
   	})
   }
 

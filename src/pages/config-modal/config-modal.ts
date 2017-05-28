@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, LoadingController } from 'ionic-angular';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Dialogs } from '@ionic-native/dialogs';
 
 import {TsiConnectionServiceProvider} from '../../providers/tsi-connection-service/tsi-connection-service';
+import { TsiDataServiceProvider } from '../../providers/tsi-data-service/tsi-data-service';
 
 /**
  * Generated class for the ConfigModalPage page.
@@ -24,13 +25,15 @@ export class ConfigModalPage {
 	  public img_url = "assets/images/wrong.png";
 	  public img_background_url = "assets/images/not_avalible.png";
     public is_checked: boolean = false;
-    public server_address: string = "80.228.113.30";
-    public server_name: string = "Tablet_Test";
-    public password: string = "test2016";
+    public ftp_address: string = "80.228.113.30";
+    public ftp_username: string = "Tablet_Test";
+    public ftp_password: string = "test2016";
 
     public select_folder: string;
     public folders: any;
-    public benutzername: string = "80.228.110.31";
+    public imgCount: string = "0/0";
+
+    public user_name: string = "80.228.110.31";
     public user_password: string = "testuserpassword";
     public absender_email: string = "user@email.com";
     public empfanger_email: string = "user@afm.com";
@@ -38,8 +41,12 @@ export class ConfigModalPage {
     public email_port: number = 22;
 
     public download_running : boolean = false;
+    public download_end : boolean = false;
+    public download_index = 0;
+    public server_images = [];
 
-  	constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public dialogs: Dialogs, public imagePicker: ImagePicker, public connectionService : TsiConnectionServiceProvider) {
+  	constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public dialogs: Dialogs, public imagePicker: ImagePicker, 
+      public connectionService : TsiConnectionServiceProvider,public dataService: TsiDataServiceProvider, public loadingCtrl: LoadingController) {
   	}
 
   	ionViewDidLoad() {
@@ -48,7 +55,13 @@ export class ConfigModalPage {
 
   	onCheck = () => {
 
-      this.connectionService.checkFTP(this.server_address, this.server_name, this.password).then((res) => {
+    let loader = this.loadingCtrl.create({
+      content: "Checke FTP-Server..."
+    });
+
+    loader.present();
+    
+    this.connectionService.checkFTP(this.ftp_address, this.ftp_username, this.ftp_password).then((res) => {
 
           this.is_checked = res;
           
@@ -56,9 +69,12 @@ export class ConfigModalPage {
             // code...
             this.img_url = "assets/images/right.png";
 
-            this.connectionService.server = this.server_address;
-            this.connectionService.username = this.server_name;
-            this.connectionService.password = this.password;
+            this.connectionService.server = this.ftp_address;
+            this.connectionService.username = this.ftp_username;
+            this.connectionService.password = this.ftp_password;
+
+            let serverImgCnt = 0;
+            let localImgCnt = 0;
 
             this.connectionService.getFtpFiles('').then((fileList) => {
               
@@ -71,11 +87,40 @@ export class ConfigModalPage {
                   this.select_folder = this.folders[0];
                 }
 
+                this.connectionService.getImageCount('/Grafiken/').then((res) => {
+
+                  if (res && res.length >0) {
+                    // code...
+
+                    this.server_images = res;
+                    serverImgCnt = this.server_images.length;
+
+                    console.log("Server Image count :", serverImgCnt);
+                  }
+
+                  this.dataService.getLocalImageList().then((res) => {
+                    loader.dismiss();
+
+                    if (res && res.length >0) {
+                      // code...
+                      localImgCnt = res.length;
+
+                      console.log("Local Image Count :", localImgCnt);
+                    }
+
+                    this.imgCount = localImgCnt + "/" + serverImgCnt;
+
+                  });
+
+                  
+
+                });
                 
             });
           }
           else {
             this.img_url = "assets/images/wrong.png";
+            loader.dismiss();
           }
         } 
       )
@@ -92,7 +137,67 @@ export class ConfigModalPage {
       else {
         this.download_running = true;
         element.textContent = "Herunterladen abbrechen";
+
+        this.getMissingImages().then((res) => {
+          this.downloadAllServerImages(element, res);
+        });
       }
+    }
+
+    public downloadAllServerImages(element, files) {
+      let filename = files[this.download_index].name;
+      console.log("FileObject", JSON.stringify(files[this.download_index]));
+      console.log("Filename ", filename);
+
+      this.connectionService.donwloadServerImage(this.dataService.file.documentsDirectory + "TSI/Data/Graphics", filename).then(
+        (res) => {
+          this.download_index ++;
+          let localImgCnt = files.length + this.download_index + 1;
+          this.imgCount = localImgCnt + "/" + this.server_images.length; 
+          
+          if(this.download_index == files.length) {
+            element.disabled = true;
+            element.textContent = "Alle Bilder heruntergeladen";
+            this.download_end = true;
+            return;
+          }
+          else {
+            this.downloadAllServerImages(element,files);
+          }
+        }, (err) => {
+
+        }
+      )
+    }
+
+    public getMissingImages() : Promise <any> {
+     
+     let missing_images = [];
+     return new Promise((resolve) => {
+       this.dataService.getLocalImageList().then((res) => {
+        
+          let local_images = res;
+
+          for (let serverImage of this.server_images) {
+            if (!this.stringArrayContainsString(local_images, serverImage)) {
+              missing_images.push(serverImage);
+            }
+          }
+
+          resolve(missing_images);
+        });
+     }); 
+    }
+
+    public stringArrayContainsString(array , value) :boolean {
+      
+      for (let localImage of array) {
+        if (value.name == localImage.name) {
+            return true;
+        }
+      }
+
+      return false;
     }
 
     onOpenGallery = () => {
@@ -105,15 +210,46 @@ export class ConfigModalPage {
       };
 
       this.imagePicker.getPictures(options).then((results) => {
-        this.dialogs.alert(results[0]);
         this.img_background_url = results[0];
+        this.dataService.startImgFileName = results[0];
       }, (err) => {
 
       });
     }
 
   	dismiss() { // call this function to pass modal data to main tab.
-	   let data = { 'foo': 'bar' };
-	   this.viewCtrl.dismiss(data);
-	}
+      if (this.validateAllConfiguration().length > 0) {
+        this.dialogs.alert(this.validateAllConfiguration());
+      }
+      else {
+
+        let data = { 'foo': 'bar' };
+	      this.viewCtrl.dismiss(data);
+      }
+	   
+	  }
+
+    private validateAllConfiguration() {
+      let msg = "";
+
+      if(!this.is_checked) {
+        msg = "Bitte stellen zu erst den FTP korrekt ein und checken Sie ihn auf Verfügbarkeit";
+      }
+      else {
+        if(this.dataService.startImgFileName.length == 0) {
+          msg = "Bitte wählen Sie zuerst ein Hintergrund Bild aus.";
+        }
+        else if(!this.download_end) {
+          msg = "Bitte laden Sie erst alle Bilder herunter.";
+        }
+        else {
+          if (this.user_name.length == 0 || this.user_password.length == 0 || this.email_server.length == 0 || 
+          this.empfanger_email.length == 0 ||this.absender_email.length == 0 || this.email_port > 0) {
+            msg = "Bitte geben Sie alle E-Mail Informationen ein.";
+          }
+        }
+      }
+
+      return msg;
+    }
 }
