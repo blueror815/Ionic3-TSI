@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { TsiDataServiceProvider } from '../../providers/tsi-data-service/tsi-data-service';
+import { TsiCheckInternetServiceProvider } from '../../providers/tsi-check-internet-service/tsi-check-internet-service';
 
 
 @IonicPage()
@@ -18,14 +20,16 @@ export class MainTabPage {
   	tab7: any;
 
 
-  	constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {
-  		this.tab1 = 'KundenPage';
-    	this.tab2 = 'StartPage';
-      this.tab6 = 'InfoPage';
-      this.tab7 = 'InternPage';
-
-    	this.presentConfigModal();
-  	}
+  	constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public dataService: TsiDataServiceProvider) {
+  		this.tab1 = 'StartPage';
+    	this.tab2 = 'KundenPage';
+      	this.tab6 = 'InfoPage';
+      	this.tab7 = 'InternPage';
+		
+		if (this.dataService.startImgFileName.length == 0) {
+			this.presentConfigModal();
+		}
+	}
 
   	ionViewDidLoad() {
     	console.log('ionViewDidLoad MainTabPage');
@@ -36,6 +40,8 @@ export class MainTabPage {
 
   		configModal.onDidDismiss(data => { // callback to get data from config modal, it is called when config modal is dismissed
 	     	console.log(data);
+
+			this.navCtrl.setRoot(this.navCtrl.getActive().component);
 	   	});
 
   		configModal.present();

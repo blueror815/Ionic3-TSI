@@ -214,21 +214,21 @@ export class ConfigModalPage {
 
       this.imagePicker.getPictures(options).then((results) => {
         this.img_background_url = results[0];
-        this.dataService.startImgFileName = results[0];
       }, (err) => {
 
       });
     }
 
   	dismiss() { // call this function to pass modal data to main tab.
-      if (this.validateAllConfiguration().length > 0) {
-        this.dialogs.alert(this.validateAllConfiguration());
-      }
-      else {
+        this.dataService.startImgFileName = this.img_background_url;
+      // if (this.validateAllConfiguration().length > 0) {
+      //   this.dialogs.alert(this.validateAllConfiguration());
+      // }
+      // else {
 
-        let data = { 'foo': 'bar' };
+        let data = { 'startImage': this.dataService.startImgFileName };
 	      this.viewCtrl.dismiss(data);
-      }
+      //}
 	   
 	  }
 

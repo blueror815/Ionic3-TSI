@@ -1,7 +1,11 @@
 page-start {
-	.scroll-content {
-		margin-top: 81px !important;
-		padding-right: 0px !important;
-		padding-left: 0px !important;
-	}
+    .scroll-content {
+        margin-top: 81px !important;
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+        img.background-img {
+            width: auto;
+            height: 100%;
+        }
+    }
 }
