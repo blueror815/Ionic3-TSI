@@ -221,14 +221,14 @@ export class ConfigModalPage {
 
   	dismiss() { // call this function to pass modal data to main tab.
         this.dataService.startImgFileName = this.img_background_url;
-      // if (this.validateAllConfiguration().length > 0) {
-      //   this.dialogs.alert(this.validateAllConfiguration());
-      // }
-      // else {
+        if (this.validateAllConfiguration().length > 0) {
+          this.dialogs.alert(this.validateAllConfiguration());
+        }
+        else {
 
-        let data = { 'startImage': this.dataService.startImgFileName };
-	      this.viewCtrl.dismiss(data);
-      //}
+          let data = { 'startImage': this.dataService.startImgFileName };
+	        this.viewCtrl.dismiss(data);
+        }
 	   
 	  }
 

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { TsiDataServiceProvider } from '../../providers/tsi-data-service/tsi-data-service';
-import { TsiCheckInternetServiceProvider } from '../../providers/tsi-check-internet-service/tsi-check-internet-service';
 
 
 @IonicPage()
