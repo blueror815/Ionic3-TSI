@@ -221,15 +221,17 @@ export class ConfigModalPage {
 
   	dismiss() { // call this function to pass modal data to main tab.
         this.dataService.startImgFileName = this.img_background_url;
-        if (this.validateAllConfiguration().length > 0) {
-          this.dialogs.alert(this.validateAllConfiguration());
-        }
-        else {
+        // if (this.validateAllConfiguration().length > 0) {
+        //   this.dialogs.alert(this.validateAllConfiguration());
+        // }
+        // else {
 
-          let data = { 'startImage': this.dataService.startImgFileName };
-	        this.viewCtrl.dismiss(data);
-        }
+        //   let data = { 'startImage': this.dataService.startImgFileName };
+	      //   this.viewCtrl.dismiss(data);
+        // }
 	   
+        let data = { 'startImage': this.dataService.startImgFileName };
+	      this.viewCtrl.dismiss(data);
 	  }
 
     private validateAllConfiguration() {
@@ -247,7 +249,7 @@ export class ConfigModalPage {
         }
         else {
           if (this.user_name.length == 0 || this.user_password.length == 0 || this.email_server.length == 0 || 
-          this.empfanger_email.length == 0 ||this.absender_email.length == 0 || this.email_port > 0) {
+            this.empfanger_email.length == 0 ||this.absender_email.length == 0 || this.email_port > 0) {
             msg = "Bitte geben Sie alle E-Mail Informationen ein.";
           }
         }
