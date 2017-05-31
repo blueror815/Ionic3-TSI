@@ -9,16 +9,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
  */
 @IonicPage()
 @Component({
-  selector: 'page-kunden',
-  templateUrl: 'kunden.html',
+  	selector: 'page-kunden',
+  	templateUrl: 'kunden.html',
 })
 export class KundenPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+	public select: string = "alie";
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad KundenPage');
-  }
+  	constructor(public navCtrl: NavController, public navParams: NavParams) {
+  	}
+
+  	ionViewDidLoad() {
+    	console.log('ionViewDidLoad KundenPage');
+  	}
 
 }
