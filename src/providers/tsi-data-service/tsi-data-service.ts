@@ -3,6 +3,8 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { File } from '@ionic-native/file';
+import { TsiConnectionServiceProvider } from '../tsi-connection-service/tsi-connection-service';
+import { TsiEmailServiceProvider } from '../tsi-email-service/tsi-email-service';
 /*
   Generated class for the TsiDataServiceProvider provider.
 
@@ -15,7 +17,9 @@ export class TsiDataServiceProvider {
   public startImgFileName = "";
   public rootPath = "";
 
-  constructor(public http: Http, public file: File) {
+	public customerFolder = "";
+
+  constructor(public http: Http, public file: File, public connectionService: TsiConnectionServiceProvider,public emailService: TsiEmailServiceProvider) {
     console.log('Hello TsiDataServiceProvider Provider');
   }
 
@@ -64,29 +68,72 @@ export class TsiDataServiceProvider {
   }
 
   public getLocalImageList() : Promise<any> {
-	let images = [];
+		let images = [];
 
   	return new Promise((resolve) => {
-		this.getGraphicsStoragePath().then((res) => {
-			this.file.listDir(this.file.documentsDirectory + "TSI/Data/", "Graphics").then((res) => {
+			this.getGraphicsStoragePath().then((res) => {
+					this.file.listDir(this.file.documentsDirectory + "TSI/Data/", "Graphics").then((res) => {
 
-				console.log('LocalImageFiles => ', JSON.stringify(res));
+							console.log('LocalImageFiles => ', JSON.stringify(res));
 
-				if (res && res.length > 0) {
-					for (let img of res) {
-						if (img.name != "." && img.name != "..") {
-							images.push(img);
-						}
-					} 
-				}
-				
-				resolve(images);
-			}, (err) => {
-				resolve(images);
-			})
-		});
+							if (res && res.length > 0) {
+									for (let img of res) {
+											if (img.name != "." && img.name != "..") {
+													images.push(img);
+											}
+									} 
+							}
+						
+						resolve(images);
+					}, (err) => {
+						resolve(images);
+					})
+			});
   		
   	})
   }
+
+	public writeConfigFile() : Promise<any> {
+
+		let configText = "CustomerFolder" + "|" + this.customerFolder + "\n" +
+										 "StartPic" + "|" + this.startImgFileName + "\n" +
+										 "FTPUsername" + "|" + this.connectionService.username + "\n" +
+										 "FTPPassword" + "|" + this.connectionService.password + "\n" +
+										 "EmailServer" + "|" + this.emailService.host + "\n" +
+										 "EmailPort" + "|" + this.emailService.port + "\n" +
+										 "EmailUsername" + "|" + this.emailService.username + "\n" +
+										 "EmailPassword" + "|" + this.emailService.password + "\n" +
+										 "EmailRecipient" + "|" + this.emailService.recipient + "\n" +
+										 "EmailFrom" + "|" + this.emailService.from + "\n";
+
+		return new Promise((resolve, reject) => {
+				this.file.checkFile(this.file.documentsDirectory + "TSI/", "config.dat").then((res) => {
+						if (!res) {
+								this.file.createFile(this.file.documentsDirectory + "TSI/", "config.dat", true).then((res) => {
+									
+										this.file.writeFile(this.file.documentsDirectory + "TSI/", "config.dat", configText).then((res) => {
+												resolve(res);
+										}, (err) => {
+												reject(err);
+										})
+									
+							}, (err) => {
+								reject(err);
+							});
+						}
+						else {
+							this.file.writeFile(this.file.documentsDirectory + "TSI/", "config.dat", configText).then((res) => {
+									resolve(res);
+							}, (err) => {
+									reject(err);
+							})
+						} 
+
+			  }, (err) => {
+					reject(err);
+				})
+
+		})
+	}
 
 }
