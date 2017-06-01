@@ -16,8 +16,8 @@ export class TsiDataServiceProvider {
 
   public startImgFileName = "";
   public rootPath = "";
-
-	public customerFolder = "";
+  public customerFolder = "";
+  public customerBusinessUnit = [];
 
   constructor(public http: Http, public file: File, public connectionService: TsiConnectionServiceProvider,public emailService: TsiEmailServiceProvider) {
     console.log('Hello TsiDataServiceProvider Provider');
@@ -68,7 +68,7 @@ export class TsiDataServiceProvider {
   }
 
   public getLocalImageList() : Promise<any> {
-		let images = [];
+	let images = [];
 
   	return new Promise((resolve) => {
 			this.getGraphicsStoragePath().then((res) => {
@@ -93,7 +93,7 @@ export class TsiDataServiceProvider {
   	})
   }
 
-	public writeConfigFile() : Promise<any> {
+  public writeConfigFile() : Promise<any> {
 
 		let configText = "CustomerFolder" + "|" + this.customerFolder + "\n" +
 										 "StartPic" + "|" + this.startImgFileName + "\n" +
@@ -134,6 +134,16 @@ export class TsiDataServiceProvider {
 				})
 
 		})
-	}
+  }
+
+  public getCustomerBusinessUnit() {
+	  this.customerBusinessUnit = ["Alle", "SLE - SELH", "VEN - VENDING", "LEH - REWE", "APO - APOTHEKEN"];
+	  return this.customerBusinessUnit;
+  }
+
+  public getCustomerOnlyBusinessUnit() {
+	  this.customerBusinessUnit = ["SLE - SELH", "VEN - VENDING", "LEH - REWE", "APO - APOTHEKEN"];
+	  return this.customerBusinessUnit;
+  }
 
 }

@@ -112,9 +112,6 @@ export class ConfigModalPage {
                     this.imgCount = localImgCnt + "/" + serverImgCnt;
 
                   });
-
-                  
-
                 });
                 
             });
