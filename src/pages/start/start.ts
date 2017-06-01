@@ -22,7 +22,7 @@ export class StartPage {
 
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad StartPage');
-		
+	
 	}
 
 	ionViewWillEnter() {

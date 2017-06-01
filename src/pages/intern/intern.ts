@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Dialogs } from '@ionic-native/dialogs';
 
 /**
  * Generated class for the InternPage page.
@@ -15,11 +16,34 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class InternPage {
 	public items = [];
 
-	constructor(public navCtrl: NavController, public navParams: NavParams) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, public dialogs : Dialogs) {
 	
 	}
 
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad InternPage');
+	}
+
+	onRemoveAllKm = () => {
+		this.dialogs.confirm("Löschen?", "Wollen Sie wirklich alle Einträge löschen?", ["Ja", "Nein"]).then((buttonIndex) => {
+			switch (buttonIndex) {
+				case 1:
+					break;
+				case 2:
+					break;
+			}
+		});
+	}
+
+	onRemoveAllExp = () => {
+		this.dialogs.confirm("Löschen?", "Wollen Sie wirklich alle Einträge löschen?", ["Ja", "Nein"]).then((buttonIndex) => {
+			switch (buttonIndex) {
+				case 1:
+
+					break;
+				case 2:
+					break;
+			}
+		});
 	}
 }

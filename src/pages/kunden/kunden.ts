@@ -13,6 +13,7 @@ import { TsiDataServiceProvider } from '../../providers/tsi-data-service/tsi-dat
   	selector: 'page-kunden',
   	templateUrl: 'kunden.html',
 })
+
 export class KundenPage {
 
 	public select_unit : string = "";
