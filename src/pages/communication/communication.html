@@ -1,5 +1,69 @@
 <ion-content padding>
+	<ion-grid main-grid>
+		<ion-row main-row>
+			<ion-col main-area col-10>
+				<h6>Kommunikation</h6>				
+				<ion-grid>
+					<ion-row>
+						<ion-col col-2>
+							<ion-label>SPRACHE</ion-label>
+						</ion-col>
 
+						<ion-col col-2>
+							<ion-input></ion-input>
+						</ion-col>
+					</ion-row>
+
+					<ion-row>
+						<ion-col col-2>
+							<ion-label>TELEFON</ion-label>
+						</ion-col>
+
+						<ion-col col-10>
+							<ion-input type="phone" [(ngModel)]="telephone"></ion-input>
+						</ion-col>
+					</ion-row>
+
+					<ion-row>
+						<ion-col col-2>
+							<ion-label>MOBILETELEPHONE</ion-label>
+						</ion-col>
+
+						<ion-col col-10>
+							<ion-input type="phone" [(ngModel)]="mobile_telephone"></ion-input>
+						</ion-col>
+					</ion-row>
+
+					<ion-row>
+						<ion-col col-2>
+							<ion-label>FAX</ion-label>
+						</ion-col>
+
+						<ion-col col-10>
+							<ion-input type="text" [(ngModel)]="fax"></ion-input>
+						</ion-col>
+					</ion-row>
+
+					<ion-row>
+						<ion-col col-2>
+							<ion-label>E-MAIL</ion-label>
+						</ion-col>
+
+						<ion-col col-10>
+							<ion-input type="email" [(ngModel)]="email"></ion-input>
+						</ion-col>
+					</ion-row>
+
+					<ion-row class="checkbox-container">
+			            <ion-item>
+						    <ion-label>AB PER MAIL</ion-label>
+						    <ion-checkbox [(ngModel)]="ab_per_mail"></ion-checkbox>
+						</ion-item>
+			        </ion-row>
+				</ion-grid>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
 </ion-content>
 
 <ion-row class="sub-row">

@@ -1,3 +1,35 @@
 page-date {
 
+	ion-row.control-data-row {
+		border-bottom: 1px solid #ccc;
+	}
+
+	ion-row.payment-section {
+		padding-top: 15px;
+	}
+
+	ion-label {
+		font-size: 12px;
+		margin-top: 5px !important;
+    	width: 111px;
+	}
+
+	ion-row {
+		padding-top: 0px;
+		padding-bottom: 10px;
+
+		ion-col[col-10] {
+
+			ion-input {
+				border: 1px solid gray;
+				border-radius: 5px;
+				height: 25px;
+
+				input {
+					margin-top: 4px !important;
+					padding-left: 10px;
+				}
+			}
+		}
+	}
 }
