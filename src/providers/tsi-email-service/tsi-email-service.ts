@@ -11,6 +11,16 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class TsiEmailServiceProvider {
 
+  public username = "";
+  public password = "";
+  public from     = "";
+
+  public host     = "www.tsi.de";
+  public port     = "25";
+
+  public subject  = "";
+  public recipient = "";
+
   constructor(public http: Http) {
     console.log('Hello TsiEmailServiceProvider Provider');
   }

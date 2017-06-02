@@ -1,133 +1,133 @@
 <ion-content>
-	<ion-grid class="top-section">
-		<ion-row>
-			<ion-col col-8>
-				<span class="title">BARAUSLAGEN</span>
-				
-				<ion-grid class="table">
-					<ion-row class="table-header">
-						<ion-col col-2>
-							BELEGNER
-						</ion-col>
+    <ion-grid class="top-section">
+        <ion-row>
+            <ion-col col-8>
+                <span class="title">BARAUSLAGEN</span>
 
-						<ion-col col-2>
-							DATUM
-						</ion-col>
+                <ion-grid class="table">
+                    <ion-row class="table-header">
+                        <ion-col col-2>
+                            BELEGNER
+                        </ion-col>
 
-						<ion-col col-2>
-							BETRAG
-						</ion-col>
+                        <ion-col col-2>
+                            DATUM
+                        </ion-col>
 
-						<ion-col col-6>
-							BEMERKUNGEN
-						</ion-col>
-					</ion-row>
+                        <ion-col col-2>
+                            BETRAG
+                        </ion-col>
 
-					<div class="table-body">
-						<ion-row *ngFor="let item of items" class="table-body-row">
-						</ion-row>
+                        <ion-col col-6>
+                            BEMERKUNGEN
+                        </ion-col>
+                    </ion-row>
 
-						<button class="hin-submit-btn" ion-button full>--Hinzufugen--</button>
+                    <div class="table-body">
+                        <ion-row *ngFor="let item of items" class="table-body-row">
+                        </ion-row>
 
-						<div class="sum-row">
-							<span>Summe: 0,000£</span>
-						</div>
-					</div>
-				</ion-grid>
-			</ion-col>
+                        <button class="hin-submit-btn" ion-button full>--Hinzufugen--</button>
 
-			<ion-col col-4>
-				<ion-grid class="datum-section">
-					<span>KILOMETERSTAND UBERITRAGEN</span>
-					<ion-row class="license-container">
-				    	<ion-col col-5>
-				    		<ion-label class="license">
-				    			PKW KENNZEICHEN = 
-				    		</ion-label>
-				    	</ion-col>
-				    	<ion-col col-7>
-				    		<input type="text" [(ngModel)]="license" />
-				    	</ion-col>
-				  	</ion-row>
+                        <div class="sum-row">
+                            <span>Summe: 0,000£</span>
+                        </div>
+                    </div>
+                </ion-grid>
+            </ion-col>
 
-				  	<ion-row class="kilometer-container">
-				    	<ion-col col-5>
-				    		<ion-label class="kilometer">
-				    			KILOMETERSTAND =  
-				    		</ion-label>
-				    	</ion-col>
-				    	<ion-col col-7>
-				    		<input type="text" [(ngModel)]="kilometer"/>
-				    	</ion-col>
-				  	</ion-row>
+            <ion-col col-4>
+                <ion-grid class="datum-section">
+                    <span>KILOMETERSTAND UBERITRAGEN</span>
+                    <ion-row class="license-container">
+                        <ion-col col-5>
+                            <ion-label class="license">
+                                PKW KENNZEICHEN =
+                            </ion-label>
+                        </ion-col>
+                        <ion-col col-7>
+                            <input type="text" [(ngModel)]="license" />
+                        </ion-col>
+                    </ion-row>
 
-				  	<ion-row class="date-container">
-				    	<ion-col col-5>
-				    		<ion-label class="date">
-				    			DATUM =  
-				    		</ion-label>
-				    	</ion-col>
-				    	<ion-col col-7>
-				    		<input type="date" [(ngModel)]="date"/>
-				    	</ion-col>
-				  	</ion-row>
-				</ion-grid>
+                    <ion-row class="kilometer-container">
+                        <ion-col col-5>
+                            <ion-label class="kilometer">
+                                KILOMETERSTAND =
+                            </ion-label>
+                        </ion-col>
+                        <ion-col col-7>
+                            <input type="text" [(ngModel)]="kilometer" />
+                        </ion-col>
+                    </ion-row>
 
-				<ion-row class="empfanger-email-container">
-			    	<ion-col col-5>
-			    		<ion-label class="title">
-			    			Empfanger-Email: 
-			    		</ion-label>
-			    	</ion-col>
-			    	<ion-col col-7>
-			    		<input class="empfanger-email" type="email" [(ngModel)]="empfanger_email"/>
-			    	</ion-col>
-			  	</ion-row>
-			  	<ion-grid>
-				  	<ion-row>
-				  		<ion-col col-4>
-				  			<button class="emp-button" ion-button>Specichem</button>
-				  		</ion-col>
-				  		<ion-col col-4>
-				  			<button class="emp-button" ion-button>Versenden</button>
-				  		</ion-col>
-				  		<ion-col col-4>
-				  			<button class="emp-button" ion-button>Aile loschen</button>
-				  		</ion-col>
-				  	</ion-row>
-			  	</ion-grid>
-			</ion-col>
-		</ion-row>
-	</ion-grid>
+                    <ion-row class="date-container">
+                        <ion-col col-5>
+                            <ion-label class="date">
+                                DATUM =
+                            </ion-label>
+                        </ion-col>
+                        <ion-col col-7>
+                            <input type="date" [(ngModel)]="date" />
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
 
-	<ion-grid class="bottom-section">
-		<ion-row>
-			<ion-col col-8>
-				<ion-row class="empfanger-email-container">
-			    	<ion-col col-3>
-			    		<ion-label class="title">
-			    			Empfanger-Email: 
-			    		</ion-label>
-			    	</ion-col>
-			    	<ion-col col-9>
-			    		<input class="empfanger-email" type="email" [(ngModel)]="empfanger_email"/>
-			    	</ion-col>
-			  	</ion-row>
-			</ion-col>
+                <ion-row class="empfanger-email-container">
+                    <ion-col col-5>
+                        <ion-label class="title">
+                            Empfanger-Email:
+                        </ion-label>
+                    </ion-col>
+                    <ion-col col-7>
+                        <input class="empfanger-email" type="email" [(ngModel)]="empfanger_email" />
+                    </ion-col>
+                </ion-row>
+                <ion-grid>
+                    <ion-row>
+                        <ion-col col-4>
+                            <button class="emp-button" ion-button>Specichem</button>
+                        </ion-col>
+                        <ion-col col-4>
+                            <button class="emp-button" ion-button>Versenden</button>
+                        </ion-col>
+                        <ion-col col-4>
+                            <button class="emp-button" ion-button (click)="onRemoveAllKm()">Aile loschen</button>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 
-			<ion-col col-4>
-				<ion-row>
-			  		<ion-col col-4>
-			  			<button class="emp-button" ion-button>Specichem</button>
-			  		</ion-col>
-			  		<ion-col col-4>
-			  			<button class="emp-button" ion-button>Versenden</button>
-			  		</ion-col>
-			  		<ion-col col-4>
-			  			<button class="emp-button" ion-button>Aile loschen</button>
-			  		</ion-col>
-			  	</ion-row>
-			</ion-col>
-		</ion-row>
-	</ion-grid>
+    <ion-grid class="bottom-section">
+        <ion-row>
+            <ion-col col-8>
+                <ion-row class="empfanger-email-container">
+                    <ion-col col-3>
+                        <ion-label class="title">
+                            Empfanger-Email:
+                        </ion-label>
+                    </ion-col>
+                    <ion-col col-9>
+                        <input class="empfanger-email" type="email" [(ngModel)]="empfanger_email" />
+                    </ion-col>
+                </ion-row>
+            </ion-col>
+
+            <ion-col col-4>
+                <ion-row>
+                    <ion-col col-4>
+                        <button class="emp-button" ion-button>Specichem</button>
+                    </ion-col>
+                    <ion-col col-4>
+                        <button class="emp-button" ion-button>Versenden</button>
+                    </ion-col>
+                    <ion-col col-4>
+                        <button class="emp-button" ion-button (click)="onRemoveAllExp()">Aile loschen</button>
+                    </ion-col>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>

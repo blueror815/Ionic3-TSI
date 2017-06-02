@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { TsiDataServiceProvider } from '../../providers/tsi-data-service/tsi-data-service';
 
 /**
  * Generated class for the KundenPage page.
@@ -12,16 +13,16 @@ import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angu
   	selector: 'page-kunden',
   	templateUrl: 'kunden.html',
 })
+
 export class KundenPage {
 
-	public select: string = "alie";
+	public select_unit : string = "";
+	public customerUnits = [];
 
-  	constructor(
-  		public navCtrl: NavController, 
-  		public navParams: NavParams,
-  		public modalCtrl: ModalController
-  	) {
 
+  	constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public dataService: TsiDataServiceProvider) {
+		this.customerUnits = this.dataService.getCustomerBusinessUnit();
+		this.select_unit = this.customerUnits[0];
   	}
 
   	ionViewDidLoad() {

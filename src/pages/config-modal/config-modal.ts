@@ -5,6 +5,7 @@ import { Dialogs } from '@ionic-native/dialogs';
 
 import {TsiConnectionServiceProvider} from '../../providers/tsi-connection-service/tsi-connection-service';
 import { TsiDataServiceProvider } from '../../providers/tsi-data-service/tsi-data-service';
+import { TsiEmailServiceProvider } from '../../providers/tsi-email-service/tsi-email-service';
 
 /**
  * Generated class for the ConfigModalPage page.
@@ -38,7 +39,7 @@ export class ConfigModalPage {
     public absender_email: string = "user@email.com";
     public empfanger_email: string = "user@afm.com";
     public email_server: string = "192.149.22.1";
-    public email_port: number = 22;
+    public email_port: string = "22";
 
     public download_running : boolean = false;
     public download_end : boolean = false;
@@ -46,7 +47,7 @@ export class ConfigModalPage {
     public server_images = [];
 
   	constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public dialogs: Dialogs, public imagePicker: ImagePicker, 
-      public connectionService : TsiConnectionServiceProvider,public dataService: TsiDataServiceProvider, public loadingCtrl: LoadingController) {
+      public connectionService : TsiConnectionServiceProvider,public dataService: TsiDataServiceProvider, public loadingCtrl: LoadingController, public emailService : TsiEmailServiceProvider) {
   	}
 
   	ionViewDidLoad() {
@@ -111,9 +112,6 @@ export class ConfigModalPage {
                     this.imgCount = localImgCnt + "/" + serverImgCnt;
 
                   });
-
-                  
-
                 });
                 
             });
@@ -156,9 +154,9 @@ export class ConfigModalPage {
           this.imgCount = localImgCnt + "/" + this.server_images.length; 
           
           if(this.download_index == files.length) {
+            this.download_end = true;
             element.disabled = true;
             element.textContent = "Alle Bilder heruntergeladen";
-            this.download_end = true;
             return;
           }
           else {
@@ -221,17 +219,28 @@ export class ConfigModalPage {
 
   	dismiss() { // call this function to pass modal data to main tab.
         this.dataService.startImgFileName = this.img_background_url;
-        // if (this.validateAllConfiguration().length > 0) {
-        //   this.dialogs.alert(this.validateAllConfiguration());
-        // }
-        // else {
+        if (this.validateAllConfiguration().length > 0) {
+          this.dialogs.alert(this.validateAllConfiguration());
+        }
+        else {
 
-        //   let data = { 'startImage': this.dataService.startImgFileName };
-	      //   this.viewCtrl.dismiss(data);
-        // }
-	   
-        let data = { 'startImage': this.dataService.startImgFileName };
-	      this.viewCtrl.dismiss(data);
+          this.emailService.username = this.user_name;
+          this.emailService.password = this.user_password;
+
+          this.emailService.host     = this.email_server;
+          this.emailService.port     = this.email_port;
+          this.emailService.from     = this.absender_email;
+          this.emailService.recipient = this.empfanger_email;
+
+          this.dataService.customerFolder = this.select_folder;
+
+          this.dataService.writeConfigFile().then((res) => {
+              let data = { 'startImage': this.dataService.startImgFileName };
+	            this.viewCtrl.dismiss(data);
+          }, (err) => {
+
+          })
+        }
 	  }
 
     private validateAllConfiguration() {
@@ -249,7 +258,7 @@ export class ConfigModalPage {
         }
         else {
           if (this.user_name.length == 0 || this.user_password.length == 0 || this.email_server.length == 0 || 
-            this.empfanger_email.length == 0 ||this.absender_email.length == 0 || this.email_port > 0) {
+            this.empfanger_email.length == 0 ||this.absender_email.length == 0 || this.email_port.length == 0) {
             msg = "Bitte geben Sie alle E-Mail Informationen ein.";
           }
         }
