@@ -16,6 +16,11 @@ import { Dialogs } from '@ionic-native/dialogs';
 export class InternPage {
 	public items = [];
 
+	public empfanger_email = "";
+	public license         = "";
+	public kilometer       = "";
+	public date            = "";
+
 	constructor(public navCtrl: NavController, public navParams: NavParams, public dialogs : Dialogs) {
 	
 	}
@@ -39,7 +44,9 @@ export class InternPage {
 		this.dialogs.confirm("Löschen?", "Wollen Sie wirklich alle Einträge löschen?", ["Ja", "Nein"]).then((buttonIndex) => {
 			switch (buttonIndex) {
 				case 1:
-
+					this.license   = "";
+					this.kilometer = "";
+					this.date      = "";
 					break;
 				case 2:
 					break;
