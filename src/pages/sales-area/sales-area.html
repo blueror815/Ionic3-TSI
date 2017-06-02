@@ -1,0 +1,113 @@
+<ion-content padding>
+	<ion-grid main-grid>
+		<ion-row main-row>
+			<ion-col main-area col-10>
+				<h6>Vertriebsbereich</h6>
+				<span class="err-msg">{{errMsg}}</span>
+				<ion-grid>
+					<ion-row>
+						<ion-col col-2>
+							<ion-label>KONTENGRUPPE</ion-label>
+						</ion-col>
+
+						<ion-col col-2>
+							<ion-input></ion-input>
+						</ion-col>
+
+						<ion-col col-3>
+							<ion-label>PREISGRUPPE</ion-label>
+						</ion-col>
+
+						<ion-col col-4>
+							<ion-input></ion-input>
+						</ion-col>
+					</ion-row>
+
+					<ion-row>
+						<ion-col col-2>
+							<ion-label>AG ZU FILIALE</ion-label>
+						</ion-col>
+
+						<ion-col class="grayfield" col-10>
+						</ion-col>
+					</ion-row>
+
+					<ion-row>
+						<ion-col col-2>
+							<ion-label>VERTRETER</ion-label>
+						</ion-col>
+
+						<ion-col class="grayfield" col-10>
+							<span>A10</span>
+						</ion-col>
+					</ion-row>
+
+					<ion-row>
+						<ion-col col-2>
+							<ion-label>ZAHLUNGSART</ion-label>
+						</ion-col>
+
+						<ion-col class="" col-g>
+							<ion-input></ion-input>
+						</ion-col>
+					</ion-row>
+
+					<ion-row>
+						<ion-col col-2>
+							<ion-label>ANLIEFERZEIT</ion-label>
+						</ion-col>
+
+						<ion-col col-2>
+							<ion-input class="deliver-to" type="text" [(ngModel)]="deliver_time"></ion-input>
+						</ion-col>
+
+						<ion-col col-1>
+							<ion-label>BIS</ion-label>
+						</ion-col>
+
+						<ion-col col-2>
+							<ion-input class="deliver-to" type="text" [(ngModel)]="to"></ion-input>
+						</ion-col>
+					</ion-row>
+
+					<ion-row>
+						<ion-col col-2>
+							<ion-label>VERANDART</ion-label>
+						</ion-col>
+
+						<ion-col col-2>
+							<ion-input></ion-input>
+						</ion-col>
+					</ion-row>
+
+					<ion-row>
+						<ion-col col-3>
+							<ion-label>GENSCHAFTSBEREICH</ion-label>
+						</ion-col>
+
+						<ion-col col-5>
+							<ion-item class="select-container">
+							  	<ion-select [(ngModel)]="select">
+							    	<ion-option value="alie">Alie</ion-option>
+							    	<ion-option value="sle">SLE - SLEH</ion-option>
+							    	<ion-option value="ven">VEN - VENDING</ion-option>
+							    	<ion-option value="leh">LEH - REWE</ion-option>
+							    	<ion-option value="apo">APO - APOTHEKEN</ion-option>
+							  	</ion-select>
+							</ion-item>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-content>
+
+<ion-row class="sub-row">
+	<ion-col sub-area col-2>
+		<ion-row class="btn-container">
+			<button ion-button full>vorherige</button>
+			<button ion-button full>nachste</button>
+		</ion-row>
+	</ion-col>
+</ion-row>

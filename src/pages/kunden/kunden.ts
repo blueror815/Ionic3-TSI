@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 
 /**
  * Generated class for the KundenPage page.
@@ -16,11 +16,25 @@ export class KundenPage {
 
 	public select: string = "alie";
 
-  	constructor(public navCtrl: NavController, public navParams: NavParams) {
+  	constructor(
+  		public navCtrl: NavController, 
+  		public navParams: NavParams,
+  		public modalCtrl: ModalController
+  	) {
+
   	}
 
   	ionViewDidLoad() {
     	console.log('ionViewDidLoad KundenPage');
   	}
 
+  	onCreateClient() {
+  		let newClientModal = this.modalCtrl.create('CreateClientModalPage');
+
+  		newClientModal.onDidDismiss(data => { // callback to get data from config modal, it is called when config modal is dismissed
+	     	console.log(data);
+	   	});
+
+	   	newClientModal.present();
+  	}
 }
