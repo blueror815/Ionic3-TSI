@@ -1,3 +1,40 @@
 page-contact-person {
+	ion-label.label-ios {
+		font-size: 11px;
+		margin-top: 5px !important;
+		// margin: 0px !important;
+		width: 110px !important;
+	}
 
+	ion-row {
+		padding-top: 10px;
+		padding-bottom: 10px;
+
+		ion-col[col-10] {
+
+			ion-input {
+				border: 1px solid black;
+				border-radius: 5px;
+				height: 25px;
+
+				input {
+					margin-top: 4px !important;
+					padding-left: 10px;
+				}
+			}
+		}
+	}
+
+	ion-row.checkbox-container {
+		
+		ion-item {
+		    width: 200px;
+		    margin-left: auto;
+		    margin-right: auto;
+
+		    div.item-inner {
+				border-bottom: 0px !important;
+			}
+		}
+	}
 }
