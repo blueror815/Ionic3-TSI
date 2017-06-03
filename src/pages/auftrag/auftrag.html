@@ -1,75 +1,135 @@
 <ion-content>
     <ion-row class="top-input-container">
-        <span class="placeholder">Auftrag: </span>
+        <span class="placeholder">Artikesuche: </span>
         <ion-input type="text" [(ngModel)]="customer"></ion-input>
     </ion-row>
 
     <ion-grid class="main-container">
         <ion-row class="sub-container">
-            <ion-col col-8>
-                <div class="customer-table-container">
+            <ion-col col-6>
+                <div class="product-table-container">
                     <ion-row class="table-header">
-                        <ion-col col-3>
-                            <span>KUNDENNAME</span>
+                        <ion-col col-4>
+                            <span>ARTIKELNUMMER</span>
+                        </ion-col>
+
+                        <ion-col col-6>
+                            <span>ARTIKELNAME</span>
                         </ion-col>
 
                         <ion-col col-2>
-                            <span>PRIO.</span>
-                        </ion-col>
-
-                        <ion-col col-3>
-                            <span>LETZTER BESUCH</span>
-                        </ion-col>
-
-                        <ion-col col-2>
-                            <span>KUNDENGR.</span>
-                        </ion-col>
-
-                        <ion-col col-2>
-                            <span>ORT</span>
                         </ion-col>
                     </ion-row>
 
                     <ion-row class="table-row" *ngFor="let item of items">
-                        <ion-col col-6>
+                        <ion-col col-4>
                             great
                         </ion-col>
 
-                        <ion-col col-3>
+                        <ion-col col-6>
                             thanks
                         </ion-col>
 
-                        <ion-col col-3>
+                        <ion-col col-2>
                             mmm
                         </ion-col>
                     </ion-row>
                 </div>
 
-                <ion-row class="customer-button-container">
-                    <ion-col>
-                        <button id="aus-btn" ion-button full>KUNDE AUSWAHLEN</button>
+                <ion-row>
+                    <div (click)="popupModal()" class="modal-button"></div>
+                </ion-row>
+
+                <div class="product-table-container">
+                    <ion-row class="table-header">
+                        <ion-col col-3>
+                            <span>ARTIKELNR.</span>
+                        </ion-col>
+
+                        <ion-col col-3>
+                            <span>BESTELLTE</span>
+                        </ion-col>
+
+                        <ion-col col-6>
+                            <span>ARTIKELNAME</span>
+                        </ion-col>
+                    </ion-row>
+
+                    <ion-row class="table-row" *ngFor="let item of items">
+                        <ion-col col-4>
+                            great
+                        </ion-col>
+
+                        <ion-col col-6>
+                            thanks
+                        </ion-col>
+
+                        <ion-col col-2>
+                            mmm
+                        </ion-col>
+                    </ion-row>
+                </div>
+
+                <ion-row class="bottom-btn-container">
+                    <ion-col col-8>
+                        <button ion-button full class="complete-btn">KOMPLETTE RECHNUNG ODER VORSCHLAG</button>
                     </ion-col>
-                    <ion-col>
-                        <button id="anl-btn" (click)="onCreateClient()" ion-button full>KUNDE ANLEGEN</button>
-                    </ion-col>
-                    <ion-col>
-                        <button id="pra-btn" ion-button full>PRASENTATIONSKATALOG</button>
+
+                    <ion-col col-4>
+                        <button ion-button full class="goods-btn">ZUM WARENKORB</button>
                     </ion-col>
                 </ion-row>
             </ion-col>
 
+            <ion-col col-1>
+                <span class="art-span">Art.-Nr. 110008</span>
+            </ion-col>
+
             <ion-col col-4>
-                <div class="customer-detail-listview-container">
-
-                </div>
-
                 <ion-row>
-                    <ion-item class="select-container">
-                        <ion-select [(ngModel)]="select_unit">
-                            <ion-option *ngFor="let unit of customerUnits">{{unit}}</ion-option>
-                        </ion-select>
-                    </ion-item>
+                    <img class="img-responsive" [src]="img_url" />
                 </ion-row>
+
+                <ion-row class="infor-btn-container">
+                    <button ion-button full>INFODETAILS ARTIKEL</button>
+                </ion-row>
+
+                <ion-row class="amount-container">
+                    <ion-col col-4>
+                        <ion-label>Menge VPE</ion-label>
+                    </ion-col>
+
+                    <ion-col col-4>
+                        <ion-input placeholder="---" type="text" [(ngModel)]="qty_1"></ion-input>
+                    </ion-col>
+
+                    <ion-col class="amount-btn-container" col-2>
+                        <div class="min-btn"></div>
+                        <div class="plus-btn"></div>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row class="amount-container">
+                    <ion-col col-4>
+                        <ion-label>Menge VPE</ion-label>
+                    </ion-col>
+
+                    <ion-col col-4>
+                        <ion-input placeholder="---" type="text" [(ngModel)]="qty_1"></ion-input>
+                    </ion-col>
+
+                    <ion-col class="amount-btn-container" col-2>
+                        <div class="min-btn"></div>
+                        <div class="plus-btn"></div>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row class="add-btn-container">
+                    <button ion-button full>HINZUFUGEN</button>
+                </ion-row>
+            </ion-col>
+
+            <ion-col col-1>
             </ion-col>
         </ion-row>
     </ion-grid>

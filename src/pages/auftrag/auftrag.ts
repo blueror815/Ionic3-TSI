@@ -14,11 +14,13 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class AuftragPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+	public img_url: string = "assets/images/not_avalible.png";
+	
+  	constructor(public navCtrl: NavController, public navParams: NavParams) {
+  	}
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AuftragPage');
-  }
+  	ionViewDidLoad() {
+    	console.log('ionViewDidLoad AuftragPage');
+  	}
 
 }
