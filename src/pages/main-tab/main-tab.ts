@@ -22,6 +22,7 @@ export class MainTabPage {
   	constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public dataService: TsiDataServiceProvider) {
   		this.tab1 = 'StartPage';
     	this.tab2 = 'KundenPage';
+		this.tab3 = 'AuftragPage';
       	this.tab6 = 'InfoPage';
       	this.tab7 = 'InternPage';
 		
