@@ -45,7 +45,41 @@
                     </ion-row>
                 </div>
 
-				<ion-row class="customer-button-container">
+				<!-- <ion-row class="customer-button-container">
+					<ion-col>
+						<button id="aus-btn" ion-button full>KUNDE AUSWAHLEN</button>
+					</ion-col>
+					<ion-col>
+						<button id="anl-btn" (click)="onCreateClient()" ion-button full>KUNDE ANLEGEN</button>
+					</ion-col>
+					<ion-col>
+						<button id="pra-btn" ion-button full>PRASENTATIONSKATALOG</button>
+					</ion-col>
+				</ion-row> -->
+			</ion-col>
+
+            <ion-col col-4>
+                <div class="customer-detail-listview-container">
+
+                </div>
+
+                <!-- <ion-row>
+                    <ion-item class="select-container">
+                        <ion-select [(ngModel)]="select_unit">
+                            <ion-option *ngFor="let unit of customerUnits">{{unit}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-row> -->
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<ion-footer>
+  	<ion-toolbar>
+    	<ion-row>
+    		<ion-col col-8>
+    			<ion-row class="customer-button-container">
 					<ion-col>
 						<button id="aus-btn" ion-button full>KUNDE AUSWAHLEN</button>
 					</ion-col>
@@ -56,21 +90,17 @@
 						<button id="pra-btn" ion-button full>PRASENTATIONSKATALOG</button>
 					</ion-col>
 				</ion-row>
-			</ion-col>
+    		</ion-col>
 
-            <ion-col col-4>
-                <div class="customer-detail-listview-container">
-
-                </div>
-
-                <ion-row>
+    		<ion-col col-4>
+    			<ion-row>
                     <ion-item class="select-container">
                         <ion-select [(ngModel)]="select_unit">
                             <ion-option *ngFor="let unit of customerUnits">{{unit}}</ion-option>
                         </ion-select>
                     </ion-item>
                 </ion-row>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-</ion-content>
+    		</ion-col>
+    	</ion-row>
+  	</ion-toolbar>
+</ion-footer>
