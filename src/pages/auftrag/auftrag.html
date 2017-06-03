@@ -1,0 +1,76 @@
+<ion-content>
+    <ion-row class="top-input-container">
+        <span class="placeholder">Auftrag: </span>
+        <ion-input type="text" [(ngModel)]="customer"></ion-input>
+    </ion-row>
+
+    <ion-grid class="main-container">
+        <ion-row class="sub-container">
+            <ion-col col-8>
+                <div class="customer-table-container">
+                    <ion-row class="table-header">
+                        <ion-col col-3>
+                            <span>KUNDENNAME</span>
+                        </ion-col>
+
+                        <ion-col col-2>
+                            <span>PRIO.</span>
+                        </ion-col>
+
+                        <ion-col col-3>
+                            <span>LETZTER BESUCH</span>
+                        </ion-col>
+
+                        <ion-col col-2>
+                            <span>KUNDENGR.</span>
+                        </ion-col>
+
+                        <ion-col col-2>
+                            <span>ORT</span>
+                        </ion-col>
+                    </ion-row>
+
+                    <ion-row class="table-row" *ngFor="let item of items">
+                        <ion-col col-6>
+                            great
+                        </ion-col>
+
+                        <ion-col col-3>
+                            thanks
+                        </ion-col>
+
+                        <ion-col col-3>
+                            mmm
+                        </ion-col>
+                    </ion-row>
+                </div>
+
+                <ion-row class="customer-button-container">
+                    <ion-col>
+                        <button id="aus-btn" ion-button full>KUNDE AUSWAHLEN</button>
+                    </ion-col>
+                    <ion-col>
+                        <button id="anl-btn" (click)="onCreateClient()" ion-button full>KUNDE ANLEGEN</button>
+                    </ion-col>
+                    <ion-col>
+                        <button id="pra-btn" ion-button full>PRASENTATIONSKATALOG</button>
+                    </ion-col>
+                </ion-row>
+            </ion-col>
+
+            <ion-col col-4>
+                <div class="customer-detail-listview-container">
+
+                </div>
+
+                <ion-row>
+                    <ion-item class="select-container">
+                        <ion-select [(ngModel)]="select_unit">
+                            <ion-option *ngFor="let unit of customerUnits">{{unit}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
