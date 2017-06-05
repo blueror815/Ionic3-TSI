@@ -36,9 +36,6 @@ export class MainTabPage {
 			this.presentConfigModal();
 		});
 
-		// if (this.dataService.startImgFileName.length == 0) {
-		// 	this.presentConfigModal();
-		// }
 	}
 
   	ionViewDidLoad() {
