@@ -127,32 +127,40 @@ export class TsiDataServiceProvider {
 										 "EmailRecipient" + "|" + this.emailService.recipient + "\n" +
 										 "EmailFrom" + "|" + this.emailService.from + "\n";
 
+	    console.log('config text', configText);
+
 		return new Promise((resolve, reject) => {
 				this.file.checkFile(this.file.documentsDirectory + "TSI/", "config.dat").then((res) => {
+					console.log('checkFile', JSON.stringify(res));
 						if (!res) {
-								this.file.createFile(this.file.documentsDirectory + "TSI/", "config.dat", true).then((res) => {
-									
-										this.file.writeFile(this.file.documentsDirectory + "TSI/", "config.dat", configText).then((res) => {
-												resolve(res);
-										}, (err) => {
-												reject(err);
-										})
-									
-							}, (err) => {
-								reject(err);
-							});
+								this.file.writeFile(this.file.documentsDirectory + "TSI/", "config.dat", configText).then((res) => {
+									console.log('config text', JSON.stringify(res));
+									resolve(res);
+								}, (err) => {
+									console.log('config text', JSON.stringify(err));
+										reject(err);
+								})
 						}
 						else {
-							this.file.writeFile(this.file.documentsDirectory + "TSI/", "config.dat", configText).then((res) => {
-									resolve(res);
+							this.file.writeExistingFile(this.file.documentsDirectory + "TSI/", "config.dat", configText).then((res) => {
+								console.log('config text', JSON.stringify(res));
+									resolve({});
 							}, (err) => {
+									console.log('config text', JSON.stringify(err));
 									reject(err);
 							})
 						} 
 
 			  }, (err) => {
-					reject(err);
+				  console.log('checkFile', JSON.stringify(err));
+				  this.file.writeFile(this.file.documentsDirectory + "TSI/", "config.dat", configText).then((res) => {
+						console.log('config text', JSON.stringify(res));
+						resolve(res);
+				}, (err) => {
+					console.log('config text', JSON.stringify(err));
+						reject(err);
 				})
+			  })
 
 		})
   }

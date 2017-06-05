@@ -27,11 +27,13 @@ export class MainTabPage {
       	this.tab7 = 'InternPage';
 		
 		this.dataService.readConfigFile().then((res) => {
+			console.log('Read File', JSON.stringify(res));
 			if (!res) {
 				this.presentConfigModal();
 			}
 		}, (err) => {
-
+			console.log('Read File', JSON.stringify(err));
+			this.presentConfigModal();
 		});
 
 		// if (this.dataService.startImgFileName.length == 0) {

@@ -111,6 +111,10 @@ export class ConfigModalPage {
 
                     this.imgCount = localImgCnt + "/" + serverImgCnt;
 
+                    if (localImgCnt == serverImgCnt) {
+                      this.download_end = true;
+                    }
+
                   });
                 });
                 
