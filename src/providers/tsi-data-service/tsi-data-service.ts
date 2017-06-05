@@ -93,6 +93,27 @@ export class TsiDataServiceProvider {
   	})
   }
 
+  public readConfigFile() : Promise<any> {
+	  return new Promise((resolve, reject) => {
+		this.file.checkFile(this.file.documentsDirectory + "TSI/", "config.dat").then((res) => {
+				if (res) {
+					this.file.readAsText(this.file.documentsDirectory + "TSI/", "config.dat").then((res) => {
+						console.log("Config Bat file", res);
+
+						resolve(true);
+					}, (err) => {
+						reject(err);
+					});
+				}
+				else {
+					resolve(false);
+				}		
+			}, (err) => {
+				reject(err);
+			})
+	  });
+  }
+
   public writeConfigFile() : Promise<any> {
 
 		let configText = "CustomerFolder" + "|" + this.customerFolder + "\n" +

@@ -26,9 +26,17 @@ export class MainTabPage {
       	this.tab6 = 'InfoPage';
       	this.tab7 = 'InternPage';
 		
-		if (this.dataService.startImgFileName.length == 0) {
-			this.presentConfigModal();
-		}
+		this.dataService.readConfigFile().then((res) => {
+			if (!res) {
+				this.presentConfigModal();
+			}
+		}, (err) => {
+
+		});
+
+		// if (this.dataService.startImgFileName.length == 0) {
+		// 	this.presentConfigModal();
+		// }
 	}
 
   	ionViewDidLoad() {
@@ -44,6 +52,6 @@ export class MainTabPage {
 			this.navCtrl.setRoot(this.navCtrl.getActive().component);
 	   	});
 
-  		// configModal.present();
+  	    configModal.present();
   	}
 }
