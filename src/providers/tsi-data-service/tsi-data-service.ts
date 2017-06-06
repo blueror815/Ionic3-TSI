@@ -15,6 +15,7 @@ import { TsiConfigEntry } from '../../models/TsiConfigEntry';
 import { TsiArticleBundle } from '../../models/TsiArticleBundle';
 import { TsiShoppingCartEntry } from '../../models/TsiShoppingCartEntry';
 import { TsiExpenditure } from '../../models/TsiExpenditure';
+import { TsiUtil } from '../../utils/TsiUtil';
 /*
   Generated class for the TsiDataServiceProvider provider.
 
@@ -34,85 +35,86 @@ export class TsiDataServiceProvider {
   public  static  SHOPPING_CART_FILE_TYPE_IMAGE = 2;
   public  static  NOT_AVAILABLE = "D";
   public  infoTabFlag = false;
-  private customerFolders = [];
-  private  preventCodeScanning = false;
-  private  showCatalogDetailView = false;
-  private  catalogDetailViewArticleCount = 1;
-  private  serverImageList = null;
 
-  private allCategories : Map<string, TsiCategory> = null;
-  private mainCategories : Map<string, TsiCategory> = null;
-  private articlesViaID : Map<string, TsiArticle> = null;
-  private articlesViaIDTmp : Map<string, TsiArticle> = null;
-  private articlesViaEANVPE : Map<string, TsiArticle> = null;
-  private articlesViaEANVKE : Map<string, TsiArticle> = null;
-  private customers : Map<string, TsiCustomer> = null;
-  private customersCatalogs : Map<string, TsiCustomerCatalog> = null;
+  public customerFolders = [];
+  public  preventCodeScanning = false;
+  public  showCatalogDetailView = false;
+  public  catalogDetailViewArticleCount = 1;
+  public  serverImageList = null;
+
+  public allCategories : Map<string, TsiCategory> = null;
+  public mainCategories : Map<string, TsiCategory> = null;
+  public articlesViaID : Map<string, TsiArticle> = null;
+  public articlesViaIDTmp : Map<string, TsiArticle> = null;
+  public articlesViaEANVPE : Map<string, TsiArticle> = null;
+  public articlesViaEANVKE : Map<string, TsiArticle> = null;
+  public customers : Map<string, TsiCustomer> = null;
+  public customersCatalogs : Map<string, TsiCustomerCatalog> = null;
 
   // KundenID , AuftragsID, BestellungsID
-  private  orders : Map<string, Map<string, TsiOrder>> = null;
-  private categoryArticles : Map<string, Map<string, TsiArticle>> = null;
+  public  orders : Map<string, Map<string, TsiOrder>> = null;
+  public categoryArticles : Map<TsiCategory, Map<string, TsiArticle>> = null;
 
     // Vectors for Reading the NewCustomerConf File
-    private accountType  : [TsiConfigEntry] = null;
-    private accountLanguage  : [TsiConfigEntry] = null;
-    private accountContactLanguage  : [TsiConfigEntry] = null;
-    private accountContactGender  : [TsiConfigEntry] = null;
-    private accountNewsletter  : [TsiConfigEntry] = null;
-    private accountUseMail  : [TsiConfigEntry] = null;
-    private accountPayments  : [TsiConfigEntry] = null;
-    private accountPricegroup  : [TsiConfigEntry] = null;
-    private accountCountry  : [TsiConfigEntry] = null;
-    private accountShippingType  : [TsiConfigEntry] = null;
+    public accountType  : TsiConfigEntry[] = null;
+    public accountLanguage  : TsiConfigEntry[] = null;
+    public accountContactLanguage  : TsiConfigEntry[] = null;
+    public accountContactGender  : TsiConfigEntry[] = null;
+    public accountNewsletter  : TsiConfigEntry[] = null;
+    public accountUseMail  : TsiConfigEntry[] = null;
+    public accountPayments  : TsiConfigEntry[] = null;
+    public accountPricegroup  : TsiConfigEntry[] = null;
+    public accountCountry  : TsiConfigEntry[] = null;
+    public accountShippingType  : TsiConfigEntry[] = null;
 
-    private top50Articles  : [TsiArticle] = null;
-    private refundfreeArticles : [TsiArticle] = null;
-    private refundArticles : [TsiArticle] = null;
-    private newcomerArticles : [TsiArticle] = null;
-    private specialArticles : [TsiArticle] = null;
-    private discontinuedLineArticles : [TsiArticle] = null;
-    private postenArticles : [TsiArticle] = null;
-    private customerArticles : [TsiArticle] = null;
-    private seasonArticles : [TsiArticle] = null;
-    private halalArticles : [TsiArticle] = null;
-    private rabattArticles : [TsiArticle] = null;
+    public top50Articles  : TsiArticle[] = null;
+    public refundfreeArticles : TsiArticle[] = null;
+    public refundArticles : TsiArticle[] = null;
+    public newcomerArticles : TsiArticle[] = null;
+    public specialArticles : TsiArticle[] = null;
+    public discontinuedLineArticles : TsiArticle[] = null;
+    public postenArticles : TsiArticle[] = null;
+    public customerArticles : TsiArticle[] = null;
+    public seasonArticles : TsiArticle[] = null;
+    public halalArticles : TsiArticle[] = null;
+    public rabattArticles : TsiArticle[] = null;
 
-    private expenditureEntries : [TsiExpenditure] = null;
-    private expenditureSuggestion : [string]= null;
-    private licenceNumberSuggestions : [string] = null;
-    private catalogTabHeaders : [string] = null;
-    private expenditureEmail;
-    private kmEmail;
+    public expenditureEntries : TsiExpenditure[] = null;
+    public expenditureSuggestion : string[] = null;
+    public licenceNumberSuggestions : string[] = null;
+    public catalogTabHeaders : string[] = null;
+    public expenditureEmail;
+    public kmEmail;
 
-    private  mainTabHost = null;
-    private  tvStatus = null;
-    private  llStatus = null;
-    private  ivInvalidate = null;
+    public  mainTabHost = null;
+    public  tvStatus = null;
+    public  llStatus = null;
+    public  ivInvalidate = null;
 
-    private  indexOfCatlogTabTab;
-    private  choosenCategory : TsiCategory = null;
-    private  choosenViewPagerCategory : TsiCategory = null;
-    private  choosenSubCategory : TsiCategory = null;
-    private  selectedCustomer : TsiCustomer = null;
+    public  indexOfCatlogTabTab;
+    public  choosenCategory : TsiCategory = null;
+    public  choosenViewPagerCategory : TsiCategory = null;
+    public  choosenSubCategory : TsiCategory = null;
+    public  selectedCustomer : TsiCustomer = null;
 
-    private  choosenCustomer : TsiCustomer = null;
-    private  choosenOrder : TsiOrder = null;
-    private  choosenArticle : TsiArticle = null;
-    private  selectedArticle : TsiArticle = null;
-    private  choosenShoppingCartEntry : TsiShoppingCartEntry = null;
-    private  choosenOrderSuggestionType = null;
-    private  lastSelectedBundle : TsiArticleBundle = null;
+    public  choosenCustomer : TsiCustomer = null;
+    public  choosenOrder : TsiOrder = null;
+    public  choosenArticle : TsiArticle = null;
+    public  selectedArticle : TsiArticle = null;
+    public  choosenShoppingCartEntry : TsiShoppingCartEntry = null;
+    public  choosenOrderSuggestionType = null;
+    public  lastSelectedBundle : TsiArticleBundle = null;
 
-    private  latitude = 0.0;
-    private  longitude = 0.0;
-    private  zip = null;
+    public  latitude = 0.0;
+    public  longitude = 0.0;
+    public  zip = null;
 
-    private  bmpSign : Blob;
+    public  bmpSign : Blob;
 
-    private sortAttributes: Map<any, string>;
+    public sortAttributes: Map<any, string>;
 
-    // private Hashtable<Class<?>, ESortType> sortTypes;
-    // private Hashtable<Class<?>, Comparator<TSI_SortableObject>> sortComparators;
+    // public Hashtable<Class<?>, ESortType> sortTypes;
+    // public Hashtable<Class<?>, Comparator<TSI_SortableObject>> sortComparators;
 
   constructor(public http: Http, public file: File, public connectionService: TsiConnectionServiceProvider,public emailService: TsiEmailServiceProvider) {
     console.log('Hello TsiDataServiceProvider Provider');
@@ -285,6 +287,120 @@ export class TsiDataServiceProvider {
         if (article == null)
             article = this.articlesViaEANVKE.get( articleID );
         return article;
+  }
+
+  public putArticle(article){
+
+        // All Articles
+        if (this.articlesViaID.get(article.getArticleNumber()) != null)
+        {
+            this.articlesViaIDTmp.set( article.getArticleNumber(), this.articlesViaID.get(article.getArticleNumber()));
+            this.articlesViaID.set( article.getArticleNumber(), article );
+        }
+        else {
+            this.articlesViaID.set( article.getArticleNumber(), article );
+        }
+        this.articlesViaEANVPE.set( article.getGTIN_VPE(), article );
+        this.articlesViaEANVKE.set( article.getGTIN_VKE(), article );
+
+        // Only Category
+        let categoryId = article.getCategory();
+
+        let category : TsiCategory = this.allCategories.get(categoryId);
+
+        if (category == null)
+            return;
+
+        let articlesOfCategory = this.categoryArticles.get(category);
+        if (articlesOfCategory == null)
+        {
+            articlesOfCategory = new Map<string, TsiArticle>();
+            this.categoryArticles.set( category, articlesOfCategory );
+        }
+        articlesOfCategory.set( article.getArticleNumber() + article.getUnit(), article );
+
+        // Main Category
+        /*
+         * TSI_Category mainCategory = this.mainCategories.get( categoryId.substring( 0, 1 ) ); articlesOfCategory = this.categoryArticles.get( mainCategory ); if (articlesOfCategory == null) {
+         * articlesOfCategory = new Hashtable<String, TSI_Article>(); this.categoryArticles.put( mainCategory, articlesOfCategory ); } articlesOfCategory.put( article.getArticleNumber(), article );
+         */
+
+        // Top50
+        if (article.getTop_50_pos().length() > 0)
+            this.top50Articles.push(article);
+
+        // refund
+        if (parseFloat( article.getDpg_refund_je_vke() ) > 0)
+            this.refundArticles.push( article );
+        else
+            // refundfree
+            if (article.getCategory().charAt( 0 ) == '5')
+                this.refundfreeArticles.push( article );
+
+        // newcomer
+        if (article.getNew_comer().equals( "N" ))
+            this.newcomerArticles.push( article );
+
+        // special
+        if (article.getSeason_article().equals( "SAI" ))
+            this.specialArticles.push( article );
+
+        // discontinued line
+        if (article.getDiscontinued_line().equals( "A" ))
+            this.discontinuedLineArticles.push( article );
+
+        // posten
+        if (article.getPosten_article().equals( "P" ))
+            this.postenArticles.push( article );
+
+        // season
+        if (article.getReservationDate() != null)
+            if (TsiUtil.checkReservationDate( article ))
+                this.seasonArticles.push( article );
+
+        // halal
+        if (article.getHalal() != null && article.getHalal().equals( "H" )) {
+            this.halalArticles.push(article);
+        }
+
+        // rabatt
+        if ((article.getRebate1() != null && article.getRebate1().length() != 0 && parseFloat(article.getRebate1()) > 0) || (article.getRebate2() != null && article.getRebate2().length() != 0 && parseFloat(article.getRebate2()) > 0)) {
+            this.rabattArticles.push(article);
+        }
+    }
+
+	public clearArticleCategories()
+    {
+        this.top50Articles = [];
+        this.refundArticles = [];
+        this.refundfreeArticles = [];
+        this.newcomerArticles = [];
+        this.specialArticles = [];
+        this.seasonArticles = [];
+        this.discontinuedLineArticles = [];
+        this.postenArticles = [];
+        this.customerArticles = [];
+        this.halalArticles = [];
+        this.rabattArticles = [];
+    }
+
+    public putMainCategory(mainCategoryID, category)
+    {
+        if (this.mainCategories.get( mainCategoryID ) == null)
+        {
+            this.mainCategories.set( mainCategoryID, category );
+            this.allCategories.set( category.getId(), category );
+        }
+    }
+
+    public putSubCategory(mainCategoryID, category)
+    {
+        let mainCategory = this.mainCategories.get(mainCategoryID);
+        if (mainCategory.getChild( category.getId() ) == null)
+        {
+            mainCategory.addChild( category );
+            this.allCategories.set( category.getId(), category );
+        }
     }
 
 }

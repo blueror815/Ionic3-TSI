@@ -1,7 +1,7 @@
 export class TsiCategory {
-    private name = '';
-    private id = '';
-    private childs : Map<string, TsiCategory>;
+    public name = '';
+    public id = '';
+    public childs : Map<string, TsiCategory>;
 
     constructor(name : string, id : string) {
         this.name = name;
@@ -11,6 +11,10 @@ export class TsiCategory {
 
     public addChild(child : TsiCategory) {
         this.childs.set(child.id, child);
+    }
+
+    public getChild(id) {
+        return this.childs.get(id);
     }
 
     public getChilds() {
