@@ -111,6 +111,10 @@ export class ConfigModalPage {
 
                     this.imgCount = localImgCnt + "/" + serverImgCnt;
 
+                    if (localImgCnt == serverImgCnt) {
+                      this.download_end = true;
+                    }
+
                   });
                 });
                 
@@ -151,7 +155,6 @@ export class ConfigModalPage {
         (res) => {
           this.download_index ++;
           let localImgCnt = this.server_images.length - files.length + this.download_index + 1;
-          this.imgCount = localImgCnt + "/" + this.server_images.length; 
           
           if(this.download_index == files.length) {
             this.download_end = true;
@@ -160,6 +163,8 @@ export class ConfigModalPage {
             return;
           }
           else {
+            this.imgCount = localImgCnt + "/" + this.server_images.length; 
+
             if (!this.download_running) {
               return;
             }
