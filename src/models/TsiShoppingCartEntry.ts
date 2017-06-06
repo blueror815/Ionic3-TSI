@@ -1,7 +1,9 @@
 import { TsiSortableObj } from './TsiSortableObj';
 import { TsiArticle } from './TsiArticle';
+import { TsiDataServiceProvider } from '../providers/tsi-data-service/tsi-data-service';
 
 export class TsiShoppingCartEntry extends TsiSortableObj {
+    
 
     protected addAllAttributeIndexSynonyms() {
         this.addAttributeIndexSynonym( "ARTIKELNR.", 0 );
@@ -11,7 +13,7 @@ export class TsiShoppingCartEntry extends TsiSortableObj {
         this.addAttributeIndexSynonym( "INDEX", 6 );
     }
 
-    constructor(articleID: string) {
+    constructor(articleID: string, public dataService: TsiDataServiceProvider) {
         super(7);
         this.setArticleID(articleID);
     }
@@ -121,9 +123,8 @@ export class TsiShoppingCartEntry extends TsiSortableObj {
 
     private  updateData()
     {
-        //let article = TSI_ClientService.getDataService().getArticle( getArticleID() );
+        let article = this.dataService.getArticle(this.getArticleID());
         
-        let article = new TsiArticle();
         this.setName( article.getName() );
         this.setContent( article.getContent() );
 
