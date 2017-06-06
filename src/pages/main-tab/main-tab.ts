@@ -23,17 +23,15 @@ export class MainTabPage {
   		this.tab1 = 'StartPage';
     	this.tab2 = 'KundenPage';
 		this.tab3 = 'AuftragPage';
-    this.tab5 = 'ShoppingCartPage';
+    	this.tab5 = 'ShoppingCartPage';
       	this.tab6 = 'InfoPage';
       	this.tab7 = 'InternPage';
 		
 		this.dataService.readConfigFile().then((res) => {
-			console.log('Read File', JSON.stringify(res));
 			if (!res) {
 				this.presentConfigModal();
 			}
 		}, (err) => {
-			console.log('Read File', JSON.stringify(err));
 			this.presentConfigModal();
 		});
 

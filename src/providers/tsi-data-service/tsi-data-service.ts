@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import { File } from '@ionic-native/file';
 import { TsiConnectionServiceProvider } from '../tsi-connection-service/tsi-connection-service';
 import { TsiEmailServiceProvider } from '../tsi-email-service/tsi-email-service';
+import { TsiConstants } from '../../utils/TsiConstants';
 /*
   Generated class for the TsiDataServiceProvider provider.
 
@@ -94,6 +95,9 @@ export class TsiDataServiceProvider {
   }
 
   public readConfigFile() : Promise<any> {
+
+	  console.log("Config Bat file");
+
 	  return new Promise((resolve, reject) => {
 		this.file.checkFile(this.file.documentsDirectory + "TSI/", "config.dat").then((res) => {
 				if (res) {
@@ -109,6 +113,7 @@ export class TsiDataServiceProvider {
 					resolve(false);
 				}		
 			}, (err) => {
+				console.log("Config Bat file", JSON.stringify(err));
 				reject(err);
 			})
 	  });
@@ -116,16 +121,16 @@ export class TsiDataServiceProvider {
 
   public writeConfigFile() : Promise<any> {
 
-		let configText = "CustomerFolder" + "|" + this.customerFolder + "\n" +
-										 "StartPic" + "|" + this.startImgFileName + "\n" +
-										 "FTPUsername" + "|" + this.connectionService.username + "\n" +
-										 "FTPPassword" + "|" + this.connectionService.password + "\n" +
-										 "EmailServer" + "|" + this.emailService.host + "\n" +
-										 "EmailPort" + "|" + this.emailService.port + "\n" +
-										 "EmailUsername" + "|" + this.emailService.username + "\n" +
-										 "EmailPassword" + "|" + this.emailService.password + "\n" +
-										 "EmailRecipient" + "|" + this.emailService.recipient + "\n" +
-										 "EmailFrom" + "|" + this.emailService.from + "\n";
+		let configText = TsiConstants.CUSTOMER_FOLDER_KEY + "|" + this.customerFolder + "\n" +
+										 TsiConstants.START_PIC_KEY + "|" + this.startImgFileName + "\n" +
+										 TsiConstants.FTP_USERNAME + "|" + this.connectionService.username + "\n" +
+										 TsiConstants.FTP_PASSWORD + "|" + this.connectionService.password + "\n" +
+										 TsiConstants.EMAIL_SERVER_KEY + "|" + this.emailService.host + "\n" +
+										 TsiConstants.EMAIL_PORT_KEY + "|" + this.emailService.port + "\n" +
+										 TsiConstants.EMAIL_USERNAME_KEY + "|" + this.emailService.username + "\n" +
+										 TsiConstants.EMAIL_PASSWORD_KEY + "|" + this.emailService.password + "\n" +
+										 TsiConstants.EMAIL_RECIPIENT_KEY + "|" + this.emailService.recipient + "\n" +
+										 TsiConstants.EMAIL_FROM_KEY + "|" + this.emailService.from + "\n";
 
 	    console.log('config text', configText);
 
