@@ -5,8 +5,6 @@ export class TsiCatalogTabHeadersLineProcessor extends TsiAbstractLineProcessor<
 
     constructor(public dataService: TsiDataServiceProvider) {
         super();
-
-        this.dataService.clearArticleCategories();
     }
 
     public parse(line: string, sourceFileName: string) {
@@ -14,8 +12,7 @@ export class TsiCatalogTabHeadersLineProcessor extends TsiAbstractLineProcessor<
     }
 
     public process(lineResult: string) {
-        let article = lineResult;
-        //this.dataService.putArticle(article);
+        this.dataService.catalogTabHeaders.push(lineResult);
     }
 
 }

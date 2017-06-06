@@ -1,7 +1,8 @@
 import { TsiAbstractLineProcessor } from './TsiAbstractLineProcessor';
 import { TsiDataServiceProvider } from '../providers/tsi-data-service/tsi-data-service';
+import { TsiCustomerCatalog } from '../models/TsiCustomerCatalog';
 
-export class TsiCustomerCatalogLineProcessor extends TsiAbstractLineProcessor<string> {
+export class TsiCustomerCatalogLineProcessor extends TsiAbstractLineProcessor<TsiCustomerCatalog> {
 
     constructor(public dataService: TsiDataServiceProvider) {
         super();
@@ -13,7 +14,7 @@ export class TsiCustomerCatalogLineProcessor extends TsiAbstractLineProcessor<st
         return line;
     }
 
-    public process(lineResult: string) {
+    public process(lineResult: TsiCustomerCatalog) {
         let article = lineResult;
         //this.dataService.putArticle(article);
     }
