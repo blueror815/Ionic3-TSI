@@ -6,10 +6,10 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Dialogs } from '@ionic-native/dialogs';
 import { File } from '@ionic-native/file';
+import { SignaturePadModule } from 'angular2-signaturepad';
+import { HttpModule } from '@angular/http';
 
 import { Ftp } from '../../plugins/cordova-plugin-ftp/types/ftp';
-
-import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { MyApp } from './app.component';
 import { TsiClientServiceProvider } from '../providers/tsi-client-service/tsi-client-service';
@@ -30,7 +30,7 @@ import { TsiSyncDataServiceProvider } from '../providers/tsi-sync-data-service/t
   ],
   imports: [
     BrowserModule,
-    Ng2SmartTableModule,
+    HttpModule,
     IonicModule.forRoot(MyApp , {
       backButtonText: '',
       backButtonIcon: 'ios-arrow-back',
@@ -63,7 +63,8 @@ import { TsiSyncDataServiceProvider } from '../providers/tsi-sync-data-service/t
     TsiLocationServiceProvider,
     TsiParserServiceProvider,
     TsiShoppingCartServiceProvider,
-    TsiSyncDataServiceProvider
+    TsiSyncDataServiceProvider,
+    SignaturePadModule
   ]
 })
 export class AppModule {}
