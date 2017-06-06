@@ -14,14 +14,20 @@ import { SignaturePad } from 'angular2-signaturepad/signature-pad';
   		templateUrl: 'shopping-cart.html',
 })
 export class ShoppingCartPage {
+	@ViewChild(SignaturePad) signaturePad: SignaturePad;
 
-	signature = '';
-  	isDrawing = false;
- 
-  	@ViewChild(SignaturePad) signaturePad: SignaturePad;
+	public signature = '';
+  	public isDrawing = false;
+ 	public is_active = false;
+ 	public price: string = "0.00";
+ 	public amount = 0;
+ 	public prize: string = "0.00";
+ 	public qty_vpe = "000";
+ 	public qty_pal = "000";
+
   	public signaturePadOptions: any = { // Check out https://github.com/szimek/signature_pad
 	    'minWidth': 2,
-	    'canvasWidth': 400,
+	    'canvasWidth': 380,
 	    'canvasHeight': 200,
 	    'backgroundColor': '#f6fbff',
 	    'penColor': '#666a73'
@@ -36,7 +42,7 @@ export class ShoppingCartPage {
   	}
 
   	ionViewDidEnter() {
-    	// this.signaturePad.clear()
+    	this.signaturePad.clear()
     // this.storage.get('savedSignature').then((data) => {
     //   this.signature = data;
     // });
