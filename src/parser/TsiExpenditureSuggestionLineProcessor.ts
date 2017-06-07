@@ -6,7 +6,7 @@ export class TsiExpenditureSuggestionLineProcessor extends TsiAbstractLineProces
     constructor(public dataService: TsiDataServiceProvider) {
         super();
 
-        this.dataService.clearArticleCategories();
+        this.dataService.clearExpenditureSuggestions();
     }
 
     public parse(line: string, sourceFileName: string) {
@@ -14,7 +14,7 @@ export class TsiExpenditureSuggestionLineProcessor extends TsiAbstractLineProces
     }
 
     public process(lineResult: string) {
-        let article = lineResult;
+        this.dataService.addExpenditureSuggestions( lineResult );
         //this.dataService.putArticle(article);
     }
 

@@ -1,11 +1,11 @@
 export class TsiRawOrder {
 
-    private  customerID;
-    private  billCounter;
-    private  billID;
-    private  position;
-    private  fakturDate;
-    private  articleID;
-    private  vpe_size;
-    private  price;
+    public  customerID;
+    public  billCounter;
+    public  billID;
+    public  position;
+    public  fakturDate;
+    public  articleID;
+    public  vpe_size;
+    public  price;
 }

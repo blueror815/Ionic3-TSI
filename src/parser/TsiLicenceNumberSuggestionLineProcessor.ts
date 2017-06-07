@@ -6,7 +6,7 @@ export class TsiLicenceNumberSuggestionLineProcessor extends TsiAbstractLineProc
     constructor(public dataService: TsiDataServiceProvider) {
         super();
 
-        this.dataService.clearArticleCategories();
+        this.dataService.clearLicenceNumberSuggestions();
     }
 
     public parse(line: string, sourceFileName: string) {
@@ -14,8 +14,7 @@ export class TsiLicenceNumberSuggestionLineProcessor extends TsiAbstractLineProc
     }
 
     public process(lineResult: string) {
-        let article = lineResult;
-        //this.dataService.putArticle(article);
+        this.dataService.addLicenceNumberSuggestions(lineResult);
     }
 
 }

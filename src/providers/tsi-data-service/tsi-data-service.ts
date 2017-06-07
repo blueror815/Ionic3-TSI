@@ -16,6 +16,7 @@ import { TsiArticleBundle } from '../../models/TsiArticleBundle';
 import { TsiShoppingCartEntry } from '../../models/TsiShoppingCartEntry';
 import { TsiExpenditure } from '../../models/TsiExpenditure';
 import { TsiUtil } from '../../utils/TsiUtil';
+import { TsiRawOrder } from '../../models/TsiRawOrder';
 /*
   Generated class for the TsiDataServiceProvider provider.
 
@@ -52,8 +53,8 @@ export class TsiDataServiceProvider {
   public customersCatalogs : Map<string, TsiCustomerCatalog> = null;
 
   // KundenID , AuftragsID, BestellungsID
-  public  orders : Map<string, Map<string, TsiOrder>> = null;
-  public categoryArticles : Map<TsiCategory, Map<string, TsiArticle>> = null;
+  public orders : Map<string, Map<string, Map<string, TsiOrder>>> = null;
+  public categoryArticles : Map<TsiCategory, Map<TsiCategory, Map<string, TsiArticle>>> = null;
 
     // Vectors for Reading the NewCustomerConf File
     public accountType  : TsiConfigEntry[] = null;
@@ -108,6 +109,10 @@ export class TsiDataServiceProvider {
     public  latitude = 0.0;
     public  longitude = 0.0;
     public  zip = null;
+
+    public  internKm;
+    public  internLicence;
+    public  internDate;
 
     public  bmpSign : Blob;
 
@@ -266,6 +271,29 @@ export class TsiDataServiceProvider {
 		})
   }
 
+  public getCustomer(id)
+    {
+        let result = this.customers.get( id );
+        let temp = id;
+        while (result == null && temp.charAt( 0 ) == '0')
+        {
+            temp = temp.substring( 1 );
+            result = this.customers.get( temp );
+        }
+        if (result == null)
+        {
+            result = new TsiCustomer();
+            result.setCustomerID( "N9900" );
+            result.setDateLastVisit( "00000000" );
+            result.setDateLastRG( "00000000" );
+            result.setOrderBlock( "" );
+            result.setFormatCode( "" );
+            result.setMinOrderQuantity( "0" );
+            this.putCustomer( result );
+        }
+        return result;
+    }
+
   public getCustomerBusinessUnit() {
 	  this.customerBusinessUnit = ["Alle", "SLE - SELH", "VEN - VENDING", "LEH - REWE", "APO - APOTHEKEN"];
 	  return this.customerBusinessUnit;
@@ -314,7 +342,7 @@ export class TsiDataServiceProvider {
         let articlesOfCategory = this.categoryArticles.get(category);
         if (articlesOfCategory == null)
         {
-            articlesOfCategory = new Map<string, TsiArticle>();
+            articlesOfCategory = new Map<TsiCategory, Map<string, TsiArticle>>();
             this.categoryArticles.set( category, articlesOfCategory );
         }
         articlesOfCategory.set( article.getArticleNumber() + article.getUnit(), article );
@@ -369,6 +397,21 @@ export class TsiDataServiceProvider {
         }
     }
 
+    public putCustomer(customer)
+    {
+        this.customers.set(customer.getCustomerID(), customer);
+    }
+
+    public putCustomerCatalog( customerID,  customer)
+    {
+        this.customersCatalogs.set( customerID, customer );
+    }
+
+    public getCustomerCatalog(customerID)
+    {
+        return this.customersCatalogs.get(customerID);
+    }
+
 	public clearArticleCategories()
     {
         this.top50Articles = [];
@@ -382,6 +425,56 @@ export class TsiDataServiceProvider {
         this.customerArticles = [];
         this.halalArticles = [];
         this.rabattArticles = [];
+    }
+
+    public addExpenditureEntry(expenditure)
+    {
+        let index = 0;
+        if (this.expenditureEntries.length > 1)
+        {
+            let lastExpenditure = this.expenditureEntries[this.expenditureEntries.length - 2];
+            index = parseInt( lastExpenditure.getRecordID() );
+            index++;
+        }
+        expenditure.setRecordID( index.toString() );
+        this.addExpenditureSuggestions( expenditure.getInformation() );
+        this.expenditureEntries.push( expenditure );
+    }
+
+    public clearExpenditureEntries()
+    {
+        this.expenditureEntries = [];
+        this.expenditureEntries.push( new TsiExpenditure( "-1", null, null, null ) );
+    }
+
+    public addExpenditureSuggestions(suggestion)
+    {
+        if (this.expenditureSuggestion.indexOf(suggestion) > -1)
+        {
+            if (this.expenditureSuggestion.length > 500)
+                this.expenditureSuggestion.splice(0, 1);
+            this.expenditureSuggestion.push(suggestion);
+        }
+    }
+
+    public clearExpenditureSuggestions()
+    {
+        this.expenditureSuggestion = [];
+    }
+
+    public addLicenceNumberSuggestions (suggestion)
+    {
+        if (this.licenceNumberSuggestions.indexOf( suggestion ) > -1)
+        {
+            if (this.licenceNumberSuggestions.length > 100)
+                this.licenceNumberSuggestions.splice(0, 1);
+            this.licenceNumberSuggestions.push( suggestion );
+        }
+    }
+
+    public clearLicenceNumberSuggestions()
+    {
+        this.licenceNumberSuggestions = [];
     }
 
     public putMainCategory(mainCategoryID, category)
@@ -401,6 +494,38 @@ export class TsiDataServiceProvider {
             mainCategory.addChild( category );
             this.allCategories.set( category.getId(), category );
         }
+    }
+
+    public createDummyArticle(articleID) {
+        let result = new TsiArticle();
+        result.setArticleNumber(articleID);
+        result.setOut_of_stock(TsiDataServiceProvider.NOT_AVAILABLE);
+        return result;
+    }
+
+    public putOrder(rawOrder : TsiRawOrder)
+    {
+        let ordersOfCustomer = this.orders.get(rawOrder.customerID );
+        if (ordersOfCustomer == null)
+            ordersOfCustomer = new Map<string, Map<string, TsiOrder>>();
+        
+        let orderList = ordersOfCustomer.get(rawOrder.billCounter);
+        if (orderList == null)
+            orderList = new Map<string, TsiOrder>();
+        
+        let order = orderList.get(rawOrder.position);
+        if (order == null)
+            order = new TsiOrder();
+
+        order.setArticleID( rawOrder.articleID);
+        order.setBillCounter( rawOrder.billCounter);
+        order.setFakturDate( rawOrder.fakturDate );
+        order.setPrice( rawOrder.price );
+        order.setVpe_size( rawOrder.vpe_size);
+
+        orderList.set( rawOrder.position, order );
+        ordersOfCustomer.set( rawOrder.billCounter, orderList );
+        this.orders.set( rawOrder.customerID, ordersOfCustomer );
     }
 
 }

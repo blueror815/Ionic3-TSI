@@ -5,17 +5,20 @@ export class TsiLicenceNumberLineProcessor extends TsiAbstractLineProcessor<stri
 
     constructor(public dataService: TsiDataServiceProvider) {
         super();
-
-        this.dataService.clearArticleCategories();
     }
 
     public parse(line: string, sourceFileName: string) {
+        let lineItems = line.split( "\\;" );
+        
+        let index = 0;
+        this.dataService.internLicence = lineItems[index++];
+        this.dataService.internKm = lineItems[index++];
+        this.dataService.internDate = lineItems[index++];
+        
         return line;
     }
 
     public process(lineResult: string) {
-        let article = lineResult;
-        //this.dataService.putArticle(article);
     }
 
 }
