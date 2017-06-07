@@ -54,6 +54,6 @@ export class MainTabPage {
 			this.navCtrl.setRoot(this.navCtrl.getActive().component);
 	   	});
 
-  	    // configModal.present();
+  	    configModal.present();
   	}
 }
