@@ -10,7 +10,7 @@ import { TsiDataServiceProvider } from '../../providers/tsi-data-service/tsi-dat
 })
 export class MainTabPage {
 
-	tab1: any;
+    tab1: any;
   	tab2: any;
   	tab3: any;
   	tab4: any;
@@ -27,19 +27,31 @@ export class MainTabPage {
       	this.tab6 = 'InfoPage';
       	this.tab7 = 'InternPage';
 		
-		this.dataService.readConfigFile()
-		.then((res) => {
-			console.log("Reponse for reading file.", res);
-			if (!res) {
-				this.presentConfigModal();
-			}
-		}, (err) => {
-			console.log("Error for reading file.", err);
-			this.presentConfigModal();
-		})
-		.catch(err => console.log("Error case for file reading", JSON.stringify(err)));
+		// this.dataService.readConfigFile()
+		// .then((res) => {
+		// 	console.log("Reponse for reading file.", res);
+		// 	if (!res) {
+		// 		this.presentConfigModal();
+		// 	}
+		// }, (err) => {
+		// 	console.log("Error for reading file.", JSON.stringify(err));
+		// 	this.presentConfigModal();
+		// })
+		// .catch(err => console.log("Error case for file reading", JSON.stringify(err)));
 
 	}
+
+    ionViewWillEnter() {
+        this.dataService.readConfigFile().then((res) => {
+            console.log("Response for reading config file.", JSON.stringify(res));
+            if (!res) {
+                this.presentConfigModal();
+            }
+        },(err) => {
+            console.log("Error for reading config file.", JSON.stringify(err));
+            this.presentConfigModal();
+        })
+    }
 
   	ionViewDidLoad() {
     	console.log('ionViewDidLoad MainTabPage');

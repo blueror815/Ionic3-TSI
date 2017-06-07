@@ -21,7 +21,7 @@ export class TsiArticle extends TsiSortableObj {
     }
 
     public setArticleNumber(articleNumber)
-    {
+    {    
         this.setAttribute( 0, articleNumber );
     }
 

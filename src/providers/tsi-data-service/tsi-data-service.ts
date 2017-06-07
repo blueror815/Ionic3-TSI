@@ -17,44 +17,40 @@ import { TsiShoppingCartEntry } from '../../models/TsiShoppingCartEntry';
 import { TsiExpenditure } from '../../models/TsiExpenditure';
 import { TsiUtil } from '../../utils/TsiUtil';
 import { TsiRawOrder } from '../../models/TsiRawOrder';
-/*
-  Generated class for the TsiDataServiceProvider provider.
 
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
+
 @Injectable()
 export class TsiDataServiceProvider {
 
-  public startImgFileName = "";
-  public rootPath = "";
-  public customerFolder = "";
-  public customerBusinessUnit = [];
+    public startImgFileName = "";
+    public rootPath = "";
+    public customerFolder = "";
+    public customerBusinessUnit = [];
 
-  public  static SHOPPING_CART_FILE_TYPE_ORDERS = 0;
-  public  static  SHOPPING_CART_FILE_TYPE_DATA = 1;
-  public  static  SHOPPING_CART_FILE_TYPE_IMAGE = 2;
-  public  static  NOT_AVAILABLE = "D";
-  public  infoTabFlag = false;
+    public  static SHOPPING_CART_FILE_TYPE_ORDERS = 0;
+    public  static  SHOPPING_CART_FILE_TYPE_DATA = 1;
+    public  static  SHOPPING_CART_FILE_TYPE_IMAGE = 2;
+    public  static  NOT_AVAILABLE = "D";
+    public  infoTabFlag = false;
 
-  public customerFolders = [];
-  public  preventCodeScanning = false;
-  public  showCatalogDetailView = false;
-  public  catalogDetailViewArticleCount = 1;
-  public  serverImageList = null;
+    public customerFolders = [];
+    public  preventCodeScanning = false;
+    public  showCatalogDetailView = false;
+    public  catalogDetailViewArticleCount = 1;
+    public  serverImageList = null;
 
-  public allCategories : Map<string, TsiCategory> = null;
-  public mainCategories : Map<string, TsiCategory> = null;
-  public articlesViaID : Map<string, TsiArticle> = null;
-  public articlesViaIDTmp : Map<string, TsiArticle> = null;
-  public articlesViaEANVPE : Map<string, TsiArticle> = null;
-  public articlesViaEANVKE : Map<string, TsiArticle> = null;
-  public customers : Map<string, TsiCustomer> = null;
-  public customersCatalogs : Map<string, TsiCustomerCatalog> = null;
+    public allCategories : Map<string, TsiCategory> = null;
+    public mainCategories : Map<string, TsiCategory> = null;
+    public articlesViaID : Map<string, TsiArticle> = null;
+    public articlesViaIDTmp : Map<string, TsiArticle> = null;
+    public articlesViaEANVPE : Map<string, TsiArticle> = null;
+    public articlesViaEANVKE : Map<string, TsiArticle> = null;
+    public customers : Map<string, TsiCustomer> = null;
+    public customersCatalogs : Map<string, TsiCustomerCatalog> = null;
 
-  // KundenID , AuftragsID, BestellungsID
-  public orders : Map<string, Map<string, Map<string, TsiOrder>>> = null;
-  public categoryArticles : Map<TsiCategory, Map<TsiCategory, Map<string, TsiArticle>>> = null;
+    // KundenID , AuftragsID, BestellungsID
+    public orders : Map<string, Map<string, Map<string, TsiOrder>>> = null;
+    public categoryArticles : Map<TsiCategory, Map<TsiCategory, Map<string, TsiArticle>>> = null;
 
     // Vectors for Reading the NewCustomerConf File
     public accountType  : TsiConfigEntry[] = null;
@@ -121,158 +117,161 @@ export class TsiDataServiceProvider {
     // public Hashtable<Class<?>, ESortType> sortTypes;
     // public Hashtable<Class<?>, Comparator<TSI_SortableObject>> sortComparators;
 
-  constructor(public http: Http, public file: File, public connectionService: TsiConnectionServiceProvider,public emailService: TsiEmailServiceProvider) {
-    console.log('Hello TsiDataServiceProvider Provider');
-  }
+    constructor(public http: Http, public file: File, public connectionService: TsiConnectionServiceProvider,public emailService: TsiEmailServiceProvider) {
+        console.log('Hello TsiDataServiceProvider Provider');
+    }
 
-  public getRootStoragePath() : Promise<any> {
-	  return new Promise((resolve) => {
-		this.file.createDir(this.file.documentsDirectory, "TSI", false).then((res) => {
-			console.log('RootStoragePath Success=> ', JSON.stringify(res));
-			this.rootPath = this.file.documentsDirectory + "TSI/";
-			resolve(res.nativeURL);
-		}, (err) => {
-			console.log('RootStoragePath Error => ', JSON.stringify(err));
-			resolve(this.file.documentsDirectory + "TSI/");
-		});
-	  });
-  }
+    public getRootStoragePath() : Promise<any> {
+        return new Promise((resolve) => {
+            this.file.createDir(this.file.documentsDirectory, "TSI", false).then((res) => {
+                console.log('RootStoragePath Success=> ', JSON.stringify(res));
+                this.rootPath = this.file.documentsDirectory + "TSI/";
+                resolve(res.nativeURL);
+            }, (err) => {
+                console.log('RootStoragePath Error => ', JSON.stringify(err));
+                resolve(this.file.documentsDirectory + "TSI/");
+            });
+        });
+    }
 
-  public getDataStoragePath() : Promise<any> {
+    public getDataStoragePath() : Promise<any> {
 
-	  return new Promise((resolve) => {
-		  this.getRootStoragePath().then((res) => {
-			this.file.createDir(res, "Data", false).then((res) => {
-			console.log('DataStoragePath Success=> ', JSON.stringify(res));
-			resolve(res.nativeURL);
-			}, (err) => {
-				console.log('DataStoragePath Error => ', JSON.stringify(err));
-				resolve(this.file.documentsDirectory + "TSI/Data/")
-			})
-		 });
-		
-	  });
-  }
+        return new Promise((resolve) => {
+            this.getRootStoragePath().then((res) => {
+                this.file.createDir(res, "Data", false).then((res) => {
+                    console.log('DataStoragePath Success=> ', JSON.stringify(res));
+                    resolve(res.nativeURL);
+                }, (err) => {
+                    console.log('DataStoragePath Error => ', JSON.stringify(err));
+                    resolve(this.file.documentsDirectory + "TSI/Data/")
+                })
+            });
 
-  public getGraphicsStoragePath() : Promise<any> {
+        });
+    }
 
-	  return new Promise((resolve) => {
-		  this.getDataStoragePath().then((res) => {
-			this.file.createDir(res, "Graphics", false).then((res) => {
-			console.log('GraphicStoragePath Success=> ', JSON.stringify(res));
-			resolve(res.nativeURL);
-			}, (err) => {
-				resolve(this.file.documentsDirectory + "TSI/Data/Graphics/")
-			})
-		 });
-		
-	  });
-  }
+    public getGraphicsStoragePath() : Promise<any> {
 
-  public getLocalImageList() : Promise<any> {
-	let images = [];
+        return new Promise((resolve) => {
+            this.getDataStoragePath().then((res) => {
+                this.file.createDir(res, "Graphics", false).then((res) => {
+                    console.log('GraphicStoragePath Success=> ', JSON.stringify(res));
+                    resolve(res.nativeURL);
+                }, (err) => {
+                    resolve(this.file.documentsDirectory + "TSI/Data/Graphics/")
+                })
+            });
 
-  	return new Promise((resolve) => {
-			this.getGraphicsStoragePath().then((res) => {
-					this.file.listDir(this.file.documentsDirectory + "TSI/Data/", "Graphics").then((res) => {
+        });
+    }
 
-							console.log('LocalImageFiles => ', JSON.stringify(res));
+    public getLocalImageList() : Promise<any> {
+        let images = [];
 
-							if (res && res.length > 0) {
-									for (let img of res) {
-											if (img.name != "." && img.name != "..") {
-													images.push(img);
-											}
-									} 
-							}
-						
-						resolve(images);
-					}, (err) => {
-						resolve(images);
-					})
-			});
-  		
-  	})
-  }
+        return new Promise((resolve) => {
+            this.getGraphicsStoragePath().then((res) => {
+                this.file.listDir(this.file.documentsDirectory + "TSI/Data/", "Graphics").then((res) => {
 
-  public readConfigFile() : Promise<any> {
+                    console.log('LocalImageFiles => ', JSON.stringify(res));
 
-	  console.log("Config Bat file");
+                    if (res && res.length > 0) {
+                        for (let img of res) {
+                            if (img.name != "." && img.name != "..") {
+                                images.push(img);
+                            }
+                        } 
+                    }
 
-	  return new Promise((resolve, reject) => {
-		this.file.checkFile(this.file.documentsDirectory + "TSI/", "config.dat").then((res) => {
-				if (res) {
-					this.file.readAsText(this.file.documentsDirectory + "TSI/", "config.dat").then((res) => {
-						console.log("Config Bat file", res);
+                    resolve(images);
+                }, (err) => {
+                    resolve(images);
+                })
+            });
 
-						resolve(true);
-					}, (err) => {
-						reject(err);
-					});
-				}
-				else {
-					resolve(false);
-				}		
-			}, (err) => {
-				console.log("Config Bat file", JSON.stringify(err));
-				reject(err);
-			})
-	  });
-  }
+        })
+    }
 
-  public writeConfigFile() : Promise<any> {
+    readConfigFile() {
 
-		let configText = TsiConstants.CUSTOMER_FOLDER_KEY + "|" + this.customerFolder + "\n" +
-										 TsiConstants.START_PIC_KEY + "|" + this.startImgFileName + "\n" +
-										 TsiConstants.FTP_USERNAME + "|" + this.connectionService.username + "\n" +
-										 TsiConstants.FTP_PASSWORD + "|" + this.connectionService.password + "\n" +
-										 TsiConstants.EMAIL_SERVER_KEY + "|" + this.emailService.host + "\n" +
-										 TsiConstants.EMAIL_PORT_KEY + "|" + this.emailService.port + "\n" +
-										 TsiConstants.EMAIL_USERNAME_KEY + "|" + this.emailService.username + "\n" +
-										 TsiConstants.EMAIL_PASSWORD_KEY + "|" + this.emailService.password + "\n" +
-										 TsiConstants.EMAIL_RECIPIENT_KEY + "|" + this.emailService.recipient + "\n" +
-										 TsiConstants.EMAIL_FROM_KEY + "|" + this.emailService.from + "\n";
+        console.log("Calling read config file.");
 
-	    console.log('config text', configText);
+        return new Promise((resolve, reject) => {
 
-		return new Promise((resolve, reject) => {
-				this.file.checkFile(this.file.documentsDirectory + "TSI/", "config.dat").then((res) => {
-					console.log('checkFile', JSON.stringify(res));
-						if (!res) {
-								this.file.writeFile(this.file.documentsDirectory + "TSI/", "config.dat", configText).then((res) => {
-									console.log('config text', JSON.stringify(res));
-									resolve(res);
-								}, (err) => {
-									console.log('config text', JSON.stringify(err));
-										reject(err);
-								})
-						}
-						else {
-							this.file.writeExistingFile(this.file.documentsDirectory + "TSI/", "config.dat", configText).then((res) => {
-								console.log('config text', JSON.stringify(res));
-									resolve({});
-							}, (err) => {
-									console.log('config text', JSON.stringify(err));
-									reject(err);
-							})
-						} 
+            this.file.checkFile(this.file.documentsDirectory + "TSI/", "config.dat").then((res) => {
 
-			  }, (err) => {
-				  console.log('checkFile', JSON.stringify(err));
-				  this.file.writeFile(this.file.documentsDirectory + "TSI/", "config.dat", configText).then((res) => {
-						console.log('config text', JSON.stringify(res));
-						resolve(res);
-				}, (err) => {
-					console.log('config text', JSON.stringify(err));
-						reject(err);
-				})
-			  })
+                console.log("Checking Config file response", res);
 
-		})
-  }
+                if (res) {
+                    this.file.readAsText(this.file.documentsDirectory + "TSI/", "config.dat").then((res) => {
+                        console.log("Config Bat file", res);
 
-  public getCustomer(id)
-    {
+                        resolve(true);
+                    }, (err) => {
+                        console.log("error for checking file", err);
+                        reject(err);
+                    });
+                } else {
+                    resolve(false);
+                }		
+            }, (err) => {
+                console.log("Config Bat file", JSON.stringify(err));
+                reject(err);
+            })
+        });
+    }
+
+    public writeConfigFile() : Promise<any> {
+
+        let configText = TsiConstants.CUSTOMER_FOLDER_KEY + "|" + this.customerFolder + "\n" +
+        TsiConstants.START_PIC_KEY + "|" + this.startImgFileName + "\n" +
+        TsiConstants.FTP_USERNAME + "|" + this.connectionService.username + "\n" +
+        TsiConstants.FTP_PASSWORD + "|" + this.connectionService.password + "\n" +
+        TsiConstants.EMAIL_SERVER_KEY + "|" + this.emailService.host + "\n" +
+        TsiConstants.EMAIL_PORT_KEY + "|" + this.emailService.port + "\n" +
+        TsiConstants.EMAIL_USERNAME_KEY + "|" + this.emailService.username + "\n" +
+        TsiConstants.EMAIL_PASSWORD_KEY + "|" + this.emailService.password + "\n" +
+        TsiConstants.EMAIL_RECIPIENT_KEY + "|" + this.emailService.recipient + "\n" +
+        TsiConstants.EMAIL_FROM_KEY + "|" + this.emailService.from + "\n";
+
+        console.log('config text', configText);
+
+        return new Promise((resolve, reject) => {
+            this.file.checkFile(this.file.documentsDirectory + "TSI/", "config.dat").then((res) => {
+                console.log('checkFile', JSON.stringify(res));
+                if (!res) {
+                    this.file.writeFile(this.file.documentsDirectory + "TSI/", "config.dat", configText).then((res) => {
+                        console.log('config text', JSON.stringify(res));
+                        resolve(res);
+                    }, (err) => {
+                        console.log('config text', JSON.stringify(err));
+                        reject(err);
+                    })
+                }
+                else {
+                    this.file.writeExistingFile(this.file.documentsDirectory + "TSI/", "config.dat", configText).then((res) => {
+                        console.log('config text', JSON.stringify(res));
+                        resolve({});
+                    }, (err) => {
+                        console.log('config text', JSON.stringify(err));
+                        reject(err);
+                    })
+                } 
+
+            }, (err) => {
+                console.log('checkFile', JSON.stringify(err));
+                this.file.writeFile(this.file.documentsDirectory + "TSI/", "config.dat", configText).then((res) => {
+                    console.log('config text', JSON.stringify(res));
+                    resolve(res);
+                }, (err) => {
+                    console.log('config text', JSON.stringify(err));
+                    reject(err);
+                })
+            })
+
+        })
+    }
+
+    public getCustomer(id) {
         let result = this.customers.get( id );
         let temp = id;
         while (result == null && temp.charAt( 0 ) == '0')
@@ -294,17 +293,17 @@ export class TsiDataServiceProvider {
         return result;
     }
 
-  public getCustomerBusinessUnit() {
-	  this.customerBusinessUnit = ["Alle", "SLE - SELH", "VEN - VENDING", "LEH - REWE", "APO - APOTHEKEN"];
-	  return this.customerBusinessUnit;
-  }
+    public getCustomerBusinessUnit() {
+        this.customerBusinessUnit = ["Alle", "SLE - SELH", "VEN - VENDING", "LEH - REWE", "APO - APOTHEKEN"];
+        return this.customerBusinessUnit;
+    }
 
-  public getCustomerOnlyBusinessUnit() {
-	  this.customerBusinessUnit = ["SLE - SELH", "VEN - VENDING", "LEH - REWE", "APO - APOTHEKEN"];
-	  return this.customerBusinessUnit;
-  }
+    public getCustomerOnlyBusinessUnit() {
+        this.customerBusinessUnit = ["SLE - SELH", "VEN - VENDING", "LEH - REWE", "APO - APOTHEKEN"];
+        return this.customerBusinessUnit;
+    }
 
-  public getArticle(articleID){
+    public getArticle(articleID){
         let article = this.articlesViaID.get(articleID);
         if (this.choosenCustomer != null && article != null) {
             if (!article.getUnit().equalsIgnoreCase(this.choosenCustomer.getInfo()))
@@ -315,9 +314,9 @@ export class TsiDataServiceProvider {
         if (article == null)
             article = this.articlesViaEANVKE.get( articleID );
         return article;
-  }
+    }
 
-  public putArticle(article){
+      public putArticle(article){
 
         // All Articles
         if (this.articlesViaID.get(article.getArticleNumber()) != null)
@@ -328,6 +327,7 @@ export class TsiDataServiceProvider {
         else {
             this.articlesViaID.set( article.getArticleNumber(), article );
         }
+
         this.articlesViaEANVPE.set( article.getGTIN_VPE(), article );
         this.articlesViaEANVKE.set( article.getGTIN_VKE(), article );
 
@@ -340,11 +340,12 @@ export class TsiDataServiceProvider {
             return;
 
         let articlesOfCategory = this.categoryArticles.get(category);
-        if (articlesOfCategory == null)
-        {
+
+        if (articlesOfCategory == null) {
             articlesOfCategory = new Map<TsiCategory, Map<string, TsiArticle>>();
             this.categoryArticles.set( category, articlesOfCategory );
         }
+
         articlesOfCategory.set( article.getArticleNumber() + article.getUnit(), article );
 
         // Main Category

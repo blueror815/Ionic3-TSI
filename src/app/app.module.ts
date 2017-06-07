@@ -23,7 +23,6 @@ import { TsiParserServiceProvider } from '../providers/tsi-parser-service/tsi-pa
 import { TsiShoppingCartServiceProvider } from '../providers/tsi-shopping-cart-service/tsi-shopping-cart-service';
 import { TsiSyncDataServiceProvider } from '../providers/tsi-sync-data-service/tsi-sync-data-service';
 
-
 @NgModule({
   declarations: [
     MyApp
