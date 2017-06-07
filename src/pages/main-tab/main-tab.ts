@@ -27,13 +27,17 @@ export class MainTabPage {
       	this.tab6 = 'InfoPage';
       	this.tab7 = 'InternPage';
 		
-		this.dataService.readConfigFile().then((res) => {
+		this.dataService.readConfigFile()
+		.then((res) => {
+			console.log("Reponse for reading file.", res);
 			if (!res) {
 				this.presentConfigModal();
 			}
 		}, (err) => {
+			console.log("Error for reading file.", err);
 			this.presentConfigModal();
-		});
+		})
+		.catch(err => console.log("Error case for file reading", JSON.stringify(err)));
 
 	}
 
