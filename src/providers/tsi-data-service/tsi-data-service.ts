@@ -25,7 +25,7 @@ export class TsiDataServiceProvider {
     public startImgFileName ;
     public rootPath ;
     public customerFolder ;
-    public customerBusinessUnit = [];
+    public customerBusinessUnit;
 
     public  static SHOPPING_CART_FILE_TYPE_ORDERS = 0;
     public  static  SHOPPING_CART_FILE_TYPE_DATA = 1;
@@ -33,78 +33,78 @@ export class TsiDataServiceProvider {
     public  static  NOT_AVAILABLE = "D";
     public  infoTabFlag = false;
 
-    public customerFolders = [];
+    public customerFolders;
     public  preventCodeScanning = false;
     public  showCatalogDetailView = false;
     public  catalogDetailViewArticleCount = 1;
-    public  serverImageList = null;
+    public  serverImageList;
 
-    public allCategories : Map<string, TsiCategory> = null;
-    public mainCategories : Map<string, TsiCategory> = null;
-    public articlesViaID : Map<string, TsiArticle> = null;
-    public articlesViaIDTmp : Map<string, TsiArticle> = null;
-    public articlesViaEANVPE : Map<string, TsiArticle> = null;
-    public articlesViaEANVKE : Map<string, TsiArticle> = null;
-    public customers : Map<string, TsiCustomer> = null;
-    public customersCatalogs : Map<string, TsiCustomerCatalog> = null;
+    public allCategories : Map<string, TsiCategory>;
+    public mainCategories : Map<string, TsiCategory>;
+    public articlesViaID : Map<string, TsiArticle>;
+    public articlesViaIDTmp : Map<string, TsiArticle>;
+    public articlesViaEANVPE : Map<string, TsiArticle>;
+    public articlesViaEANVKE : Map<string, TsiArticle>;
+    public customers : Map<string, TsiCustomer>;
+    public customersCatalogs : Map<string, TsiCustomerCatalog>;
 
     // KundenID , AuftragsID, BestellungsID
-    public orders : Map<string, Map<string, Map<string, TsiOrder>>> = null;
-    public categoryArticles : Map<TsiCategory, Map<TsiCategory, Map<string, TsiArticle>>> = null;
+    public orders : Map<string, Map<string, Map<string, TsiOrder>>>;
+    public categoryArticles : Map<TsiCategory, Map<TsiCategory, Map<string, TsiArticle>>>;
 
     // Vectors for Reading the NewCustomerConf File
-    public accountType  : TsiConfigEntry[] = null;
-    public accountLanguage  : TsiConfigEntry[] = null;
-    public accountContactLanguage  : TsiConfigEntry[] = null;
-    public accountContactGender  : TsiConfigEntry[] = null;
-    public accountNewsletter  : TsiConfigEntry[] = null;
-    public accountUseMail  : TsiConfigEntry[] = null;
-    public accountPayments  : TsiConfigEntry[] = null;
-    public accountPricegroup  : TsiConfigEntry[] = null;
-    public accountCountry  : TsiConfigEntry[] = null;
-    public accountShippingType  : TsiConfigEntry[] = null;
+    public accountType  : TsiConfigEntry[];
+    public accountLanguage  : TsiConfigEntry[];
+    public accountContactLanguage  : TsiConfigEntry[];
+    public accountContactGender  : TsiConfigEntry[];
+    public accountNewsletter  : TsiConfigEntry[];
+    public accountUseMail  : TsiConfigEntry[];
+    public accountPayments  : TsiConfigEntry[];
+    public accountPricegroup  : TsiConfigEntry[];
+    public accountCountry  : TsiConfigEntry[];
+    public accountShippingType  : TsiConfigEntry[];
 
-    public top50Articles  : TsiArticle[] = null;
-    public refundfreeArticles : TsiArticle[] = null;
-    public refundArticles : TsiArticle[] = null;
-    public newcomerArticles : TsiArticle[] = null;
-    public specialArticles : TsiArticle[] = null;
-    public discontinuedLineArticles : TsiArticle[] = null;
-    public postenArticles : TsiArticle[] = null;
-    public customerArticles : TsiArticle[] = null;
-    public seasonArticles : TsiArticle[] = null;
-    public halalArticles : TsiArticle[] = null;
-    public rabattArticles : TsiArticle[] = null;
+    public top50Articles  : TsiArticle[];
+    public refundfreeArticles : TsiArticle[];
+    public refundArticles : TsiArticle[];
+    public newcomerArticles : TsiArticle[];
+    public specialArticles : TsiArticle[];
+    public discontinuedLineArticles : TsiArticle[];
+    public postenArticles : TsiArticle[];
+    public customerArticles : TsiArticle[];
+    public seasonArticles : TsiArticle[];
+    public halalArticles : TsiArticle[];
+    public rabattArticles : TsiArticle[];
 
-    public expenditureEntries : TsiExpenditure[] = null;
-    public expenditureSuggestion : string[] = null;
-    public licenceNumberSuggestions : string[] = null;
-    public catalogTabHeaders : string[] = null;
+    public expenditureEntries : TsiExpenditure[];
+    public expenditureSuggestion : string[];
+    public licenceNumberSuggestions : string[];
+    public catalogTabHeaders : string[];
     public expenditureEmail;
     public kmEmail;
 
-    public  mainTabHost = null;
-    public  tvStatus = null;
-    public  llStatus = null;
-    public  ivInvalidate = null;
+    public  mainTabHost;
+    public  tvStatus;
+    public  llStatus;
+    public  ivInvalidate;
 
     public  indexOfCatlogTabTab;
-    public  choosenCategory : TsiCategory = null;
-    public  choosenViewPagerCategory : TsiCategory = null;
-    public  choosenSubCategory : TsiCategory = null;
-    public  selectedCustomer : TsiCustomer = null;
+    public  choosenCategory : TsiCategory;
+    public  choosenViewPagerCategory : TsiCategory;
+    public  choosenSubCategory : TsiCategory;
+    public  selectedCustomer : TsiCustomer;
 
-    public  choosenCustomer : TsiCustomer = null;
-    public  choosenOrder : TsiOrder = null;
-    public  choosenArticle : TsiArticle = null;
-    public  selectedArticle : TsiArticle = null;
-    public  choosenShoppingCartEntry : TsiShoppingCartEntry = null;
-    public  choosenOrderSuggestionType = null;
-    public  lastSelectedBundle : TsiArticleBundle = null;
+    public  choosenCustomer : TsiCustomer;
+    public  choosenOrder : TsiOrder;
+    public  choosenArticle : TsiArticle;
+    public  selectedArticle : TsiArticle;
+    public  choosenShoppingCartEntry : TsiShoppingCartEntry;
+    public  choosenOrderSuggestionType;
+    public  lastSelectedBundle : TsiArticleBundle;
 
     public  latitude = 0.0;
     public  longitude = 0.0;
-    public  zip = null;
+    public  zip;
 
     public  internKm;
     public  internLicence;

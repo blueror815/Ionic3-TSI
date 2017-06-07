@@ -41,22 +41,22 @@ export class TsiParserServiceProvider {
 
     this.parserConfigs = new Map();
     this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_CONF, new TsiConfLineProcessor(this.dataService, this.emailService, this.connectionService) );
-    // this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_CATEGORY, new TsiCategoryLineProcessor(this.dataService) );
-    // this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_ARTICLE, new TsiArticleLineProcessor(this.dataService) );
-    // this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_CUSTOMER, new TsiCustomerLineProcessor(this.dataService) );
-    // this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_CUSTOMER_CATALOG, new TsiCustomerCatalogLineProcessor(this.dataService) );
-    // this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_ORDER, new TsiOrderLineProcessor(this.dataService) );
-    // this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_SYNCFILE, new TsiSyncFileLineProcessor(this.dataService));
-    // this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_SHOPPING_CART_ORDERS, new TsiShoppingCartOrdersLineProcessor(this.dataService, this.shoppingService) );
-    // this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_SHOPPING_CART_DATA, new TsiShoppingCartDataLineProcessor(this.dataService, this.shoppingService) );
-    // this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_EXPENDITURES, new TsiExpendituresConfLineProcessor(this.dataService));
-    // this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_EXPENDITURE_SUGGESTIONS, new TsiExpenditureSuggestionLineProcessor(this.dataService) );
-    // this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_LICENCE_NUMBER, new TsiLicenceNumberLineProcessor(this.dataService) );
-    // this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_LICENCE_NUMBER_SUGGESTIONS, new TsiLicenceNumberSuggestionLineProcessor(this.dataService) );
-    // this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_EXPANDITURES_EMAIL, new TsiExpendituresConfLineProcessor(this.dataService) );
-    // this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_KM_EMAIL, new TsiKmConfLineProcessor(this.dataService) );
-    // this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_CATALOG_TAB_HEADERS, new TsiCatalogTabHeadersLineProcessor(this.dataService) );
-    // this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_NEW_CUSTOMER_CONF, new TsiNewCustomerConfLineProcessor(this.dataService) );
+    this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_CATEGORY, new TsiCategoryLineProcessor(this.dataService) );
+    this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_ARTICLE, new TsiArticleLineProcessor(this.dataService) );
+    this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_CUSTOMER, new TsiCustomerLineProcessor(this.dataService) );
+    this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_CUSTOMER_CATALOG, new TsiCustomerCatalogLineProcessor(this.dataService) );
+    this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_ORDER, new TsiOrderLineProcessor(this.dataService) );
+    this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_SYNCFILE, new TsiSyncFileLineProcessor(this.dataService));
+    this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_SHOPPING_CART_ORDERS, new TsiShoppingCartOrdersLineProcessor(this.dataService, this.shoppingService) );
+    this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_SHOPPING_CART_DATA, new TsiShoppingCartDataLineProcessor(this.dataService, this.shoppingService) );
+    this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_EXPENDITURES, new TsiExpendituresConfLineProcessor(this.dataService));
+    this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_EXPENDITURE_SUGGESTIONS, new TsiExpenditureSuggestionLineProcessor(this.dataService) );
+    this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_LICENCE_NUMBER, new TsiLicenceNumberLineProcessor(this.dataService) );
+    this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_LICENCE_NUMBER_SUGGESTIONS, new TsiLicenceNumberSuggestionLineProcessor(this.dataService) );
+    this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_EXPANDITURES_EMAIL, new TsiExpendituresConfLineProcessor(this.dataService) );
+    this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_KM_EMAIL, new TsiKmConfLineProcessor(this.dataService) );
+    this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_CATALOG_TAB_HEADERS, new TsiCatalogTabHeadersLineProcessor(this.dataService) );
+    this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_NEW_CUSTOMER_CONF, new TsiNewCustomerConfLineProcessor(this.dataService) );
   }
 
   public addParserConfig(name, lineProcessor) {

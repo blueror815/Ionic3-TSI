@@ -40,8 +40,6 @@ export class StartPage {
   	}
 
 	ionViewWillEnter() {
-		
-
 		setTimeout(() => {
 			this.parserService.parse(this.dataService.file.documentsDirectory + "TSI/", "config.dat", TsiParserConfigNames.PARSER_CONFIG_CONF).then((res) => {
 				console.log("StartImage :", this.dataService.startImgFileName);
