@@ -27,31 +27,19 @@ export class MainTabPage {
       	this.tab6 = 'InfoPage';
       	this.tab7 = 'InternPage';
 		
-		// this.dataService.readConfigFile()
-		// .then((res) => {
-		// 	console.log("Reponse for reading file.", res);
-		// 	if (!res) {
-		// 		this.presentConfigModal();
-		// 	}
-		// }, (err) => {
-		// 	console.log("Error for reading file.", JSON.stringify(err));
-		// 	this.presentConfigModal();
-		// })
-		// .catch(err => console.log("Error case for file reading", JSON.stringify(err)));
+		this.dataService.readConfigFile()
+		.then((res) => {
+			console.log("Reponse for reading file.", res);
+			if (!res) {
+				this.presentConfigModal();
+			}
+		}, (err) => {
+			console.log("Error for reading file.", JSON.stringify(err));
+			this.presentConfigModal();
+		})
+		.catch(err => console.log("Error case for file reading", JSON.stringify(err)));
 
 	}
-
-    ionViewWillEnter() {
-        this.dataService.readConfigFile().then((res) => {
-            console.log("Response for reading config file.", JSON.stringify(res));
-            if (!res) {
-                this.presentConfigModal();
-            }
-        },(err) => {
-            console.log("Error for reading config file.", JSON.stringify(err));
-            this.presentConfigModal();
-        })
-    }
 
   	ionViewDidLoad() {
     	console.log('ionViewDidLoad MainTabPage');
@@ -66,6 +54,6 @@ export class MainTabPage {
 			this.navCtrl.setRoot(this.navCtrl.getActive().component);
 	   	});
 
-  	    configModal.present();
+  	    // configModal.present();
   	}
 }
