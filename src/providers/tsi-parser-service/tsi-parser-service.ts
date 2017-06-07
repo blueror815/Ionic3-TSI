@@ -22,6 +22,7 @@ import { TsiLicenceNumberSuggestionLineProcessor } from '../../parser/TsiLicence
 import { TsiKmConfLineProcessor } from '../../parser/TsiKmConfLineProcessor';
 import { TsiCatalogTabHeadersLineProcessor } from '../../parser/TsiCatalogTabHeadersLineProcessor';
 import { TsiNewCustomerConfLineProcessor } from '../../parser/TsiNewCustomerConfLineProcessor';
+import { TsiSyncFileLineProcessor } from '../../parser/TsiSyncFileLineProcessor';
 
 /*
   Generated class for the TsiParserServiceProvider provider.
@@ -45,7 +46,7 @@ export class TsiParserServiceProvider {
     this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_CUSTOMER, new TsiCustomerLineProcessor(this.dataService) );
     this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_CUSTOMER_CATALOG, new TsiCustomerCatalogLineProcessor(this.dataService) );
     this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_ORDER, new TsiOrderLineProcessor(this.dataService) );
-    //this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_SYNCFILE, new TSI_SyncFileLineProcessor() );
+    this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_SYNCFILE, new TsiSyncFileLineProcessor(this.dataService));
     this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_SHOPPING_CART_ORDERS, new TsiShoppingCartOrdersLineProcessor(this.dataService, this.shoppingService) );
     this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_SHOPPING_CART_DATA, new TsiShoppingCartDataLineProcessor(this.dataService, this.shoppingService) );
     this.addParserConfig( TsiParserConfigNames.PARSER_CONFIG_EXPENDITURES, new TsiExpendituresConfLineProcessor(this.dataService));
