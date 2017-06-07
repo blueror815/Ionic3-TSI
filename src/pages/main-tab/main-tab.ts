@@ -33,4 +33,5 @@ export class MainTabPage {
   	ionViewDidLoad() {
     	console.log('ionViewDidLoad MainTabPage');
   	}
+
 }
