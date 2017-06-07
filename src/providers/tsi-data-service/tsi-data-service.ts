@@ -22,9 +22,9 @@ import { TsiRawOrder } from '../../models/TsiRawOrder';
 @Injectable()
 export class TsiDataServiceProvider {
 
-    public startImgFileName = "";
-    public rootPath = "";
-    public customerFolder = "";
+    public startImgFileName ;
+    public rootPath ;
+    public customerFolder ;
     public customerBusinessUnit = [];
 
     public  static SHOPPING_CART_FILE_TYPE_ORDERS = 0;
@@ -191,7 +191,7 @@ export class TsiDataServiceProvider {
         })
     }
 
-    readConfigFile() {
+   public readConfigFile() {
 
         console.log("Calling read config file.");
 

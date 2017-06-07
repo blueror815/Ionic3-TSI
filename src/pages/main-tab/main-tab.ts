@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
-import { TsiDataServiceProvider } from '../../providers/tsi-data-service/tsi-data-service';
-
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -19,53 +17,20 @@ export class MainTabPage {
   	tab7: any;
 
 
-  	constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public dataService: TsiDataServiceProvider) {
+  	constructor(public navCtrl: NavController, public navParams: NavParams) {
   		this.tab1 = 'StartPage';
     	this.tab2 = 'KundenPage';
 		this.tab3 = 'AuftragPage';
     	this.tab5 = 'ShoppingCartPage';
       	this.tab6 = 'InfoPage';
       	this.tab7 = 'InternPage';
-		
-		// this.dataService.readConfigFile()
-		// .then((res) => {
-		// 	console.log("Reponse for reading file.", res);
-		// 	if (!res) {
-		// 		this.presentConfigModal();
-		// 	}
-		// }, (err) => {
-		// 	console.log("Error for reading file.", JSON.stringify(err));
-		// 	this.presentConfigModal();
-		// })
-		// .catch(err => console.log("Error case for file reading", JSON.stringify(err)));
-
 	}
 
     ionViewWillEnter() {
-        this.dataService.readConfigFile().then((res) => {
-            console.log("Response for reading config file.", JSON.stringify(res));
-            if (!res) {
-                this.presentConfigModal();
-            }
-        },(err) => {
-            console.log("Error for reading config file.", JSON.stringify(err));
-            this.presentConfigModal();
-        })
+        
     }
 
   	ionViewDidLoad() {
     	console.log('ionViewDidLoad MainTabPage');
-  	}
-
-  	presentConfigModal = () => {
-  		let configModal = this.modalCtrl.create('ConfigModalPage');
-
-  		configModal.onDidDismiss(data => { // callback to get data from config modal, it is called when config modal is dismissed
-	     	console.log(data);
-
-			this.navCtrl.setRoot(this.navCtrl.getActive().component);
-	   	});
-
-  	    configModal.present();
   	}
 }

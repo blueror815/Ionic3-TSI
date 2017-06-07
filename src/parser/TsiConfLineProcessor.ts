@@ -11,7 +11,9 @@ export class TsiConfLineProcessor extends TsiAbstractLineProcessor<string> {
     }
 
     public parse(line: string, sourceFileName: string) {
-        let lineItems = line.split( "\\|" );
+        
+
+        let lineItems = line.split( "|" );
 
         if (lineItems[0] == TsiConstants.CUSTOMER_FOLDER_KEY)
             this.dataService.customerFolder = lineItems[1];
