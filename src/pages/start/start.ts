@@ -70,6 +70,5 @@ export class StartPage {
 
 	ionViewWillEnter() {
 
-		
 	}
 }
