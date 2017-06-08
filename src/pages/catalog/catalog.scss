@@ -1,48 +1,96 @@
 page-catalog {
 
+	ion-scroll.scroll-tab-container {
+		margin-top: 80px !important;
+    	height: 55px !important;
+
+    	.scroll-content {
+    		margin-top: 5px !important;
+
+    		ion-segment {
+
+    			justify-content: initial !important;
+
+    			ion-segment-button {
+    				min-width: 130px !important;
+    				text-overflow: inherit;
+					white-space: normal;
+					background: #b3dced; /* Old browsers */
+					background: -moz-linear-gradient(top, #b3dced 0%, #29b8e5 6%, #bce0ee 100%); /* FF3.6-15 */
+					background: -webkit-linear-gradient(top, #b3dced 0%,#29b8e5 6%,#bce0ee 100%); /* Chrome10-25,Safari5.1-6 */
+					background: linear-gradient(to bottom, #b3dced 0%,#29b8e5 6%,#bce0ee 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+					color: black !important;
+					margin-left: 1px;
+					border-left: 1px solid black;
+					border-top: 1px solid black;
+					border-right: 1px solid black;
+					border-top-right-radius: 5px;
+					border-top-left-radius: 5px;
+					border-bottom-right-radius: 5px;
+					border-bottom-left-radius: 5px;
+    			}
+
+    			ion-segment-button.segment-button.segment-activated {
+    				background: #cedce7; /* Old browsers */
+					background: -moz-linear-gradient(top, #cedce7 0%, #cedce7 0%, #596a72 94%, #596a72 99%, #596a72 100%, #596a72 100%, #596a72 100%); /* FF3.6-15 */
+					background: -webkit-linear-gradient(top, #cedce7 0%,#cedce7 0%,#596a72 94%,#596a72 99%,#596a72 100%,#596a72 100%,#596a72 100%); /* Chrome10-25,Safari5.1-6 */
+					background: linear-gradient(to bottom, #cedce7 0%,#cedce7 0%,#596a72 94%,#596a72 99%,#596a72 100%,#596a72 100%,#596a72 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+					color: white !important;
+    			}
+    		}
+    	}
+    }
+
 	.scroll-content {
-		margin-top: 85px !important;
+		margin-top: 120px !important;
         padding-right: 0px !important;
         padding-left: 0px !important;
+        padding-top: 0px !important;
+        overflow-y: hidden !important; 
 
-        ion-scroll.scroll-tab-container {
-        	height: 55px !important;
+        div.seg-container {
+        	height: 100%;
 
-        	.scroll-content {
-        		margin-top: 5px !important;
+        	ion-list.total-list-item {
+        		height: 100%;
 
-        		ion-segment {
+        		ion-row.total-list-row {
+        			height: 100%;
 
-        			justify-content: initial !important;
+        			button.catalog-list-btn {
+	        			color: black;
+	        			font-size: 13px;
+	        			border: 1px solid black;
+	        			border-radius: 5px;
+	        			background-color: white;
+	        			text-align: left;
+	        			text-overflow: inherit !important;
+					    text-transform: none;
+					    white-space: normal !important;
+					    padding-top: 20px !important;
+					    padding-bottom: 20px !important;
+					    // width: 200px !important;
+	        		}
 
-        			ion-segment-button {
-        				min-width: 130px !important;
-        				text-overflow: inherit;
-    					white-space: normal;
-    					background: #b3dced; /* Old browsers */
-						background: -moz-linear-gradient(top, #b3dced 0%, #29b8e5 6%, #bce0ee 100%); /* FF3.6-15 */
-						background: -webkit-linear-gradient(top, #b3dced 0%,#29b8e5 6%,#bce0ee 100%); /* Chrome10-25,Safari5.1-6 */
-						background: linear-gradient(to bottom, #b3dced 0%,#29b8e5 6%,#bce0ee 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-						color: black !important;
-						margin-left: 1px;
-						border-left: 1px solid black;
-						border-top: 1px solid black;
-						border-right: 1px solid black;
-						border-top-right-radius: 5px;
-						border-top-left-radius: 5px;
-						border-bottom-right-radius: 5px;
-						border-bottom-left-radius: 5px;
-        			}
-
-        			ion-segment-button.segment-button.segment-activated {
-        				background: #cedce7; /* Old browsers */
-						background: -moz-linear-gradient(top, #cedce7 0%, #cedce7 0%, #596a72 94%, #596a72 99%, #596a72 100%, #596a72 100%, #596a72 100%); /* FF3.6-15 */
-						background: -webkit-linear-gradient(top, #cedce7 0%,#cedce7 0%,#596a72 94%,#596a72 99%,#596a72 100%,#596a72 100%,#596a72 100%); /* Chrome10-25,Safari5.1-6 */
-						background: linear-gradient(to bottom, #cedce7 0%,#cedce7 0%,#596a72 94%,#596a72 99%,#596a72 100%,#596a72 100%,#596a72 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-						color: white !important;
-        			}
+	        		.button-inner {
+	        			justify-content: left !important;
+	        		}
         		}
         	}
+
+        	ion-scroll.product-list-scroll-view {
+				min-height: 84vh;
+
+				.scroll-content {
+					margin-top: 0px !important;
+					overflow-y: auto !important;
+
+					ion-col.product-cell {
+						padding-left: 20px;
+						padding-right: 30px;
+					}
+				}
+			}
         }
 	}
 }

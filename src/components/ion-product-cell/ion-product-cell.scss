@@ -1,0 +1,98 @@
+ion-product-cell {
+	font-size: 12px;
+	.product-cell-container {
+
+		.product-cell {
+			border: 2px solid gray;
+			max-width: 300px;
+			padding: 0px !important
+		}
+
+		.product-img-container {
+			img {
+				height: 170px;
+				width: auto;
+			}
+		}
+	}
+	.product-info {
+		right: -30px;
+		div {
+			font-size: 10px;
+		}
+	}
+
+	div.description {
+		// width: 100%;
+		text-align: center;
+		border: 2px solid gray;
+		border-radius: 5px;
+		margin-top: -20px;
+		background-color: lemonchiffon;
+		display: inline-table;
+		z-index: 2;
+		height: 20px;
+		margin-left: auto;
+    	margin-right: auto;
+	}
+
+	ion-col.amount-btn-container {
+        padding-top: 10px !important;
+        div.min-btn {
+            background: url(../assets/images/btn_minus.png) no-repeat center center; 
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            height: 20px;
+            width: 20px;
+            float: left;
+        }
+
+        div.plus-btn {
+            background: url(../assets/images/btn_plus.png) no-repeat center center; 
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            height: 20px;
+            width: 20px;
+            // float: left;
+            margin-left: 35px;
+        }
+    }
+
+    div.cart-btn {
+    	margin-left: 20px;
+    	margin-top: 5px;
+    	background: url(../assets/images/cart.png) no-repeat center center; 
+	    -webkit-background-size: cover;
+	    -moz-background-size: cover;
+	    -o-background-size: cover;
+	    background-size: cover;
+	    height: 20px;
+	    width: 20px;
+    }
+
+    div.cart-btn.activated {
+    	margin-left: 20px;
+    	background: url(../assets/images/cart_pressed.png) no-repeat center center; 
+	    -webkit-background-size: cover;
+	    -moz-background-size: cover;
+	    -o-background-size: cover;
+	    background-size: cover;
+	    height: 20px;
+	    width: 20px;
+    }
+
+    ion-input.amount {
+    	border: 1px solid #ccc;
+    	height: 30px;
+
+    	input {
+    		margin-top: 0px !important;
+    		height: 30px !important;
+    		padding-left: 5px;
+    	}
+    }
+}

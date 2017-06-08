@@ -68,7 +68,7 @@ export class StartPage {
 				
 				
 			}, (err) => {
-				this.presentConfigModal();
+				// this.presentConfigModal();
 			})
 		}, 1000);
 	}

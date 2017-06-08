@@ -1,0 +1,50 @@
+<!-- Generated template for the IonProductCellComponent component -->
+<ion-row class="product-cell-container">
+	<ion-col col-11 class="product-cell">
+		<ion-row>
+			<ion-col class="product-img-container" col-5>
+				<img [src]="product.image" />
+			</ion-col>
+
+			<ion-col col-1>
+			</ion-col>
+
+			<ion-col class="product-info" col-6>
+				<div>VKE = {{product.vke}} E</div>
+				<div>VPE = {{product.vpe}} E</div>
+				<div>LVP = {{product.lvp}} E</div>
+				<div>VKE/VPE = {{product.vke_per_vpe}}</div>
+				<div>VKE/PAL = {{product.vke_per_pal}}</div>
+				<div>VPE je PAL = {{product.vpe_je_pal}}</div>
+				<div>VPE/Lage = {{product.vpe_per_lage}}</div>
+				<div>PAL Ges. = {{product.pal_ges}} E</div>
+				<div>PAL je VKE = {{product.pal_je_vke}} E</div>
+				<div>PAL je VPE = {{product.pal_je_vpe}} E</div>
+			</ion-col>
+			<div class="description">
+				{{product.description}}
+			</div>
+		</ion-row>
+	</ion-col>  
+
+	<ion-row>
+		<ion-col col-3>
+		</ion-col>
+
+		<ion-col col-2>
+			<ion-input class="amount" [(ngModel)]="amount" type="number"></ion-input>
+		</ion-col>
+
+		<ion-col class="amount-btn-container" col-2>
+            <div (click)="addItem()" class="min-btn"></div>
+            <div (click)="removeItem()" class="plus-btn"></div>
+        </ion-col>
+
+		<ion-col col-2>
+			<div class="cart-btn" (click)="gotoCart()"></div>
+		</ion-col>
+
+		<ion-col col-3>
+		</ion-col>
+	</ion-row>	
+</ion-row>
