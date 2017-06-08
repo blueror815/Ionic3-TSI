@@ -171,4 +171,101 @@ export class TsiSyncDataServiceProvider {
 
         })
     }
+
+    public getInternStoragePath()
+    {
+        return this.file.documentsDirectory + "TSI/" + "Intern/";
+    }
+
+    public getConfFilename()
+    {
+        return this.file.documentsDirectory + "TSI/" + "conf.dat";
+    }
+
+    public getExpendituresFilename()
+    {
+        return this.getInternStoragePath() + "expanditures.dat";
+    }
+
+    public getExpenditureSuggestionsFilename()
+    {
+        return this.getInternStoragePath() + "expanditureSuggestion.dat";
+    }
+
+    public getLicenceNumberSuggestionFilename()
+    {
+        return this.getInternStoragePath() + "licenceNumberSuggestion.dat";
+    }
+
+    public getLicenceNumberFilename()
+    {
+        return this.getInternStoragePath() + "licenceNumber.dat";
+    }
+
+    public getTempExcelFileName()
+    {
+        return this.getInternStoragePath() + "tempExcelFile.xls";
+    }
+
+    public getInternExpendituresConfFilename()
+    {
+        return this.getInternStoragePath() + "internexpendituresconf.dat";
+    }
+
+    public getInternKmConfFilename()
+    {
+        return this.getInternStoragePath() + "internkmconf.dat";
+    }
+
+    public getCategoryFilename()
+    {
+        return this.getDataStoragePath() + "Kategorien/KategorieDB.PSV";
+    }
+
+    public getArticleFilename()
+    {
+        return this.getDataStoragePath() + "Artikel/ArtikelDB.PSV";
+    }
+
+    public getCustomerCatalogFilename()
+    {
+        return this.getDataStoragePath() + "Artikel/KatalogDB.PSV";
+    }
+
+    public getCatalogTabHeadersFilename()
+    {
+        return this.getDataStoragePath() + "Artikel/CatalogTabLabels.txt";
+    }
+
+    public getNewsFilename()
+    {
+        return this.getDataStoragePath() + "News/news.html";
+    }
+
+    public getCustomerFilename(fullFilename)
+    {
+        return this.getDataStoragePath() + fullFilename;
+    }
+
+    public getImageFilename(name)
+    {
+        return this.getGraphicsStoragePath() + name;
+    }
+
+    public getSynchronizationFilename()
+    {
+        return this.getDataStoragePath() + "sync.dat";
+    }
+
+    public getOrderFilename(folder)
+    {
+        return this.getDataStoragePath() + folder + "/ordersdb.psv";
+    }
+
+    public getFilenameWithVersion(filename)
+    {
+        let result = "";
+        
+        return result;
+    }
 }
