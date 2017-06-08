@@ -529,4 +529,20 @@ export class TsiDataServiceProvider {
         this.orders.set( rawOrder.customerID, ordersOfCustomer );
     }
 
+    public clearCatalogTabHeaders() {
+        this.catalogTabHeaders = [];
+    }
+
+    public clearAccountVectors() {
+        this.accountType = [];
+        this.accountLanguage = [];
+        this.accountContactLanguage = [];
+        this.accountContactGender = [];
+        this.accountNewsletter = [];
+        this.accountUseMail = [];
+        this.accountPayments = [];
+        this.accountPricegroup = [];
+        this.accountCountry = [];
+        this.accountShippingType = [];
+    }
 }

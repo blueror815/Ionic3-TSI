@@ -44,6 +44,11 @@ export class StartPage {
 			this.parserService.parse(this.dataService.file.documentsDirectory + "TSI/", "config.dat", TsiParserConfigNames.PARSER_CONFIG_CONF).then((res) => {
 				console.log("StartImage :", this.dataService.startImgFileName);
 				this.background_img = this.dataService.startImgFileName;
+
+				this.dataService.clearCatalogTabHeaders();
+				this.dataService.clearAccountVectors();
+				
+				
 			}, (err) => {
 				this.presentConfigModal();
 			});
