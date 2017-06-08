@@ -1,0 +1,48 @@
+page-catalog {
+
+	.scroll-content {
+		margin-top: 85px !important;
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+
+        ion-scroll.scroll-tab-container {
+        	height: 55px !important;
+
+        	.scroll-content {
+        		margin-top: 5px !important;
+
+        		ion-segment {
+
+        			justify-content: initial !important;
+
+        			ion-segment-button {
+        				min-width: 130px !important;
+        				text-overflow: inherit;
+    					white-space: normal;
+    					background: #b3dced; /* Old browsers */
+						background: -moz-linear-gradient(top, #b3dced 0%, #29b8e5 6%, #bce0ee 100%); /* FF3.6-15 */
+						background: -webkit-linear-gradient(top, #b3dced 0%,#29b8e5 6%,#bce0ee 100%); /* Chrome10-25,Safari5.1-6 */
+						background: linear-gradient(to bottom, #b3dced 0%,#29b8e5 6%,#bce0ee 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+						color: black !important;
+						margin-left: 1px;
+						border-left: 1px solid black;
+						border-top: 1px solid black;
+						border-right: 1px solid black;
+						border-top-right-radius: 5px;
+						border-top-left-radius: 5px;
+						border-bottom-right-radius: 5px;
+						border-bottom-left-radius: 5px;
+        			}
+
+        			ion-segment-button.segment-button.segment-activated {
+        				background: #cedce7; /* Old browsers */
+						background: -moz-linear-gradient(top, #cedce7 0%, #cedce7 0%, #596a72 94%, #596a72 99%, #596a72 100%, #596a72 100%, #596a72 100%); /* FF3.6-15 */
+						background: -webkit-linear-gradient(top, #cedce7 0%,#cedce7 0%,#596a72 94%,#596a72 99%,#596a72 100%,#596a72 100%,#596a72 100%); /* Chrome10-25,Safari5.1-6 */
+						background: linear-gradient(to bottom, #cedce7 0%,#cedce7 0%,#596a72 94%,#596a72 99%,#596a72 100%,#596a72 100%,#596a72 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+						color: white !important;
+        			}
+        		}
+        	}
+        }
+	}
+}

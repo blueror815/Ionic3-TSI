@@ -22,10 +22,13 @@ import { TsiLocationServiceProvider } from '../providers/tsi-location-service/ts
 import { TsiParserServiceProvider } from '../providers/tsi-parser-service/tsi-parser-service';
 import { TsiShoppingCartServiceProvider } from '../providers/tsi-shopping-cart-service/tsi-shopping-cart-service';
 import { TsiSyncDataServiceProvider } from '../providers/tsi-sync-data-service/tsi-sync-data-service';
+import { CatalogCell1Component } from '../components/catalog-cell1/catalog-cell1';
+
 
 @NgModule({
   declarations: [
-    MyApp
+    MyApp,
+    CatalogCell1Component
   ],
   imports: [
     BrowserModule,

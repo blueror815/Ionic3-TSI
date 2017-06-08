@@ -17,7 +17,23 @@ import { TsiParserConfigNames } from '../../parser/TsiParserConfigNames';
 })
 export class StartPage {
 
-	public background_img: string = "";
+	public background_img: string = "assets/images/wrong.png";
+	public left_items = [
+		'NV',
+		'Gewurze',
+		'Nahrmittel',
+		'Feinkost',
+		'Instant, Tee, Subungsittel',
+		'Alkoholfreie Getranke/ Getr.zubereitung',
+		'Alkoholische Getranke',
+		'Subwaren und Geback',
+		'Non Food',
+		'Vending-Fullprodukte',
+		'RABATT'
+	]
+	public right_title = 'Waschen im';
+	public right_item = "CLENTI FLUSSIGN";
+
 	constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, 
 				public dataService: TsiDataServiceProvider, public parserService:TsiParserServiceProvider) {
 		
@@ -40,6 +56,8 @@ export class StartPage {
   	}
 
 	ionViewWillEnter() {
+		console.log("StartImage :", this.dataService.startImgFileName);
+
 		setTimeout(() => {
 			this.parserService.parse(this.dataService.file.documentsDirectory + "TSI/", "config.dat", TsiParserConfigNames.PARSER_CONFIG_CONF).then((res) => {
 				console.log("StartImage :", this.dataService.startImgFileName);
@@ -51,7 +69,7 @@ export class StartPage {
 				
 			}, (err) => {
 				this.presentConfigModal();
-			});
+			})
 		}, 1000);
 	}
 }

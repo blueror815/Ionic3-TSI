@@ -1,0 +1,165 @@
+<ion-content>
+	<ion-scroll class="scroll-tab-container" scrollX="true">
+		<ion-segment [(ngModel)]="selected_tab">
+			<ion-segment-button value="total">
+				GESAMT
+			</ion-segment-button>
+			<ion-segment-button value="top50">
+				TOP 50
+			</ion-segment-button>
+			<ion-segment-button value="pwan_free">
+				PFANDFREI
+			</ion-segment-button>
+			<ion-segment-button value="with_pand">
+				MIT PFAND
+			</ion-segment-button>
+			<ion-segment-button value="new_hit">
+				NEUHEITEN
+			</ion-segment-button>
+			<ion-segment-button value="special">
+				SPEZIAL
+			</ion-segment-button>
+			<ion-segment-button value="outlet">
+				AUSLAUF
+			</ion-segment-button>
+			<ion-segment-button value="clearance">
+				RESTPOSTEN
+			</ion-segment-button>
+			<ion-segment-button value="customer_choice">
+				KUNDENAUSWAHL
+			</ion-segment-button>
+			<ion-segment-button value="season">
+				SAISON
+			</ion-segment-button>
+			<ion-segment-button value="halal">
+				HALAL
+			</ion-segment-button>
+			<ion-segment-button value="discount">
+				RABATTE
+			</ion-segment-button>
+		</ion-segment>
+	</ion-scroll>
+
+	<div class="seg-container" [ngSwitch]="selected_tab">
+		<ion-list *ngSwitchCase="'total'">
+			<ion-item>
+				<ion-row>
+					<ion-col col-1>
+						<ion-scroll scrollY="true">
+							<button class="catalog-list-btn" full ion-button>
+								000 - NV
+							</button>
+
+							<button class="catalog-list-btn" full ion-button>
+								100 - Gewurze
+							</button>
+						
+							<button class="catalog-list-btn" full ion-button>
+								200 - Nahrmittel
+							</button>
+
+							<button class="catalog-list-btn" full ion-button>
+								300 - Feinkost
+							</button>
+
+							<button class="catalog-list-btn" full ion-button>
+								400 - Instant, Tee, Supungsmittel
+							</button>
+
+							<button class="catalog-list-btn" full ion-button>
+								500 - Alkoholfreie Getranke / Getr.zubereitung
+							</button>
+
+							<button class="catalog-list-btn" full ion-button>
+								600 - Alkoholische Getranke
+							</button>
+
+							<button class="catalog-list-btn" full ion-button>
+								700 - Subwarenund Geback
+							</button>
+
+							<button class="catalog-list-btn" ion-button full>
+								800 - Non Food
+							</button>
+
+							<button class="catalog-list-btn" ion-button full>
+								V00 - Vending Fllprodukte
+							</button>
+						</ion-scroll>
+					</ion-col>
+
+					<ion-col col-9>
+						<ion-row>
+						</ion-row>
+					</ion-col>
+				</ion-row>
+			</ion-item>
+		</ion-list>
+
+		<ion-list *ngSwitchCase="'top50'">
+			<ion-item>
+				<h2>top50</h2>
+			</ion-item>
+		</ion-list>
+
+		<ion-list *ngSwitchCase="'pwan_free'">
+			<ion-item>
+				<h2>pwan_free</h2>
+			</ion-item>
+		</ion-list>
+
+		<ion-list *ngSwitchCase="'with_pand'">
+			<ion-item>
+				<h2>with_pand</h2>
+			</ion-item>
+		</ion-list>
+
+		<ion-list *ngSwitchCase="'new_hit'">
+			<ion-item>
+				<h2>new_hit</h2>
+			</ion-item>
+		</ion-list>
+
+		<ion-list *ngSwitchCase="'special'">
+			<ion-item>
+				<h2>special</h2>
+			</ion-item>
+		</ion-list>
+
+		<ion-list *ngSwitchCase="'outlet'">
+			<ion-item>
+				<h2>outlet</h2>
+			</ion-item>
+		</ion-list>
+
+		<ion-list *ngSwitchCase="'clearance'">
+			<ion-item>
+				<h2>clearance</h2>
+			</ion-item>
+		</ion-list>
+
+		<ion-list *ngSwitchCase="'customer_choice'">
+			<ion-item>
+				<h2>customer_choice</h2>
+			</ion-item>
+		</ion-list>
+
+		<ion-list *ngSwitchCase="'season'">
+			<ion-item>
+				<h2>season</h2>
+			</ion-item>
+		</ion-list>
+
+		<ion-list *ngSwitchCase="'halal'">
+			<ion-item>
+				<h2>halal</h2>
+			</ion-item>
+		</ion-list>
+
+		<ion-list *ngSwitchCase="'discount'">
+			<ion-item>
+				<h2>discount</h2>
+			</ion-item>
+		</ion-list>
+	</div>
+</ion-content>

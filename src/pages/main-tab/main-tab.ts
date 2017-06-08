@@ -21,6 +21,7 @@ export class MainTabPage {
   		this.tab1 = 'StartPage';
     	this.tab2 = 'KundenPage';
 		this.tab3 = 'AuftragPage';
+        this.tab4 = 'CatalogPage';
     	this.tab5 = 'ShoppingCartPage';
       	this.tab6 = 'InfoPage';
       	this.tab7 = 'InternPage';
