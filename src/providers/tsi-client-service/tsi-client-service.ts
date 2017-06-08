@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { TsiDataServiceProvider } from '../tsi-data-service/tsi-data-service';
-import { TsiEmailServiceProvider } from '../tsi-email-service/tsi-email-service';
 import { TsiParserServiceProvider } from '../tsi-parser-service/tsi-parser-service';
-import { TsiConnectionServiceProvider } from '../tsi-connection-service/tsi-connection-service';
+import { Dialogs } from '@ionic-native/dialogs';
+import { TsiParserConfigNames } from '../../parser/TsiParserConfigNames';
 
 /*
   Generated class for the TsiClientServiceProvider provider.
@@ -15,10 +15,32 @@ import { TsiConnectionServiceProvider } from '../tsi-connection-service/tsi-conn
 @Injectable()
 export class TsiClientServiceProvider {
 
-
-  constructor() {
+  constructor(public dataService : TsiDataServiceProvider, public parserService : TsiParserServiceProvider, public dialog : Dialogs) {
     console.log('Hello TsiClientServiceProvider Provider');
   
   }
+
+  public showDialog(message, showCustomerScreen) {
+    this.dataService.preventCodeScanning = showCustomerScreen;
+
+    this.dialog.alert(message, '', 'OK').then((res) => {
+      this.dataService.preventCodeScanning = false;
+      if (showCustomerScreen) {
+
+      }
+    });
+  }
+
+  public updateConfiguration(disableScreen) {
+     this.parserService.parse(this.dataService.file.documentsDirectory + "TSI/Data/", "sync.dat", TsiParserConfigNames.PARSER_CONFIG_SYNCFILE).then((res) => {}, (err) => {});
+
+  }
+
+  public showNoInternetDialog() {
+     this.showDialog('Keine Internetverbindung verfügbar!', false);
+  }
+
+
+
 
 }

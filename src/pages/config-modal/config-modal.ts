@@ -6,6 +6,7 @@ import { Dialogs } from '@ionic-native/dialogs';
 import {TsiConnectionServiceProvider} from '../../providers/tsi-connection-service/tsi-connection-service';
 import { TsiDataServiceProvider } from '../../providers/tsi-data-service/tsi-data-service';
 import { TsiEmailServiceProvider } from '../../providers/tsi-email-service/tsi-email-service';
+import { TsiSyncDataServiceProvider } from '../../providers/tsi-sync-data-service/tsi-sync-data-service';
 
 /**
  * Generated class for the ConfigModalPage page.
@@ -47,7 +48,8 @@ export class ConfigModalPage {
     public server_images = [];
 
   	constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public dialogs: Dialogs, public imagePicker: ImagePicker, 
-      public connectionService : TsiConnectionServiceProvider,public dataService: TsiDataServiceProvider, public loadingCtrl: LoadingController, public emailService : TsiEmailServiceProvider) {
+      public connectionService : TsiConnectionServiceProvider,public dataService: TsiDataServiceProvider, public loadingCtrl: LoadingController, 
+      public emailService : TsiEmailServiceProvider, public syncService: TsiSyncDataServiceProvider) {
   	}
 
   	ionViewDidLoad() {
@@ -99,7 +101,7 @@ export class ConfigModalPage {
                     console.log("Server Image count :", serverImgCnt);
                   }
 
-                  this.dataService.getLocalImageList().then((res) => {
+                  this.syncService.getLocalImageList().then((res) => {
                     loader.dismiss();
 
                     if (res && res.length >0) {
@@ -180,7 +182,7 @@ export class ConfigModalPage {
      
      let missing_images = [];
      return new Promise((resolve) => {
-       this.dataService.getLocalImageList().then((res) => {
+       this.syncService.getLocalImageList().then((res) => {
         
           let local_images = res;
 
@@ -239,7 +241,7 @@ export class ConfigModalPage {
 
           this.dataService.customerFolder = this.select_folder;
 
-          this.dataService.writeConfigFile().then((res) => {
+          this.syncService.writeConfigFile().then((res) => {
               let data = { 'startImage': this.dataService.startImgFileName };
 	            this.viewCtrl.dismiss(data);
           }, (err) => {
