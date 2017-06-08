@@ -41,6 +41,19 @@ export class StartPage {
 
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad StartPage');
+		setTimeout(() => {
+			this.parserService.parse(this.dataService.file.documentsDirectory + "TSI/", "config.dat", TsiParserConfigNames.PARSER_CONFIG_CONF).then((res) => {
+				console.log("StartImage :", this.dataService.startImgFileName);
+				this.background_img = this.dataService.startImgFileName;
+
+				this.dataService.clearCatalogTabHeaders();
+				this.dataService.clearAccountVectors();
+				
+				
+			}, (err) => {
+				this.presentConfigModal();
+			})
+		}, 2000);
 	}
 
 	presentConfigModal = () => {
@@ -56,20 +69,7 @@ export class StartPage {
   	}
 
 	ionViewWillEnter() {
-		console.log("StartImage :", this.dataService.startImgFileName);
 
-		setTimeout(() => {
-			this.parserService.parse(this.dataService.file.documentsDirectory + "TSI/", "config.dat", TsiParserConfigNames.PARSER_CONFIG_CONF).then((res) => {
-				console.log("StartImage :", this.dataService.startImgFileName);
-				this.background_img = this.dataService.startImgFileName;
-
-				this.dataService.clearCatalogTabHeaders();
-				this.dataService.clearAccountVectors();
-				
-				
-			}, (err) => {
-				this.presentConfigModal();
-			})
-		}, 1000);
+		
 	}
 }
