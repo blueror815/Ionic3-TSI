@@ -21,7 +21,7 @@ export class TsiEmailServiceProvider {
   public subject  = "";
   public recipient = "";
 
-  constructor(public http: Http) {
+  constructor() {
     console.log('Hello TsiEmailServiceProvider Provider');
   }
 

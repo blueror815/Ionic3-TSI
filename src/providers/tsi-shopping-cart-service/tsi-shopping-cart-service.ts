@@ -17,8 +17,11 @@ export class TsiShoppingCartServiceProvider {
   private tempPALArticles : Map<string, number> = null;
   private shoppingCarts : Map<string, TsiShoppingCart> = null;
 
-  constructor(public http: Http, public dataService: TsiDataServiceProvider, public file: File) {
+  constructor(public http: Http, public dataService: TsiDataServiceProvider) {
     console.log('Hello TsiShoppingCartServiceProvider Provider');
+    this.tempPALArticles = new Map();
+    this.tempVPEArticles = new Map();
+    this.shoppingCarts = new Map();
   }
 
     public getShoppingCart(customerID)

@@ -63,34 +63,30 @@ export class TsiParserServiceProvider {
     this.parserConfigs.set(name, lineProcessor);
   }
 
-  public parse(srcFilename, parserConfigname) {
-        let lineProcessor = this.parserConfigs.get( parserConfigname );
+  public parse(filePath, fileName, parserConfigname) {
+    let lineProcessor = this.parserConfigs.get( parserConfigname );
 
-        try
-        {
-            console.log ( "///////////////////", "Parser" );
-            console.log ( "Parsing File: " + srcFilename, "Parser" );
-            console.log ( "///////////////////", "Parser" );
-            
-            let time = new Date().getTime();
-            // let fis = new FileInputStream( srcFilename );
-            // InputStreamReader isr = new InputStreamReader( fis, Charset.forName( "ISO-8859-1" ) );
-            // BufferedReader br = new BufferedReader( isr );
-            // String strLine = "";
-            // while ((strLine = br.readLine()) != null)
-            // {
-            //     Object lineResult = lineProcessor.parse( strLine, srcFilename );
-            //     lineProcessor.process( lineResult );
-            // }
-            // fis.close();
-            // isr.close();
-            // br.close();
-            // System.out.println( "Parsing " + srcFilename + " time: " + (new Date().getTime() - time) + "ms" );
-        }
-        catch (error)
-        {
-            console.log('Parser Error', JSON.stringify(error));
-        }
+    console.log ( "///////////////////", "Parser" );
+    console.log ( "Parsing File: " + lineProcessor, "Parser" );
+    console.log ( "///////////////////", "Parser" );
+    
+    return new Promise((resolve, reject) => {
+        this.dataService.file.readAsText(filePath, fileName).then((res) => {
+            console.log("Config Bat file", res);
+
+            let linesText = res.split("\n");
+            for (let line of linesText) {
+              let lineResult : Object = lineProcessor.parse(line, fileName);
+              lineProcessor.process(lineResult);
+            }
+
+            resolve(true);
+        }, (err) => {
+            console.log("error for checking file", err);
+            reject(err);
+        });
+
+    });
   }
 
 }
