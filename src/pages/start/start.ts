@@ -15,7 +15,23 @@ import { TsiDataServiceProvider } from '../../providers/tsi-data-service/tsi-dat
 })
 export class StartPage {
 
-	public background_img: string = "";
+	public background_img: string = "assets/images/wrong.png";
+	public left_items = [
+		'NV',
+		'Gewurze',
+		'Nahrmittel',
+		'Feinkost',
+		'Instant, Tee, Subungsittel',
+		'Alkoholfreie Getranke/ Getr.zubereitung',
+		'Alkoholische Getranke',
+		'Subwaren und Geback',
+		'Non Food',
+		'Vending-Fullprodukte',
+		'RABATT'
+	]
+	public right_title = 'Waschen im';
+	public right_item = "CLENTI FLUSSIGN";
+
 	constructor(public navCtrl: NavController, public navParams: NavParams, public dataService: TsiDataServiceProvider) {
 		
 	}
@@ -27,6 +43,6 @@ export class StartPage {
 
 	ionViewWillEnter() {
 		console.log("StartImage :", this.dataService.startImgFileName);
-		this.background_img = this.dataService.startImgFileName;
+		// this.background_img = this.dataService.startImgFileName;
 	}
 }

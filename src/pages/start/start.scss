@@ -3,9 +3,43 @@ page-start {
         margin-top: 81px !important;
         padding-right: 0px !important;
         padding-left: 0px !important;
+        text-align: center;
+
         img.background-img {
-            width: auto;
-            height: 100%;
+            position: fixed;
+			width: 700px;
+			height: auto;
+			margin: 5% auto; /* Will not center vertically and won't work in IE6/7. */
+			left: 0;
+			right: 0;
+			margin-top: 0px;
+        }
+
+        ion-row.left-button-container {
+        	margin-left: 20px;
+        	margin-top: 10px;
+
+        	span {
+        		font-size: 17px;
+        		font-weight: bold;
+        	}
+        }
+
+        ion-row.right-title-container {
+        	h2 {
+        		position: absolute;
+        		right: 20px;
+        		color: red;
+        		margin-top: 20px;
+        	}
+        }
+
+        ion-row.right-item {
+        	h5 {
+        		position: absolute;
+        		right: 20px;
+        		margin-top: 60px;
+        	}
         }
     }
 }
