@@ -1,0 +1,144 @@
+<ion-content>
+	<ion-row>
+		<ion-col col-6 class="product-detail-img-container">
+			<div>
+				<img [src]="product.image"/>
+			</div>
+		</ion-col>
+
+		<ion-col col-6 class="product-detail-info-container">
+			<div class="info-div">
+			<div>
+				Art. - Nr. = 80005 
+			</div>
+
+			<div>
+				Bezeichnung = METZGER MEYER Gruner Bohneneintopf m.
+			</div>
+
+			<div>
+				GTIN - VKE = 4400108012053
+			</div>
+
+			<div>
+				Inhalt = 1200 ml Dose
+			</div>
+
+			<div>
+				VKE je PAL = {{product.pal_je_vke}}
+			</div>
+
+			<div>
+				VPE je PAL = {{product.pal_je_vpe}}
+			</div>
+
+			<div>
+				VPE je Lage = {{product.vpe_per_lag}}
+			</div>
+
+			<div>
+				empf. LVP = {{product.lvp}}
+			</div>
+
+			<div>
+				VKE Vertreterpreis = 1,520 E
+			</div>
+
+			<div>
+				PAL Preis je VKE = 0,000 E
+			</div>
+
+			<div>
+				RLZ = 24.00 Monate
+			</div>
+
+			<div>
+				MHD = 36.00 Monate
+			</div>
+
+			<div>
+				Altestes MHD = 01.02.2021
+			</div>
+
+			<div>
+				Lagerbestand = 334
+			</div>
+			</div>
+		</ion-col>
+	</ion-row>
+
+	<ion-row>
+		<ion-col col-4>
+			<button ion-button>Vorhergehender Artikel</button>
+		</ion-col>
+
+		<ion-col col-4>
+			<ion-row class="amount-container">
+                <ion-col col-4>
+                    <ion-label>Menge VPE</ion-label>
+                </ion-col>
+
+                <ion-col col-4>
+                    <ion-input placeholder="000" type="text" [(ngModel)]="qty_vpe"></ion-input>
+                </ion-col>
+
+                <ion-col class="amount-btn-container" col-2>
+                    <div class="min-btn"></div>
+                    <div class="plus-btn"></div>
+                </ion-col>
+
+                <ion-col col-2>
+                	<div class="cart-btn"></div>
+                </ion-col>
+            </ion-row>
+		</ion-col>
+
+		<ion-col col-4>
+			<ion-row class="amount-container">
+                <ion-col col-4>
+                    <ion-label>Menge PAL</ion-label>
+                </ion-col>
+
+                <ion-col col-4>
+                    <ion-input placeholder="000" type="text" [(ngModel)]="qty_pal"></ion-input>
+                </ion-col>
+
+                <ion-col class="amount-btn-container" col-2>
+                    <div class="min-btn"></div>
+                    <div class="plus-btn"></div>
+                </ion-col>
+
+                <ion-col col-2>
+                	<div class="cart-btn"></div>
+                </ion-col>
+            </ion-row>
+		</ion-col>
+	</ion-row>
+
+	<ion-row>
+		<ion-col col-4>
+			<button ion-button>Nachster Artikel</button>
+		</ion-col>
+
+		<ion-col col-6 offset-1>
+			<ion-row class="amount-container">
+                <ion-col col-4>
+                    <ion-label>Anz, Artikel: {{no_article}}</ion-label>
+                </ion-col>
+
+                <ion-col col-4>
+                    <ion-input placeholder="000" type="text" [(ngModel)]="qty_pal"></ion-input>
+                </ion-col>
+
+                <ion-col class="amount-btn-container" col-2>
+                    <div class="min-btn"></div>
+                    <div class="plus-btn"></div>
+                </ion-col>
+
+                <ion-col col-2>
+                	<button class="zuruck" ion-button>Zuruck</button>
+                </ion-col>
+            </ion-row>
+		</ion-col>
+	</ion-row>
+</ion-content>

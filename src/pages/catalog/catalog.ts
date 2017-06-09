@@ -25,10 +25,17 @@ import { PRODUCTS } from '../../data/product';
  	}
 
  	ionViewDidLoad() {
- 		console.log('ionViewDidLoad CatalogPage');
+ 		
  	}
 
- 	public viewDetail(id: any) {
- 		this.ionProductCell.goDetail(id);
+ 	// public viewDetail = (id: any) => {
+ 	// 	console.log("Product id is. ", id);
+ 	// 	this.ionProductCell.goDetail(id);
+ 	// }
+
+ 	public getProducts = (...params) =>  {
+ 		// get all products according to the main and sub cateogry here...
+ 		
+ 		console.log("Category for getting total products is. ", params);
  	}
  }

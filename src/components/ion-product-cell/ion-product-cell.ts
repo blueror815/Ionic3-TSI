@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { NavController } from 'ionic-angular';
 
 /**
  * Generated class for the IonProductCellComponent component.
@@ -23,12 +24,16 @@ import { Component, Input } from '@angular/core';
 	    this._product = val
 	}
 
- 	constructor() {
+ 	constructor(public navCtrl: NavController) {
  		console.log('Hello IonProductCellComponent Component');
- 		this.text = 'Hello World';
  	}
 
  	public goDetail(id: any) {
  		console.log("Passed id is...", id);
+ 		this.navCtrl.push(
+ 			'ProductDetailPage', {
+ 				product: this._product
+ 			}
+ 		)
  	}
  }
