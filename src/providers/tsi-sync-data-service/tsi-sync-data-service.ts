@@ -5,6 +5,8 @@ import { TsiConstants } from '../../utils/TsiConstants';
 import { TsiConnectionServiceProvider } from '../tsi-connection-service/tsi-connection-service';
 import { TsiDataServiceProvider } from '../tsi-data-service/tsi-data-service';
 import { TsiEmailServiceProvider } from '../tsi-email-service/tsi-email-service';
+import { TsiParserConfigNames } from '../../parser/TsiParserConfigNames';
+import { TsiParserServiceProvider } from '../tsi-parser-service/tsi-parser-service';
 
 /*
   Generated class for the TsiSyncDataServiceProvider provider.
@@ -18,51 +20,99 @@ export class TsiSyncDataServiceProvider {
     public rootPath;
 
     constructor(public file: File, public connectionService : TsiConnectionServiceProvider, public dataService : TsiDataServiceProvider,
-                public emailService : TsiEmailServiceProvider) {
+                public emailService : TsiEmailServiceProvider, public parserService: TsiParserServiceProvider) {
         console.log('Hello TsiSyncDataServiceProvider Provider');
     }
 
-    public getRootStoragePath() : Promise<any> {
+    public getRootStoragePath() {
+        // return new Promise((resolve) => {
+        //     this.file.createDir(this.file.documentsDirectory, "TSI", false).then((res) => {
+        //         console.log('RootStoragePath Success=> ', JSON.stringify(res));
+        //         this.rootPath = this.file.documentsDirectory + "TSI/";
+        //         resolve(res.nativeURL);
+        //     }, (err) => {
+        //         console.log('RootStoragePath Error => ', JSON.stringify(err));
+        //         resolve(this.file.documentsDirectory + "TSI/");
+        //     });
+        // });
+
+        return this.file.documentsDirectory + "TSI/";
+    }
+
+    public getDataStoragePath() {
+
+        // return new Promise((resolve) => {
+        //     this.getRootStoragePath().then((res) => {
+        //         this.file.createDir(res, "Data", false).then((res) => {
+        //             console.log('DataStoragePath Success=> ', JSON.stringify(res));
+        //             resolve(res.nativeURL);
+        //         }, (err) => {
+        //             console.log('DataStoragePath Error => ', JSON.stringify(err));
+        //             resolve(this.file.documentsDirectory + "TSI/Data/")
+        //         })
+        //     });
+
+        // });
+        return this.getRootStoragePath() + "Data/";
+    }
+
+    public getGraphicsStoragePath() {
+
+        // return new Promise((resolve) => {
+        //     this.getDataStoragePath().then((res) => {
+        //         this.file.createDir(res, "Graphics", false).then((res) => {
+        //             console.log('GraphicStoragePath Success=> ', JSON.stringify(res));
+        //             resolve(res.nativeURL);
+        //         }, (err) => {
+        //             resolve(this.file.documentsDirectory + "TSI/Data/Graphics/")
+        //         })
+        //     });
+
+        // });
+
+        return this.getDataStoragePath() + "Graphics/";
+    }
+
+    public setGraphicsStoragePath() {
         return new Promise((resolve) => {
-            this.file.createDir(this.file.documentsDirectory, "TSI", false).then((res) => {
-                console.log('RootStoragePath Success=> ', JSON.stringify(res));
-                this.rootPath = this.file.documentsDirectory + "TSI/";
-                resolve(res.nativeURL);
+
+            this.file.checkDir(this.getDataStoragePath(), "Graphics").then((res) => {
+                console.log('StoragePath Error => ', res);
+                if (res) {
+                    resolve(true);
+                }
+                else {
+                    this.file.createDir(this.file.documentsDirectory, "TSI", false).then((res) => {
+                        console.log('Create StoragePath Success=> ', JSON.stringify(res));
+                        resolve(true);
+                    }, (err) => {
+                        console.log('Create StoragePath Error => ', JSON.stringify(err));
+                        resolve(false);
+                    });
+                }
             }, (err) => {
-                console.log('RootStoragePath Error => ', JSON.stringify(err));
-                resolve(this.file.documentsDirectory + "TSI/");
-            });
-        });
-    }
+                console.log('StoragePath Error => ', JSON.stringify(err));
 
-    public getDataStoragePath() : Promise<any> {
+                this.file.createDir(this.file.documentsDirectory, "TSI", false).then((res) => {
 
-        return new Promise((resolve) => {
-            this.getRootStoragePath().then((res) => {
-                this.file.createDir(res, "Data", false).then((res) => {
-                    console.log('DataStoragePath Success=> ', JSON.stringify(res));
-                    resolve(res.nativeURL);
+                    this.file.createDir(this.getRootStoragePath(), "Data", false).then((res) => {
+                        this.file.createDir(this.getDataStoragePath(), "Graphics", false).then((res) => {
+                            resolve(true);
+                        }, (err) => {
+                            console.log('Create StoragePath Error => ', JSON.stringify(err));
+                            resolve(false);
+                        });
+                        
+                    }, (err) => {
+                        console.log('Create StoragePath Error => ', JSON.stringify(err));
+                        resolve(false);
+                    });
                 }, (err) => {
-                    console.log('DataStoragePath Error => ', JSON.stringify(err));
-                    resolve(this.file.documentsDirectory + "TSI/Data/")
-                })
+                    
+                    console.log('Create StoragePath Error => ', JSON.stringify(err));
+                    resolve(false);
+                });
             });
-
-        });
-    }
-
-    public getGraphicsStoragePath() : Promise<any> {
-
-        return new Promise((resolve) => {
-            this.getDataStoragePath().then((res) => {
-                this.file.createDir(res, "Graphics", false).then((res) => {
-                    console.log('GraphicStoragePath Success=> ', JSON.stringify(res));
-                    resolve(res.nativeURL);
-                }, (err) => {
-                    resolve(this.file.documentsDirectory + "TSI/Data/Graphics/")
-                })
-            });
-
         });
     }
 
@@ -70,77 +120,64 @@ export class TsiSyncDataServiceProvider {
         let images = [];
 
         return new Promise((resolve) => {
-            this.getGraphicsStoragePath().then((res) => {
-                this.file.listDir(this.file.documentsDirectory + "TSI/Data/", "Graphics").then((res) => {
+            this.file.listDir(this.file.documentsDirectory + "TSI/Data/", "Graphics").then((res) => {
 
-                    console.log('LocalImageFiles => ', JSON.stringify(res));
+                console.log('LocalImageFiles => ', JSON.stringify(res));
 
-                    if (res && res.length > 0) {
-                        for (let img of res) {
-                            if (img.name != "." && img.name != "..") {
-                                images.push(img);
-                            }
-                        } 
-                    }
+                if (res && res.length > 0) {
+                    for (let img of res) {
+                        if (img.name != "." && img.name != "..") {
+                            images.push(img);
+                        }
+                    } 
+                }
 
-                    resolve(images);
-                }, (err) => {
-                    resolve(images);
-                })
-            });
+                resolve(images);
+            }, (err) => {
+                resolve(images);
+            })
 
         })
     }
 
-   public readConfigFile() {
+    public readConfigFile() {
 
         console.log("Calling read config file.");
 
         return new Promise((resolve, reject) => {
 
-            this.file.checkFile(this.file.documentsDirectory + "TSI/", "config.dat").then((res) => {
+            this.file.readAsText(this.getRootStoragePath(), "config.dat").then((res) => {
+                console.log("Config Bat file", res);
 
-                console.log("Checking Config file response", res);
-
-                if (res) {
-                    this.file.readAsText(this.file.documentsDirectory + "TSI/", "config.dat").then((res) => {
-                        console.log("Config Bat file", res);
-
-                        resolve(true);
-                    }, (err) => {
-                        console.log("error for checking file", err);
-                        reject(err);
-                    });
-                } else {
-                    resolve(false);
-                }		
+                resolve(true);
             }, (err) => {
-                console.log("Config Bat file", JSON.stringify(err));
+                console.log("error for checking file", err);
                 reject(err);
-            })
+            });
         });
     }
 
     public writeConfigFile() : Promise<any> {
 
         let configText = TsiConstants.CUSTOMER_FOLDER_KEY + "|" + this.dataService.customerFolder + "\n" +
-        TsiConstants.START_PIC_KEY + "|" + this.dataService.startImgFileName + "\n" +
-        TsiConstants.FTP_USERNAME + "|" + this.connectionService.username + "\n" +
-        TsiConstants.FTP_PASSWORD + "|" + this.connectionService.password + "\n" +
-        TsiConstants.EMAIL_SERVER_KEY + "|" + this.emailService.host + "\n" +
-        TsiConstants.EMAIL_PORT_KEY + "|" + this.emailService.port + "\n" +
-        TsiConstants.EMAIL_USERNAME_KEY + "|" + this.emailService.username + "\n" +
-        TsiConstants.EMAIL_PASSWORD_KEY + "|" + this.emailService.password + "\n" +
-        TsiConstants.EMAIL_RECIPIENT_KEY + "|" + this.emailService.recipient + "\n" +
-        TsiConstants.EMAIL_FROM_KEY + "|" + this.emailService.from + "\n";
+                            TsiConstants.START_PIC_KEY + "|" + this.dataService.startImgFileName + "\n" +
+                            TsiConstants.FTP_USERNAME + "|" + this.connectionService.username + "\n" +
+                            TsiConstants.FTP_PASSWORD + "|" + this.connectionService.password + "\n" +
+                            TsiConstants.EMAIL_SERVER_KEY + "|" + this.emailService.host + "\n" +
+                            TsiConstants.EMAIL_PORT_KEY + "|" + this.emailService.port + "\n" +
+                            TsiConstants.EMAIL_USERNAME_KEY + "|" + this.emailService.username + "\n" +
+                            TsiConstants.EMAIL_PASSWORD_KEY + "|" + this.emailService.password + "\n" +
+                            TsiConstants.EMAIL_RECIPIENT_KEY + "|" + this.emailService.recipient + "\n" +
+                            TsiConstants.EMAIL_FROM_KEY + "|" + this.emailService.from + "\n";
 
         console.log('config text', configText);
 
         return new Promise((resolve, reject) => {
-            this.file.checkFile(this.file.documentsDirectory + "TSI/", "config.dat").then((res) => {
+            this.file.checkFile(this.getRootStoragePath(), "config.dat").then((res) => {
                 console.log('checkFile', JSON.stringify(res));
+
                 if (!res) {
-                    this.file.writeFile(this.file.documentsDirectory + "TSI/", "config.dat", configText).then((res) => {
+                    this.file.writeFile(this.getRootStoragePath(), "config.dat", configText).then((res) => {
                         console.log('config text', JSON.stringify(res));
                         resolve(res);
                     }, (err) => {
@@ -149,7 +186,7 @@ export class TsiSyncDataServiceProvider {
                     })
                 }
                 else {
-                    this.file.writeExistingFile(this.file.documentsDirectory + "TSI/", "config.dat", configText).then((res) => {
+                    this.file.writeExistingFile(this.getRootStoragePath(), "config.dat", configText).then((res) => {
                         console.log('config text', JSON.stringify(res));
                         resolve({});
                     }, (err) => {
@@ -160,7 +197,8 @@ export class TsiSyncDataServiceProvider {
 
             }, (err) => {
                 console.log('checkFile', JSON.stringify(err));
-                this.file.writeFile(this.file.documentsDirectory + "TSI/", "config.dat", configText).then((res) => {
+
+                this.file.writeFile(this.getRootStoragePath(), "config.dat", configText).then((res) => {
                     console.log('config text', JSON.stringify(res));
                     resolve(res);
                 }, (err) => {
@@ -172,14 +210,82 @@ export class TsiSyncDataServiceProvider {
         })
     }
 
+    public  readCatalogTabHeadersFile() {
+    	// just to be sure
+    	this.parseFile(this.getCatalogTabHeadersFilename(), TsiParserConfigNames.PARSER_CONFIG_CATALOG_TAB_HEADERS, false,  TsiConstants.READ_LOCAL_FILETIMES_PRIORITY );
+    }
+
+    public  readLocalFileTimes(disableScreen)
+    {
+        this.parseFile( this.getSynchronizationFilename(), TsiParserConfigNames.PARSER_CONFIG_SYNCFILE, disableScreen,  TsiConstants.READ_LOCAL_FILETIMES_PRIORITY );
+    }
+
+    public  getAllCustomerFolders( disableScreen)
+    {
+        //this.execute( new GetCustomerFolderTask( TSI_ClientService.getDataService().getStatusTextView(),  disableScreen ) );
+    }
+
+    public  readServerFileTimes(disableScreen)
+    {
+        //this.execute( new ReadServerFileTimesTask( TSI_ClientService.getDataService().getStatusTextView(), disableScreen ) );
+    }
+
+    public  startAllParseTasks( disableScreen)
+    {
+        //this.execute( new StartAllParseTasksTask( TSI_ClientService.getDataService().getStatusTextView(), disableScreen ) );
+    }
+
+    public  readShoppingCarts(disableScreen)
+    {
+        //this.execute( new ReadShoppingCartsTask( TSI_ClientService.getDataService().getStatusTextView(), disableScreen ) );
+    }
+
+    private parseFile(filePath, parseConfig, disableScreen, priority)
+    {
+        //this.execute( new DefaultParseTask( filename, parseConfig, disableScreen, priority ) );
+        let pathArray = filePath.split('/');
+        let filename : string  = pathArray[pathArray.length() - 1];
+        this.parserService.parse(filePath.replace(filename, ''), filename, parseConfig);
+    }
+
+    public  readExpendituresFile( disableScreen)
+    {
+        this.parseFile( this.getExpendituresFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPENDITURES, disableScreen, TsiConstants.PARSE_EXPENDITURES_PRIORITY );
+    }
+
+    public  readExpenditureSuggestionsFile( disableScreen)
+    {
+        this.parseFile( this.getExpenditureSuggestionsFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPENDITURE_SUGGESTIONS, disableScreen, TsiConstants.PARSE_EXPENDITURE_SUGGESTION_PRIORITY );
+    }
+
+    public  readLicenceNumberSuggestionsFile( disableScreen)
+    {
+        this.parseFile( this.getLicenceNumberSuggestionFilename(), TsiParserConfigNames.PARSER_CONFIG_LICENCE_NUMBER_SUGGESTIONS, disableScreen, TsiConstants.PARSE_DEFAULT_PRIORITY );
+    }
+
+    public  readLicenceNumberFile( disableScreen)
+    {
+        this.parseFile( this.getLicenceNumberFilename(), TsiParserConfigNames.PARSER_CONFIG_LICENCE_NUMBER, disableScreen, TsiConstants.PARSE_DEFAULT_PRIORITY );
+    }
+
+    public  readExpandituresConfFile( disableScreen)
+    {
+        this.parseFile( this.getInternExpendituresConfFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPANDITURES_EMAIL, disableScreen, TsiConstants.PARSE_DEFAULT_PRIORITY );
+    }
+
+    public  readKmConfFile( disableScreen)
+    {
+        this.parseFile( this.getInternKmConfFilename(), TsiParserConfigNames.PARSER_CONFIG_KM_EMAIL, disableScreen, TsiConstants.PARSE_DEFAULT_PRIORITY );
+    }
+
     public getInternStoragePath()
     {
-        return this.file.documentsDirectory + "TSI/" + "Intern/";
+        return this.getRootStoragePath() + "Intern/";
     }
 
     public getConfFilename()
     {
-        return this.file.documentsDirectory + "TSI/" + "conf.dat";
+        return this.getRootStoragePath() + "conf.dat";
     }
 
     public getExpendituresFilename()
@@ -268,4 +374,6 @@ export class TsiSyncDataServiceProvider {
         
         return result;
     }
+
+
 }

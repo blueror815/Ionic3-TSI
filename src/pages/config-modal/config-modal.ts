@@ -142,8 +142,13 @@ export class ConfigModalPage {
         this.download_running = true;
         element.textContent = "Herunterladen abbrechen";
 
-        this.getMissingImages().then((res) => {
-          this.downloadAllServerImages(element, res);
+        this.getMissingImages().then((files) => {
+
+          this.syncService.setGraphicsStoragePath().then((res) => {
+            if (res) {
+              this.downloadAllServerImages(element, files);  
+            }
+          });
         });
       }
     }
@@ -153,7 +158,7 @@ export class ConfigModalPage {
       console.log("FileObject", JSON.stringify(files[this.download_index]));
       console.log("Filename ", filename);
 
-      this.connectionService.donwloadServerImage(this.dataService.file.documentsDirectory + "TSI/Data/Graphics/", filename).then(
+      this.connectionService.donwloadServerImage(this.syncService.getGraphicsStoragePath(), filename).then(
         (res) => {
           this.download_index ++;
           let localImgCnt = this.server_images.length - files.length + this.download_index + 1;
