@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { TsiDataServiceProvider } from '../tsi-data-service/tsi-data-service';
-import { TsiParserServiceProvider } from '../tsi-parser-service/tsi-parser-service';
 import { Dialogs } from '@ionic-native/dialogs';
 import { TsiParserConfigNames } from '../../parser/TsiParserConfigNames';
+import { TsiSyncDataServiceProvider } from '../tsi-sync-data-service/tsi-sync-data-service';
 
 /*
   Generated class for the TsiClientServiceProvider provider.
@@ -15,7 +15,7 @@ import { TsiParserConfigNames } from '../../parser/TsiParserConfigNames';
 @Injectable()
 export class TsiClientServiceProvider {
 
-  constructor(public dataService : TsiDataServiceProvider, public parserService : TsiParserServiceProvider, public dialog : Dialogs) {
+  constructor(public dataService : TsiDataServiceProvider, public syncService: TsiSyncDataServiceProvider, public dialog : Dialogs) {
     console.log('Hello TsiClientServiceProvider Provider');
   
   }
@@ -32,7 +32,23 @@ export class TsiClientServiceProvider {
   }
 
   public updateConfiguration(disableScreen) {
-     this.parserService.parse(this.dataService.file.documentsDirectory + "TSI/Data/", "sync.dat", TsiParserConfigNames.PARSER_CONFIG_SYNCFILE).then((res) => {}, (err) => {});
+        this.syncService.readLocalFileTimes( disableScreen );
+        this.syncService.readServerFileTimes( disableScreen );
+        //this.syncService.downloadOutdatedFilesTask( disableScreen );
+        
+        this.syncService.startAllParseTasks(disableScreen );
+        
+        //this.syncService.writeSnycFile( disableScreen );
+        
+        if (disableScreen)
+            this.syncService.readShoppingCarts( disableScreen );
+        
+        this.syncService.readExpenditureSuggestionsFile( disableScreen );
+        this.syncService.readExpendituresFile(  disableScreen );
+        this.syncService.readLicenceNumberSuggestionsFile( disableScreen );
+        this.syncService.readLicenceNumberFile(  disableScreen );
+        this.syncService.readExpandituresConfFile( disableScreen );
+        this.syncService.readKmConfFile( disableScreen );
 
   }
 

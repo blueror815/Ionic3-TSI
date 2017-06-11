@@ -210,32 +210,32 @@ export class TsiSyncDataServiceProvider {
         })
     }
 
-    public  readCatalogTabHeadersFile() {
+    public readCatalogTabHeadersFile() {
     	// just to be sure
     	this.parseFile(this.getCatalogTabHeadersFilename(), TsiParserConfigNames.PARSER_CONFIG_CATALOG_TAB_HEADERS, false,  TsiConstants.READ_LOCAL_FILETIMES_PRIORITY );
     }
 
-    public  readLocalFileTimes(disableScreen)
+    public readLocalFileTimes(disableScreen)
     {
         this.parseFile( this.getSynchronizationFilename(), TsiParserConfigNames.PARSER_CONFIG_SYNCFILE, disableScreen,  TsiConstants.READ_LOCAL_FILETIMES_PRIORITY );
     }
 
-    public  getAllCustomerFolders( disableScreen)
+    public getAllCustomerFolders(disableScreen)
     {
         //this.execute( new GetCustomerFolderTask( TSI_ClientService.getDataService().getStatusTextView(),  disableScreen ) );
     }
 
-    public  readServerFileTimes(disableScreen)
+    public readServerFileTimes(disableScreen)
     {
         //this.execute( new ReadServerFileTimesTask( TSI_ClientService.getDataService().getStatusTextView(), disableScreen ) );
     }
 
-    public  startAllParseTasks( disableScreen)
+    public startAllParseTasks( disableScreen)
     {
         //this.execute( new StartAllParseTasksTask( TSI_ClientService.getDataService().getStatusTextView(), disableScreen ) );
     }
 
-    public  readShoppingCarts(disableScreen)
+    public readShoppingCarts(disableScreen)
     {
         //this.execute( new ReadShoppingCartsTask( TSI_ClientService.getDataService().getStatusTextView(), disableScreen ) );
     }
@@ -248,32 +248,32 @@ export class TsiSyncDataServiceProvider {
         this.parserService.parse(filePath.replace(filename, ''), filename, parseConfig);
     }
 
-    public  readExpendituresFile( disableScreen)
+    public readExpendituresFile( disableScreen)
     {
         this.parseFile( this.getExpendituresFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPENDITURES, disableScreen, TsiConstants.PARSE_EXPENDITURES_PRIORITY );
     }
 
-    public  readExpenditureSuggestionsFile( disableScreen)
+    public readExpenditureSuggestionsFile( disableScreen)
     {
         this.parseFile( this.getExpenditureSuggestionsFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPENDITURE_SUGGESTIONS, disableScreen, TsiConstants.PARSE_EXPENDITURE_SUGGESTION_PRIORITY );
     }
 
-    public  readLicenceNumberSuggestionsFile( disableScreen)
+    public readLicenceNumberSuggestionsFile( disableScreen)
     {
         this.parseFile( this.getLicenceNumberSuggestionFilename(), TsiParserConfigNames.PARSER_CONFIG_LICENCE_NUMBER_SUGGESTIONS, disableScreen, TsiConstants.PARSE_DEFAULT_PRIORITY );
     }
 
-    public  readLicenceNumberFile( disableScreen)
+    public readLicenceNumberFile( disableScreen)
     {
         this.parseFile( this.getLicenceNumberFilename(), TsiParserConfigNames.PARSER_CONFIG_LICENCE_NUMBER, disableScreen, TsiConstants.PARSE_DEFAULT_PRIORITY );
     }
 
-    public  readExpandituresConfFile( disableScreen)
+    public readExpandituresConfFile( disableScreen)
     {
         this.parseFile( this.getInternExpendituresConfFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPANDITURES_EMAIL, disableScreen, TsiConstants.PARSE_DEFAULT_PRIORITY );
     }
 
-    public  readKmConfFile( disableScreen)
+    public readKmConfFile( disableScreen)
     {
         this.parseFile( this.getInternKmConfFilename(), TsiParserConfigNames.PARSER_CONFIG_KM_EMAIL, disableScreen, TsiConstants.PARSE_DEFAULT_PRIORITY );
     }
