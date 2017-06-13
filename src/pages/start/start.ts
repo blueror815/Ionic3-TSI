@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angu
 import { TsiDataServiceProvider } from '../../providers/tsi-data-service/tsi-data-service';
 import { TsiParserServiceProvider } from '../../providers/tsi-parser-service/tsi-parser-service';
 import { TsiParserConfigNames } from '../../parser/TsiParserConfigNames';
+import { TsiClientServiceProvider } from '../../providers/tsi-client-service/tsi-client-service';
 
 /**
  * Generated class for the StartPage page.
@@ -35,7 +36,8 @@ export class StartPage {
 	public right_item = "CLENTI FLUSSIGN";
 
 	constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, 
-				public dataService: TsiDataServiceProvider, public parserService:TsiParserServiceProvider) {
+				public dataService: TsiDataServiceProvider, public parserService:TsiParserServiceProvider,
+				public clientService: TsiClientServiceProvider) {
 		
 	}
 
@@ -46,9 +48,9 @@ export class StartPage {
 				console.log("StartImage :", this.dataService.startImgFileName);
 				this.background_img = this.dataService.startImgFileName;
 
-				this.dataService.clearCatalogTabHeaders();
-				this.dataService.clearAccountVectors();
-				
+				// this.dataService.clearCatalogTabHeaders();
+				// this.dataService.clearAccountVectors();
+				//this.clientService.updateConfiguration(false);
 				
 			}, (err) => {
 				this.presentConfigModal();

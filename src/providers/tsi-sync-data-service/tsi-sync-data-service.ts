@@ -18,58 +18,25 @@ import { TsiParserServiceProvider } from '../tsi-parser-service/tsi-parser-servi
 export class TsiSyncDataServiceProvider {
 
     public rootPath;
+    public syncFileTimesLocal : Map<string, string>;
+    public syncFileTimesServer : Map<string, string>;
 
     constructor(public file: File, public connectionService : TsiConnectionServiceProvider, public dataService : TsiDataServiceProvider,
                 public emailService : TsiEmailServiceProvider, public parserService: TsiParserServiceProvider) {
         console.log('Hello TsiSyncDataServiceProvider Provider');
+        this.syncFileTimesLocal = new Map();
+        this.syncFileTimesServer = new Map();
     }
 
     public getRootStoragePath() {
-        // return new Promise((resolve) => {
-        //     this.file.createDir(this.file.documentsDirectory, "TSI", false).then((res) => {
-        //         console.log('RootStoragePath Success=> ', JSON.stringify(res));
-        //         this.rootPath = this.file.documentsDirectory + "TSI/";
-        //         resolve(res.nativeURL);
-        //     }, (err) => {
-        //         console.log('RootStoragePath Error => ', JSON.stringify(err));
-        //         resolve(this.file.documentsDirectory + "TSI/");
-        //     });
-        // });
-
         return this.file.documentsDirectory + "TSI/";
     }
 
     public getDataStoragePath() {
-
-        // return new Promise((resolve) => {
-        //     this.getRootStoragePath().then((res) => {
-        //         this.file.createDir(res, "Data", false).then((res) => {
-        //             console.log('DataStoragePath Success=> ', JSON.stringify(res));
-        //             resolve(res.nativeURL);
-        //         }, (err) => {
-        //             console.log('DataStoragePath Error => ', JSON.stringify(err));
-        //             resolve(this.file.documentsDirectory + "TSI/Data/")
-        //         })
-        //     });
-
-        // });
         return this.getRootStoragePath() + "Data/";
     }
 
     public getGraphicsStoragePath() {
-
-        // return new Promise((resolve) => {
-        //     this.getDataStoragePath().then((res) => {
-        //         this.file.createDir(res, "Graphics", false).then((res) => {
-        //             console.log('GraphicStoragePath Success=> ', JSON.stringify(res));
-        //             resolve(res.nativeURL);
-        //         }, (err) => {
-        //             resolve(this.file.documentsDirectory + "TSI/Data/Graphics/")
-        //         })
-        //     });
-
-        // });
-
         return this.getDataStoragePath() + "Graphics/";
     }
 
@@ -228,9 +195,10 @@ export class TsiSyncDataServiceProvider {
     public readServerFileTimes(disableScreen)
     {
         //this.execute( new ReadServerFileTimesTask( TSI_ClientService.getDataService().getStatusTextView(), disableScreen ) );
+        //this.connectionService.readServerFiles();
     }
 
-    public startAllParseTasks( disableScreen)
+    public startAllParseTasks(disableScreen)
     {
         //this.execute( new StartAllParseTasksTask( TSI_ClientService.getDataService().getStatusTextView(), disableScreen ) );
     }
@@ -250,32 +218,36 @@ export class TsiSyncDataServiceProvider {
 
     public readExpendituresFile( disableScreen)
     {
-        this.parseFile( this.getExpendituresFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPENDITURES, disableScreen, TsiConstants.PARSE_EXPENDITURES_PRIORITY );
+        this.parseFile(this.getExpendituresFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPENDITURES, disableScreen, TsiConstants.PARSE_EXPENDITURES_PRIORITY);
     }
 
     public readExpenditureSuggestionsFile( disableScreen)
     {
-        this.parseFile( this.getExpenditureSuggestionsFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPENDITURE_SUGGESTIONS, disableScreen, TsiConstants.PARSE_EXPENDITURE_SUGGESTION_PRIORITY );
+        this.parseFile(this.getExpenditureSuggestionsFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPENDITURE_SUGGESTIONS, disableScreen, TsiConstants.PARSE_EXPENDITURE_SUGGESTION_PRIORITY);
     }
 
     public readLicenceNumberSuggestionsFile( disableScreen)
     {
-        this.parseFile( this.getLicenceNumberSuggestionFilename(), TsiParserConfigNames.PARSER_CONFIG_LICENCE_NUMBER_SUGGESTIONS, disableScreen, TsiConstants.PARSE_DEFAULT_PRIORITY );
+        this.parseFile(this.getLicenceNumberSuggestionFilename(), TsiParserConfigNames.PARSER_CONFIG_LICENCE_NUMBER_SUGGESTIONS, disableScreen, TsiConstants.PARSE_DEFAULT_PRIORITY);
     }
 
     public readLicenceNumberFile( disableScreen)
     {
-        this.parseFile( this.getLicenceNumberFilename(), TsiParserConfigNames.PARSER_CONFIG_LICENCE_NUMBER, disableScreen, TsiConstants.PARSE_DEFAULT_PRIORITY );
+        this.parseFile(this.getLicenceNumberFilename(), TsiParserConfigNames.PARSER_CONFIG_LICENCE_NUMBER, disableScreen, TsiConstants.PARSE_DEFAULT_PRIORITY);
     }
 
     public readExpandituresConfFile( disableScreen)
     {
-        this.parseFile( this.getInternExpendituresConfFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPANDITURES_EMAIL, disableScreen, TsiConstants.PARSE_DEFAULT_PRIORITY );
+        this.parseFile(this.getInternExpendituresConfFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPANDITURES_EMAIL, disableScreen, TsiConstants.PARSE_DEFAULT_PRIORITY);
     }
 
     public readKmConfFile( disableScreen)
     {
-        this.parseFile( this.getInternKmConfFilename(), TsiParserConfigNames.PARSER_CONFIG_KM_EMAIL, disableScreen, TsiConstants.PARSE_DEFAULT_PRIORITY );
+        this.parseFile(this.getInternKmConfFilename(), TsiParserConfigNames.PARSER_CONFIG_KM_EMAIL, disableScreen, TsiConstants.PARSE_DEFAULT_PRIORITY);
+    }
+
+    public putServerSyncTime(filename, time) {
+        this.syncFileTimesServer.set(filename, time);
     }
 
     public getInternStoragePath()

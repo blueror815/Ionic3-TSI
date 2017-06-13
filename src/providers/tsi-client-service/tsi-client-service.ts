@@ -33,7 +33,7 @@ export class TsiClientServiceProvider {
 
   public updateConfiguration(disableScreen) {
         this.syncService.readLocalFileTimes( disableScreen );
-        this.syncService.readServerFileTimes( disableScreen );
+        //this.syncService.readServerFileTimes( disableScreen );
         //this.syncService.downloadOutdatedFilesTask( disableScreen );
         
         this.syncService.startAllParseTasks(disableScreen );

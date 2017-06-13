@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Ftp } from '../../../plugins/cordova-plugin-ftp/types/ftp';
 import { File } from '@ionic-native/file';
+import { TsiSyncDataServiceProvider } from '../tsi-sync-data-service/tsi-sync-data-service';
+import { TsiDataServiceProvider } from '../tsi-data-service/tsi-data-service';
 /*
   Generated class for the TsiConnectionServiceProvider provider.
 
@@ -16,7 +17,7 @@ export class TsiConnectionServiceProvider {
   public username : string;
   public password : string;
 
-  constructor(public http: Http, public file: File) {
+  constructor(public file: File) {
     console.log('Hello TsiConnectionServiceProvider Provider');
   }
 
@@ -89,7 +90,6 @@ export class TsiConnectionServiceProvider {
         })    
     });
           
-      
   }
 
   public getImageCount(url : string) : Promise<any> {
@@ -113,6 +113,53 @@ export class TsiConnectionServiceProvider {
         })
     });
   }
+
+//   public readServerFiles() {
+//     let files = [];
+
+//     Ftp.ls('/').then((fileList) => {
+    
+//         if (fileList && fileList.length > 0) {
+
+//             let rx = new RegExp(this.dataService.customerFolder + '|Artikel|Kategorien|News');
+
+//             for (let i = 0; i < fileList.length; i++) {
+
+//                 if (fileList[i].name) {
+//                     // code...
+//                     let foldername = fileList[i].name;
+
+//                     if (foldername.match(rx)) {
+//                         this.getFtpFiles(foldername + '/').then((res) => {
+//                             console.log("Ftp get files :", JSON.stringify(res));
+
+//                             files = res;
+//                             for (let file of files) {
+//                                 this.syncService.putServerSyncTime(file.name, file.modifiedDate);
+//                             }
+//                         }, (err) => {
+
+//                         }); 
+//                     }
+//                 }
+//             }
+//         }
+
+//         console.log("Ftp get files :", files);
+    
+//     }, (error) => {
+
+//         console.log("Ftp ls :", JSON.stringify(error));
+
+//     });
+    
+//   }
+
+  public downloadOutdatedFiles() {
+
+  }
+
+
 
 }
 
