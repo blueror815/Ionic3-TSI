@@ -76,9 +76,9 @@ export class TsiDataServiceProvider {
     public rabattArticles : TsiArticle[];
 
     public expenditureEntries : TsiExpenditure[];
-    public expenditureSuggestion : string[];
-    public licenceNumberSuggestions : string[];
-    public catalogTabHeaders : string[];
+    public expenditureSuggestion;
+    public licenceNumberSuggestions;
+    public catalogTabHeaders;
     public expenditureEmail;
     public kmEmail;
 

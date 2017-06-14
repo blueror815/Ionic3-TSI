@@ -48,9 +48,9 @@ export class StartPage {
 				console.log("StartImage :", this.dataService.startImgFileName);
 				this.background_img = this.dataService.startImgFileName;
 
-				// this.dataService.clearCatalogTabHeaders();
-				// this.dataService.clearAccountVectors();
-				//this.clientService.updateConfiguration(false);
+				this.dataService.clearCatalogTabHeaders();
+				this.dataService.clearAccountVectors();
+				this.clientService.updateConfiguration(true);
 				
 			}, (err) => {
 				this.presentConfigModal();

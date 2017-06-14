@@ -114,51 +114,84 @@ export class TsiConnectionServiceProvider {
     });
   }
 
-//   public readServerFiles() {
-//     let files = [];
+  public readServerFiles(dataService, syncService) {
+    let files = [];
+    console.log('ReadServer Files');
 
-//     Ftp.ls('/').then((fileList) => {
+    this.checkFTP(this.server, this.username, this.password).then((res) => {
+        if(res) {
+            Ftp.ls('/').then((fileList) => {
+                console.log('FileList', JSON.stringify(fileList));
+                if (fileList && fileList.length > 0) {
+
+                    let rx = new RegExp(dataService.customerFolder + '|Artikel|Kategorien|News');
+
+                    for (let i = 0; i < fileList.length; i++) {
+
+                        if (fileList[i].name) {
+                            // code...
+                            let foldername = fileList[i].name;
+
+                            if (foldername.match(rx)) {
+                                Ftp.ls(foldername + '/').then((files) => {
+                                    console.log("Ftp get files :", JSON.stringify(files));
+                                    for (let file of files) {
+                                        console.log('Ftp File', JSON.stringify(file));
+                                        syncService.putServerSyncTime(foldername + '/' + file.name, file.modifiedDate);
+                                    }
+                                }, (err) => {
+
+                                }); 
+                            }
+                        }
+                    }
+                }
+            
+            }, (error) => {
+
+                console.log("Ftp ls :", JSON.stringify(error));
+
+            });
+        }
+    });
     
-//         if (fileList && fileList.length > 0) {
-
-//             let rx = new RegExp(this.dataService.customerFolder + '|Artikel|Kategorien|News');
-
-//             for (let i = 0; i < fileList.length; i++) {
-
-//                 if (fileList[i].name) {
-//                     // code...
-//                     let foldername = fileList[i].name;
-
-//                     if (foldername.match(rx)) {
-//                         this.getFtpFiles(foldername + '/').then((res) => {
-//                             console.log("Ftp get files :", JSON.stringify(res));
-
-//                             files = res;
-//                             for (let file of files) {
-//                                 this.syncService.putServerSyncTime(file.name, file.modifiedDate);
-//                             }
-//                         }, (err) => {
-
-//                         }); 
-//                     }
-//                 }
-//             }
-//         }
-
-//         console.log("Ftp get files :", files);
     
-//     }, (error) => {
-
-//         console.log("Ftp ls :", JSON.stringify(error));
-
-//     });
-    
-//   }
-
-  public downloadOutdatedFiles() {
-
   }
 
+  public downloadOutdatedFiles(dataService: TsiDataServiceProvider, syncService: TsiSyncDataServiceProvider) {
+    let serverFilenames = syncService.getServerFilenames();
+    console.log('ServerFilenames', JSON.stringify(serverFilenames));
+    if (serverFilenames) {
+
+        for (let serverFile of serverFilenames) {
+            let filename = serverFile.split('/').pop();
+            let path = serverFile.replace(filename, '');
+
+            let rx = new RegExp(dataService.customerFolder + '|Artikel|Kategorien|News');
+
+            if (path.match(rx)) {
+                let localtime = Date.parse(syncService.getLocalSyncTime(serverFile));
+                let servertime = Date.parse(syncService.getServerSyncTime(serverFile));
+
+                if (localtime < servertime) {
+                    this.downloadFile(syncService.getDataStoragePath(), serverFile, filename);
+                    syncService.putLocalSyncTime(serverFile, syncService.getServerSyncTime(serverFile));
+                }
+            }
+        }
+    }
+  }
+
+
+  public downloadFile(localpath, serverPath, filename) {
+
+     let localFilePath = localpath.replace("file://", "") + filename;
+     Ftp.download(localFilePath, serverPath).then((res) => {
+        console.log("Download Success :", res);
+     }, (err) => {
+            
+     })    
+  }
 
 
 }

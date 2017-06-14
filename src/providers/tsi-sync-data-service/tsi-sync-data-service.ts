@@ -177,6 +177,49 @@ export class TsiSyncDataServiceProvider {
         })
     }
 
+    public writeSyncFile(disableScreen) {
+
+        let syncTxt = '';
+        for (let i = 0;i < this.syncFileTimesLocal.entries.length;i ++) {
+            syncTxt = syncTxt + this.syncFileTimesLocal.entries[i].key + "|" + this.syncFileTimesLocal.entries[i].value + "\n";
+        }
+
+        console.log('Sync Text', syncTxt);
+
+        this.file.checkFile(this.getDataStoragePath(), "sync.dat").then((res) => {
+            if (!res) {
+                    this.file.writeFile(this.getDataStoragePath(), "sync.dat", syncTxt).then((res) => {
+                        console.log('sync text', JSON.stringify(res));
+    
+                    }, (err) => {
+                        console.log('sync text', JSON.stringify(err));
+                        
+                    })
+                }
+                else {
+                    this.file.writeExistingFile(this.getDataStoragePath(), "sync.dat", syncTxt).then((res) => {
+                        console.log('sync text', JSON.stringify(res));
+                        
+                    }, (err) => {
+                        console.log('sync text', JSON.stringify(err));
+                        
+                    })
+                } 
+
+            }, (err) => {
+                console.log('SyncFile', JSON.stringify(err));
+
+                this.file.writeFile(this.getDataStoragePath(), "sync.dat", syncTxt).then((res) => {
+                    console.log('sync text', JSON.stringify(res));
+                    
+                }, (err) => {
+                    console.log('sync text', JSON.stringify(err));
+                    
+                })
+        });
+        
+    }
+
     public readCatalogTabHeadersFile() {
     	// just to be sure
     	this.parseFile(this.getCatalogTabHeadersFilename(), TsiParserConfigNames.PARSER_CONFIG_CATALOG_TAB_HEADERS, false,  TsiConstants.READ_LOCAL_FILETIMES_PRIORITY );
@@ -195,7 +238,7 @@ export class TsiSyncDataServiceProvider {
     public readServerFileTimes(disableScreen)
     {
         //this.execute( new ReadServerFileTimesTask( TSI_ClientService.getDataService().getStatusTextView(), disableScreen ) );
-        //this.connectionService.readServerFiles();
+        this.connectionService.readServerFiles(this.dataService, this);
     }
 
     public startAllParseTasks(disableScreen)
@@ -208,11 +251,17 @@ export class TsiSyncDataServiceProvider {
         //this.execute( new ReadShoppingCartsTask( TSI_ClientService.getDataService().getStatusTextView(), disableScreen ) );
     }
 
+    public downloadOutlatedFiles(disableScreen) {
+        this.connectionService.downloadOutdatedFiles(this.dataService, this);
+    }
+
     private parseFile(filePath, parseConfig, disableScreen, priority)
     {
-        //this.execute( new DefaultParseTask( filename, parseConfig, disableScreen, priority ) );
+    
         let pathArray = filePath.split('/');
-        let filename : string  = pathArray[pathArray.length() - 1];
+
+        let filename  = pathArray.pop();
+  
         this.parserService.parse(filePath.replace(filename, ''), filename, parseConfig);
     }
 
@@ -248,6 +297,11 @@ export class TsiSyncDataServiceProvider {
 
     public putServerSyncTime(filename, time) {
         this.syncFileTimesServer.set(filename, time);
+        console.log('syncFileTimesServer', JSON.stringify(this.syncFileTimesServer));
+    }
+
+    public putLocalSyncTime(filename, time) {
+        this.syncFileTimesLocal.set(filename, time);
     }
 
     public getInternStoragePath()
@@ -345,6 +399,45 @@ export class TsiSyncDataServiceProvider {
         let result = "";
         
         return result;
+    }
+
+    public getServerFilenames() {
+        return this.getFilenames(this.syncFileTimesServer);
+    }
+
+    public getLocalFilenames() {
+        return this.getFilenames(this.syncFileTimesLocal);
+    }
+
+    public getFilenames(times : Map<string, string>) {
+        let result = [];
+
+        let filenames = times.entries;
+        for (let i = 0;i < filenames.length;i ++) {
+            result.push(filenames[i].key);
+        }
+
+        return result;
+    }
+
+    public getLocalSyncTime(filename) {
+        let time = this.syncFileTimesLocal.get(filename);
+        if (time) {
+            return time;
+        }
+        else {
+            return '-1';
+        }
+    }
+
+    public getServerSyncTime(filename) {
+        let time = this.syncFileTimesServer.get(filename);
+        if (time) {
+            return time;
+        }
+        else {
+            return '-1';
+        }
     }
 
 
