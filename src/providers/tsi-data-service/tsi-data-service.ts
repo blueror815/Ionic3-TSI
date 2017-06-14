@@ -49,7 +49,7 @@ export class TsiDataServiceProvider {
 
     // KundenID , AuftragsID, BestellungsID
     public orders : Map<string, Map<string, Map<string, TsiOrder>>>;
-    public categoryArticles : Map<TsiCategory, Map<TsiCategory, Map<string, TsiArticle>>>;
+    public categoryArticles :Map<TsiCategory, Map<string, TsiArticle>>;
 
     // Vectors for Reading the NewCustomerConf File
     public accountType  : TsiConfigEntry[];
@@ -118,6 +118,8 @@ export class TsiDataServiceProvider {
 
     constructor(public file: File, public connectionService: TsiConnectionServiceProvider,public emailService: TsiEmailServiceProvider) {
         console.log('Hello TsiDataServiceProvider Provider');
+
+        this.categoryArticles = new Map<TsiCategory, Map<string, TsiArticle>>();
     }
 
     public getCustomer(id) {
@@ -170,20 +172,24 @@ export class TsiDataServiceProvider {
         // All Articles
         if (this.articlesViaID.get(article.getArticleNumber()) != null)
         {
-            this.articlesViaIDTmp.set( article.getArticleNumber(), this.articlesViaID.get(article.getArticleNumber()));
-            this.articlesViaID.set( article.getArticleNumber(), article );
+            // this.articlesViaIDTmp.set( article.getArticleNumber(), this.articlesViaID.get(article.getArticleNumber()));
+            // this.articlesViaID.set( article.getArticleNumber(), article );
+            this.articlesViaIDTmp[article.getArticleNumber()] = this.articlesViaID[article.getArticleNumber()];
+            this.articlesViaID[article.getArticleNumber()] = article;
         }
         else {
-            this.articlesViaID.set( article.getArticleNumber(), article );
+            // this.articlesViaID.set( article.getArticleNumber(), article );
+            this.articlesViaID[article.getArticleNumber()] = article;
         }
 
-        this.articlesViaEANVPE.set( article.getGTIN_VPE(), article );
-        this.articlesViaEANVKE.set( article.getGTIN_VKE(), article );
+        // this.articlesViaEANVPE.set( article.getGTIN_VPE(), article );
+        // this.articlesViaEANVKE.set( article.getGTIN_VKE(), article );
+        this.articlesViaEANVKE[article.getGTIN_VKE()] = article;
 
         // Only Category
         let categoryId = article.getCategory();
 
-        let category : TsiCategory = this.allCategories.get(categoryId);
+        let category = this.allCategories[categoryId];
 
         if (category == null)
             return;
@@ -191,11 +197,13 @@ export class TsiDataServiceProvider {
         let articlesOfCategory = this.categoryArticles.get(category);
 
         if (articlesOfCategory == null) {
-            articlesOfCategory = new Map<TsiCategory, Map<string, TsiArticle>>();
-            this.categoryArticles.set( category, articlesOfCategory );
+            articlesOfCategory = new Map<string, TsiArticle>();
+            //this.categoryArticles.set( category, articlesOfCategory );
+            this.categoryArticles[category] = articlesOfCategory;
         }
 
-        articlesOfCategory.set( article.getArticleNumber() + article.getUnit(), article );
+        //articlesOfCategory.set( article.getArticleNumber() + article.getUnit(), article );
+        articlesOfCategory[article.getArticleNumber() + article.getUnit()] = article;
 
         // Main Category
         /*
@@ -249,17 +257,20 @@ export class TsiDataServiceProvider {
 
     public putCustomer(customer)
     {
-        this.customers.set(customer.getCustomerID(), customer);
+        //this.customers.set(customer.getCustomerID(), customer);
+        this.customers[customer.getCustomerID()] = customer;
     }
 
     public putCustomerCatalog( customerID,  customer)
     {
-        this.customersCatalogs.set( customerID, customer );
+        //this.customersCatalogs.set( customerID, customer );
+        this.customersCatalogs[customerID] = customer;
     }
 
     public getCustomerCatalog(customerID)
     {
-        return this.customersCatalogs.get(customerID);
+        //return this.customersCatalogs.get(customerID);
+        return this.customersCatalogs[customerID];
     }
 
 	public clearArticleCategories()
@@ -329,10 +340,12 @@ export class TsiDataServiceProvider {
 
     public putMainCategory(mainCategoryID, category)
     {
-        if (this.mainCategories.get( mainCategoryID ) == null)
+        if (this.mainCategories[mainCategoryID] == null)
         {
-            this.mainCategories.set( mainCategoryID, category );
-            this.allCategories.set( category.getId(), category );
+            // this.mainCategories.set( mainCategoryID, category );
+            // this.allCategories.set( category.getId(), category );
+            this.mainCategories[mainCategoryID] = category;
+            this.allCategories[category.getId()] = category;
         }
     }
 
@@ -342,7 +355,8 @@ export class TsiDataServiceProvider {
         if (mainCategory.getChild( category.getId() ) == null)
         {
             mainCategory.addChild( category );
-            this.allCategories.set( category.getId(), category );
+            //this.allCategories.set( category.getId(), category );
+            this.allCategories[category.getId()] = category;
         }
     }
 
@@ -373,9 +387,12 @@ export class TsiDataServiceProvider {
         order.setPrice( rawOrder.price );
         order.setVpe_size( rawOrder.vpe_size);
 
-        orderList.set( rawOrder.position, order );
-        ordersOfCustomer.set( rawOrder.billCounter, orderList );
-        this.orders.set( rawOrder.customerID, ordersOfCustomer );
+        // orderList.set( rawOrder.position, order );
+        // ordersOfCustomer.set( rawOrder.billCounter, orderList );
+        // this.orders.set( rawOrder.customerID, ordersOfCustomer );
+        orderList[rawOrder.position] = order;
+        ordersOfCustomer[rawOrder.billCounter] = orderList;
+        this.orders[rawOrder.customerID] = ordersOfCustomer;
     }
 
     public clearCatalogTabHeaders() {

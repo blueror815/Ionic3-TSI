@@ -10,11 +10,12 @@ export class TsiCategory {
     }
 
     public addChild(child : TsiCategory) {
-        this.childs.set(child.id, child);
+       // this.childs.set(child.id, child);
+       this.childs[child.id] = child;
     }
 
     public getChild(id) {
-        return this.childs.get(id);
+        return this.childs[id];
     }
 
     public getChilds() {

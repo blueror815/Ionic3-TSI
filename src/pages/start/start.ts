@@ -18,7 +18,7 @@ import { TsiClientServiceProvider } from '../../providers/tsi-client-service/tsi
 })
 export class StartPage {
 
-	public background_img: string = "assets/images/wrong.png";
+	public background_img: string = "";
 	public left_items = [
 		'NV',
 		'Gewurze',
@@ -52,10 +52,25 @@ export class StartPage {
 				this.dataService.clearAccountVectors();
 				this.clientService.updateConfiguration(true);
 				
+				this.updateCategories();
 			}, (err) => {
 				this.presentConfigModal();
 			})
 		}, 2000);
+
+	}
+
+	private updateCategories() {
+		let categories = this.dataService.mainCategories;
+		
+		this.left_items = [];
+		
+		for(let i = 0;i < categories.values.length;i ++) {
+			let category = categories.values[i];
+			this.left_items.push(category.name);
+		}
+		
+		console.log('Start Categories', JSON.stringify(categories));
 	}
 
 	presentConfigModal = () => {

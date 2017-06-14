@@ -132,12 +132,16 @@ export class TsiConnectionServiceProvider {
                             // code...
                             let foldername = fileList[i].name;
 
-                            if (foldername.match(rx)) {
+                            if (foldername.match(rx) && foldername.match(rx)[0] != '') {
                                 Ftp.ls(foldername + '/').then((files) => {
                                     console.log("Ftp get files :", JSON.stringify(files));
                                     for (let file of files) {
                                         console.log('Ftp File', JSON.stringify(file));
-                                        syncService.putServerSyncTime(foldername + '/' + file.name, file.modifiedDate);
+
+                                        if (file.name != '.' && file.name != '..') {
+                                            syncService.putServerSyncTime(foldername + '/' + file.name, file.modifiedDate);
+                                        }
+                                        
                                     }
                                 }, (err) => {
 
@@ -169,7 +173,7 @@ export class TsiConnectionServiceProvider {
 
             let rx = new RegExp(dataService.customerFolder + '|Artikel|Kategorien|News');
 
-            if (path.match(rx)) {
+            if (path.match(rx) && path.match(rx)[0] != '') {
                 let localtime = Date.parse(syncService.getLocalSyncTime(serverFile));
                 let servertime = Date.parse(syncService.getServerSyncTime(serverFile));
 

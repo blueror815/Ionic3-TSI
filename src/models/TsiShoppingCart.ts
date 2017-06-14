@@ -25,7 +25,7 @@ export class TsiShoppingCart {
     {
         for(let i=0; i<entries.length; i++)
         {
-            this.entrys.set( entries[i].getArticleID(), entries[i]);
+            this.entrys[entries[i].getArticleID()] = entries[i];
         }
     }
 
@@ -37,7 +37,7 @@ export class TsiShoppingCart {
         if (entry == null)
         {
             entry = new TsiShoppingCartEntry(id, this.dataService);
-            this.entrys.set( id, entry );
+            this.entrys[id] = entry;
         }
         this.indexCounter += 1;
         entry.setIndex(this.indexCounter);
@@ -50,11 +50,11 @@ export class TsiShoppingCart {
     {
         this.modified = true;
 
-        let entry = this.entrys.get( id );
+        let entry = this.entrys[id];
         if (entry == null)
         {
             entry = new TsiShoppingCartEntry( id, this.dataService );
-            this.entrys.set( id, entry );
+            this.entrys[id] = entry;
         }
         this.indexCounter += 1;
         entry.setIndex( this.indexCounter );
@@ -73,7 +73,7 @@ export class TsiShoppingCart {
     public  getVpeArticleCount( id)
     {
         let result = 0;
-        let entry = this.entrys.get( id );
+        let entry = this.entrys[id];
         if (entry != null)
         {
             let count = entry.getVPECount();
@@ -86,7 +86,7 @@ export class TsiShoppingCart {
     public  getPalArticleCount( id)
     {
         let result = 0;
-        let entry = this.entrys.get( id );
+        let entry = this.entrys[id];
         if (entry != null)
         {
             let count = entry.getPALCount();

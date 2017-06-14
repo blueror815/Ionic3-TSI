@@ -24,8 +24,8 @@ export class TsiSyncDataServiceProvider {
     constructor(public file: File, public connectionService : TsiConnectionServiceProvider, public dataService : TsiDataServiceProvider,
                 public emailService : TsiEmailServiceProvider, public parserService: TsiParserServiceProvider) {
         console.log('Hello TsiSyncDataServiceProvider Provider');
-        this.syncFileTimesLocal = new Map();
-        this.syncFileTimesServer = new Map();
+        this.syncFileTimesLocal = new Map<string, string>();
+        this.syncFileTimesServer = new Map<string, string>();
     }
 
     public getRootStoragePath() {
@@ -296,12 +296,13 @@ export class TsiSyncDataServiceProvider {
     }
 
     public putServerSyncTime(filename, time) {
-        this.syncFileTimesServer.set(filename, time);
+        this.syncFileTimesServer[filename] = time;
         console.log('syncFileTimesServer', JSON.stringify(this.syncFileTimesServer));
     }
 
     public putLocalSyncTime(filename, time) {
-        this.syncFileTimesLocal.set(filename, time);
+        this.syncFileTimesLocal[filename] = time;
+        console.log('syncFileTimesLocal', JSON.stringify(this.syncFileTimesLocal));
     }
 
     public getInternStoragePath()
@@ -416,6 +417,9 @@ export class TsiSyncDataServiceProvider {
         for (let i = 0;i < filenames.length;i ++) {
             result.push(filenames[i].key);
         }
+
+        console.log('Times and Results', JSON.stringify(times));
+        console.log('Times and Results', JSON.stringify(result));
 
         return result;
     }
