@@ -32,23 +32,45 @@ export class TsiClientServiceProvider {
   }
 
   public updateConfiguration(disableScreen) {
-        this.syncService.readLocalFileTimes( disableScreen );
-        this.syncService.readServerFileTimes( disableScreen );
-        this.syncService.downloadOutlatedFiles( disableScreen );
+        this.syncService.readLocalFileTimes(disableScreen).then((res) => {
+          this.syncService.downloadOutlatedFiles(disableScreen).then((res) => {
+            this.syncService.startAllParseTasks(disableScreen).then((res) => {
+              this.syncService.writeSyncFile(disableScreen).then((res) => {
+                this.syncService.readShoppingCarts(disableScreen).then((res) => {
+                  this.syncService.readExpenditureSuggestionsFile(disableScreen).then((res) => {
+                    this.syncService.readExpendituresFile(disableScreen).then((res) => {
+                      this.syncService.readLicenceNumberSuggestionsFile(disableScreen).then((res) => {
+                        this.syncService.readLicenceNumberFile(disableScreen).then((res) => {
+                          this.syncService.readExpandituresConfFile(disableScreen).then((res) => {
+                            this.syncService.readKmConfFile(disableScreen).then((res) => {
+                              
+                            });    
+                          });    
+                        });    
+                      });
+                    });    
+                  });
+                });  
+              });  
+            });
+          });
+        });
+        // this.syncService.readServerFileTimes( disableScreen );
+        // this.syncService.downloadOutlatedFiles( disableScreen );
         
-        this.syncService.startAllParseTasks(disableScreen );
+        // this.syncService.startAllParseTasks(disableScreen );
         
-        this.syncService.writeSyncFile(disableScreen );
+        // this.syncService.writeSyncFile(disableScreen );
         
-        if (disableScreen)
-            this.syncService.readShoppingCarts( disableScreen );
+        // if (disableScreen)
+        //     this.syncService.readShoppingCarts( disableScreen );
         
-        this.syncService.readExpenditureSuggestionsFile( disableScreen );
-        this.syncService.readExpendituresFile( disableScreen );
-        this.syncService.readLicenceNumberSuggestionsFile( disableScreen );
-        this.syncService.readLicenceNumberFile(  disableScreen );
-        this.syncService.readExpandituresConfFile( disableScreen );
-        this.syncService.readKmConfFile( disableScreen );
+        // this.syncService.readExpenditureSuggestionsFile( disableScreen );
+        // this.syncService.readExpendituresFile( disableScreen );
+        // this.syncService.readLicenceNumberSuggestionsFile( disableScreen );
+        // this.syncService.readLicenceNumberFile(  disableScreen );
+        // this.syncService.readExpandituresConfFile( disableScreen );
+        // this.syncService.readKmConfFile( disableScreen );
 
   }
 

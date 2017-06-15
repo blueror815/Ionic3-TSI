@@ -222,12 +222,20 @@ export class TsiSyncDataServiceProvider {
 
     public readCatalogTabHeadersFile() {
     	// just to be sure
-    	this.parseFile(this.getCatalogTabHeadersFilename(), TsiParserConfigNames.PARSER_CONFIG_CATALOG_TAB_HEADERS, false,  TsiConstants.READ_LOCAL_FILETIMES_PRIORITY );
+        return new Promise((resolve) => {
+            this.parseFile(this.getCatalogTabHeadersFilename(), TsiParserConfigNames.PARSER_CONFIG_CATALOG_TAB_HEADERS, false,  TsiConstants.READ_LOCAL_FILETIMES_PRIORITY).then((res) => {
+                resolve();
+            });
+        });
     }
 
     public readLocalFileTimes(disableScreen)
     {
-        this.parseFile( this.getSynchronizationFilename(), TsiParserConfigNames.PARSER_CONFIG_SYNCFILE, disableScreen,  TsiConstants.READ_LOCAL_FILETIMES_PRIORITY );
+        return new Promise((resolve) => {
+            this.parseFile(this.getSynchronizationFilename(), TsiParserConfigNames.PARSER_CONFIG_SYNCFILE, disableScreen,  TsiConstants.READ_LOCAL_FILETIMES_PRIORITY).then((res) => {
+                resolve();
+            });
+        });
     }
 
     public getAllCustomerFolders(disableScreen)
@@ -238,11 +246,18 @@ export class TsiSyncDataServiceProvider {
     public readServerFileTimes(disableScreen)
     {
         //this.execute( new ReadServerFileTimesTask( TSI_ClientService.getDataService().getStatusTextView(), disableScreen ) );
-        this.connectionService.readServerFiles(this.dataService, this);
+        return new Promise((resolve) => {
+            this.connectionService.readServerFiles(this.dataService, this).then((res) => {
+                resolve();
+            });
+        });
     }
 
     public startAllParseTasks(disableScreen)
     {
+        return new Promise((resolve) => {
+            resolve();
+        });
         //this.execute( new StartAllParseTasksTask( TSI_ClientService.getDataService().getStatusTextView(), disableScreen ) );
     }
 
@@ -252,7 +267,11 @@ export class TsiSyncDataServiceProvider {
     }
 
     public downloadOutlatedFiles(disableScreen) {
-        this.connectionService.downloadOutdatedFiles(this.dataService, this);
+        return new Promise((resolve) => {
+            this.connectionService.downloadOutdatedFiles(this.dataService, this).then((res) => {
+                resolve();
+            });
+        });
     }
 
     private parseFile(filePath, parseConfig, disableScreen, priority)
@@ -262,37 +281,67 @@ export class TsiSyncDataServiceProvider {
 
         let filename  = pathArray.pop();
   
-        this.parserService.parse(filePath.replace(filename, ''), filename, parseConfig);
+        return new Promise((resolve) => {
+            this.parserService.parse(filePath.replace(filename, ''), filename, parseConfig).then((res) => {
+                resolve();
+            }, (err) => {
+                resolve();
+            })
+        }); 
     }
 
     public readExpendituresFile( disableScreen)
     {
-        this.parseFile(this.getExpendituresFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPENDITURES, disableScreen, TsiConstants.PARSE_EXPENDITURES_PRIORITY);
+        return new Promise((resolve) => {
+            this.parseFile(this.getExpendituresFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPENDITURES, disableScreen, TsiConstants.PARSE_EXPENDITURES_PRIORITY).then((res) => {
+                resolve();
+            });
+        });
     }
 
     public readExpenditureSuggestionsFile( disableScreen)
     {
-        this.parseFile(this.getExpenditureSuggestionsFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPENDITURE_SUGGESTIONS, disableScreen, TsiConstants.PARSE_EXPENDITURE_SUGGESTION_PRIORITY);
+        return new Promise((resolve) => {
+            this.parseFile(this.getExpenditureSuggestionsFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPENDITURE_SUGGESTIONS, disableScreen, TsiConstants.PARSE_EXPENDITURE_SUGGESTION_PRIORITY).then((res) => {
+                resolve();
+            });
+        });
     }
 
     public readLicenceNumberSuggestionsFile( disableScreen)
     {
-        this.parseFile(this.getLicenceNumberSuggestionFilename(), TsiParserConfigNames.PARSER_CONFIG_LICENCE_NUMBER_SUGGESTIONS, disableScreen, TsiConstants.PARSE_DEFAULT_PRIORITY);
+        return new Promise((resolve) => {
+            this.parseFile(this.getLicenceNumberSuggestionFilename(), TsiParserConfigNames.PARSER_CONFIG_LICENCE_NUMBER_SUGGESTIONS, disableScreen, TsiConstants.PARSE_DEFAULT_PRIORITY).then((res) => {
+                resolve();
+            });
+        });
     }
 
     public readLicenceNumberFile( disableScreen)
     {
-        this.parseFile(this.getLicenceNumberFilename(), TsiParserConfigNames.PARSER_CONFIG_LICENCE_NUMBER, disableScreen, TsiConstants.PARSE_DEFAULT_PRIORITY);
+        return new Promise((resolve) => {
+            this.parseFile(this.getLicenceNumberFilename(), TsiParserConfigNames.PARSER_CONFIG_LICENCE_NUMBER, disableScreen, TsiConstants.PARSE_DEFAULT_PRIORITY).then((res) => {
+                resolve();
+            });
+        });
     }
 
     public readExpandituresConfFile( disableScreen)
     {
-        this.parseFile(this.getInternExpendituresConfFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPANDITURES_EMAIL, disableScreen, TsiConstants.PARSE_DEFAULT_PRIORITY);
+        return new Promise((resolve) => {
+            this.parseFile(this.getInternExpendituresConfFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPANDITURES_EMAIL, disableScreen, TsiConstants.PARSE_DEFAULT_PRIORITY).then((res) => {
+                resolve();
+            });
+        });
     }
 
     public readKmConfFile( disableScreen)
     {
-        this.parseFile(this.getInternKmConfFilename(), TsiParserConfigNames.PARSER_CONFIG_KM_EMAIL, disableScreen, TsiConstants.PARSE_DEFAULT_PRIORITY);
+        return new Promise((resolve) => {
+            this.parseFile(this.getInternKmConfFilename(), TsiParserConfigNames.PARSER_CONFIG_KM_EMAIL, disableScreen, TsiConstants.PARSE_DEFAULT_PRIORITY).then((res) => {
+                resolve();
+            });
+        });
     }
 
     public putServerSyncTime(filename, time) {
