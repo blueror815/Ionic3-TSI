@@ -181,6 +181,9 @@ export class TsiConnectionServiceProvider {
                                     index ++;
                                 }
                             }
+                            else {
+                                index ++;
+                            }
                         }
 
                         resolve();
