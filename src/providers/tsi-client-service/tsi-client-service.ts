@@ -44,47 +44,72 @@ export class TsiClientServiceProvider {
     return new Promise((resolve) => {
         this.syncService.readLocalFileTimes(disableScreen, loader).then((res) => {
 
-          this.syncService.downloadOutlatedFiles(disableScreen, loader).then((res) => {
-            this.syncService.startAllParseTasks(disableScreen, loader).then((res) => {
-              this.syncService.writeSyncFile(disableScreen, loader).then((res) => {
+          console.log('Client Service readLocalFileTimes');
 
-                if (disableScreen) {
-                  this.syncService.readShoppingCarts(disableScreen, loader).then((res) => {
+          this.syncService.readServerFileTimes(disableScreen, loader).then((res) => {
+            console.log('Client Service readServerFileTimes');
+            this.syncService.downloadOutlatedFiles(disableScreen, loader).then((res) => {
+
+              console.log('Client Service readLocalFileTimes');
+              this.syncService.startAllParseTasks(disableScreen, loader).then((res) => {
+
+                console.log('Client Service startAllParseTasks');
+                this.syncService.writeSyncFile(disableScreen, loader).then((res) => {
+
+                  console.log('Client Service writeSyncFile');
+                  if (disableScreen) {
+                    this.syncService.readShoppingCarts(disableScreen, loader).then((res) => {
+
+                      console.log('Client Service readShoppingCarts');
+                      this.syncService.readExpenditureSuggestionsFile(disableScreen, loader).then((res) => {
+
+                        console.log('Client Service readExpenditureSuggestionsFile');
+                        this.syncService.readExpendituresFile(disableScreen, loader).then((res) => {
+
+                          console.log('Client Service readExpendituresFile');
+                          this.syncService.readLicenceNumberSuggestionsFile(disableScreen, loader).then((res) => {
+
+                            console.log('Client Service readLicenceNumberSuggestionsFile');
+                            this.syncService.readLicenceNumberFile(disableScreen, loader).then((res) => {
+
+                              console.log('Client Service readLicenceNumberFile');
+                              this.syncService.readExpandituresConfFile(disableScreen, loader).then((res) => {
+
+                                console.log('Client Service readExpandituresConfFile');
+                                this.syncService.readKmConfFile(disableScreen, loader).then((res) => {
+
+                                  console.log('Client Service readKmConfFile');
+                                  loader.dismiss();
+                                  resolve();
+                                });    
+                              });    
+                            });    
+                          });
+                        });    
+                      });
+                    });
+                  }
+                  else {
                     this.syncService.readExpenditureSuggestionsFile(disableScreen, loader).then((res) => {
                       this.syncService.readExpendituresFile(disableScreen, loader).then((res) => {
-                        this.syncService.readLicenceNumberSuggestionsFile(disableScreen, loader).then((res) => {
-                          this.syncService.readLicenceNumberFile(disableScreen, loader).then((res) => {
-                            this.syncService.readExpandituresConfFile(disableScreen, loader).then((res) => {
-                              this.syncService.readKmConfFile(disableScreen, loader).then((res) => {
-                                loader.dismiss();
-                                resolve();
+                          this.syncService.readLicenceNumberSuggestionsFile(disableScreen, loader).then((res) => {
+                            this.syncService.readLicenceNumberFile(disableScreen, loader).then((res) => {
+                              this.syncService.readExpandituresConfFile(disableScreen, loader).then((res) => {
+                                this.syncService.readKmConfFile(disableScreen, loader).then((res) => {
+                                  loader.dismiss();
+                                  resolve();
+                                });    
                               });    
                             });    
-                          });    
-                        });
+                          });
                       });    
                     });
-                  });
-                }
-                else {
-                  this.syncService.readExpenditureSuggestionsFile(disableScreen, loader).then((res) => {
-                    this.syncService.readExpendituresFile(disableScreen, loader).then((res) => {
-                        this.syncService.readLicenceNumberSuggestionsFile(disableScreen, loader).then((res) => {
-                          this.syncService.readLicenceNumberFile(disableScreen, loader).then((res) => {
-                            this.syncService.readExpandituresConfFile(disableScreen, loader).then((res) => {
-                              this.syncService.readKmConfFile(disableScreen, loader).then((res) => {
-                                loader.dismiss();
-                                resolve();
-                              });    
-                            });    
-                          });    
-                        });
-                    });    
-                  });
-                }
-              });  
-            });
+                  }
+                });  
+              });
           });
+          })
+          
         });
     })    
         // this.syncService.readServerFileTimes( disableScreen );

@@ -259,14 +259,28 @@ export class TsiSyncDataServiceProvider {
     {
         let filenames = this.getLocalFilenames();
         return new Promise((resolve) => {
-            for (let filename of filenames) {
-                let mFilename = filename.split('/').pop();
-                let path = filename.replace(mFilename, '');
+            // for (let filename of filenames) {
+            //     let mFilename = filename.split('/').pop();
+            //     let path = filename.replace(mFilename, '');
+
+            //     let rx = new RegExp(this.dataService.customerFolder + '|Artikel|Kategorien');
+
+            //     if (path.match(rx) && path.match(rx)[0] != '') {
+            //         this.startTask(this.getDataStoragePath(), disableScreen);
+            //     }
+            // }
+
+            let index = 0;
+            while(index < filenames.length) {
+                let mFilename = filenames[index].split('/').pop();
+                let path = filenames[index].replace(mFilename, '');
 
                 let rx = new RegExp(this.dataService.customerFolder + '|Artikel|Kategorien');
 
                 if (path.match(rx) && path.match(rx)[0] != '') {
-                    this.startTask(this.getDataStoragePath(), disableScreen);
+                    this.startTask(this.getDataStoragePath(), disableScreen).then((res) => {
+                        index ++;
+                    })
                 }
             }
             
@@ -370,48 +384,51 @@ export class TsiSyncDataServiceProvider {
     }
 
     public startTask(filename, disableScreen) {
-        if (filename.matches( ".*KundenDB.PSV" ))
-        {   
-            this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CUSTOMER, disableScreen, null, TsiConstants.PARSE_CUSTOMER_PRIORITY).then((res) => {
-                //resolve();
-            });
-        }
-        else if (filename.matches( ".*ArtikelDB.PSV" ))
-        {
-            this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_ARTICLE, disableScreen, null, TsiConstants.PARSE_ARTICLE_PRIORITY).then((res) => {
-                //resolve();
-            });
-        }
-        else if (filename.matches( ".*KategorieDB.PSV" ))
-        {
-            this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CATEGORY, disableScreen, null, TsiConstants.PARSE_CATEGORY_PRIORITY).then((res) => {
-                //resolve();
-            });
-        }
-        else if (filename.matches( ".*OrdersDB.PSV" ))
-        {
-            this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_ORDER, disableScreen, null, TsiConstants.PARSE_DEFAULT_PRIORITY).then((res) => {
-                //resolve();
-            });
-        }
-        else if (filename.matches( ".*KatalogDB.PSV" ))
-        {
-            this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CUSTOMER_CATALOG, disableScreen, null, TsiConstants.PARSE_DEFAULT_PRIORITY).then((res) => {
-                //resolve();
-            });
-        }
-        else if(filename.matches( ".*CatalogTabLabels.txt" ))
-        {
-            this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CATALOG_TAB_HEADERS, disableScreen, null, TsiConstants.PARSE_DEFAULT_PRIORITY).then((res) => {
-                //resolve();
-            });
-        }
-        else if(filename.matches(".*Configmaske.txt"))
-        {
-            this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_NEW_CUSTOMER_CONF, disableScreen, null, TsiConstants.PARSE_DEFAULT_PRIORITY).then((res) => {
-                //resolve();
-            });
-        }
+        return new Promise((resolve) => {
+            if (filename.matches( ".*KundenDB.PSV" ))
+            {   
+                this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CUSTOMER, disableScreen, null, TsiConstants.PARSE_CUSTOMER_PRIORITY).then((res) => {
+                    resolve();
+                });
+            }
+            else if (filename.matches( ".*ArtikelDB.PSV" ))
+            {
+                this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_ARTICLE, disableScreen, null, TsiConstants.PARSE_ARTICLE_PRIORITY).then((res) => {
+                    resolve();
+                });
+            }
+            else if (filename.matches( ".*KategorieDB.PSV" ))
+            {
+                this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CATEGORY, disableScreen, null, TsiConstants.PARSE_CATEGORY_PRIORITY).then((res) => {
+                    resolve();
+                });
+            }
+            else if (filename.matches( ".*OrdersDB.PSV" ))
+            {
+                this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_ORDER, disableScreen, null, TsiConstants.PARSE_DEFAULT_PRIORITY).then((res) => {
+                    resolve();
+                });
+            }
+            else if (filename.matches( ".*KatalogDB.PSV" ))
+            {
+                this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CUSTOMER_CATALOG, disableScreen, null, TsiConstants.PARSE_DEFAULT_PRIORITY).then((res) => {
+                    resolve();
+                });
+            }
+            else if(filename.matches( ".*CatalogTabLabels.txt" ))
+            {
+                this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CATALOG_TAB_HEADERS, disableScreen, null, TsiConstants.PARSE_DEFAULT_PRIORITY).then((res) => {
+                    resolve();
+                });
+            }
+            else if(filename.matches(".*Configmaske.txt"))
+            {
+                this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_NEW_CUSTOMER_CONF, disableScreen, null, TsiConstants.PARSE_DEFAULT_PRIORITY).then((res) => {
+                    resolve();
+                });
+            }
+        })
+        
     }
 
     public getInternStoragePath()

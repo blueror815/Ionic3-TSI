@@ -4,6 +4,7 @@ import { Ftp } from '../../../plugins/cordova-plugin-ftp/types/ftp';
 import { File } from '@ionic-native/file';
 import { TsiSyncDataServiceProvider } from '../tsi-sync-data-service/tsi-sync-data-service';
 import { TsiDataServiceProvider } from '../tsi-data-service/tsi-data-service';
+import { TsiAbstractLineProcessor } from '../../parser/TsiAbstractLineProcessor';
 /*
   Generated class for the TsiConnectionServiceProvider provider.
 
@@ -127,11 +128,37 @@ export class TsiConnectionServiceProvider {
 
                         let rx = new RegExp(dataService.customerFolder + '|Artikel|Kategorien|News');
 
-                        for (let i = 0; i < fileList.length; i++) {
+                        // for (let i = 0; i < fileList.length; i++) {
 
-                            if (fileList[i].name) {
+                        //     if (fileList[i].name) {
+                        //         // code...
+                        //         let foldername = fileList[i].name;
+
+                        //         if (foldername.match(rx) && foldername.match(rx)[0] != '') {
+                        //             Ftp.ls(foldername + '/').then((files) => {
+                        //                 console.log("Ftp get files :", JSON.stringify(files));
+                        //                 for (let file of files) {
+                        //                     console.log('Ftp File', JSON.stringify(file));
+
+                        //                     if (file.name != '.' && file.name != '..') {
+                        //                         syncService.putServerSyncTime(foldername + '/' + file.name, file.modifiedDate);
+                        //                     }
+                                            
+                        //                 }
+
+                        //                 resolve();
+                        //             }, (err) => {
+                        //                 resolve();
+                        //             }); 
+                        //         }
+                        //     }
+                        // }
+
+                        let index = 0;
+                        while (index < fileList.length) {
+                            if (fileList[index].name) {
                                 // code...
-                                let foldername = fileList[i].name;
+                                let foldername = fileList[index].name;
 
                                 if (foldername.match(rx) && foldername.match(rx)[0] != '') {
                                     Ftp.ls(foldername + '/').then((files) => {
@@ -142,16 +169,21 @@ export class TsiConnectionServiceProvider {
                                             if (file.name != '.' && file.name != '..') {
                                                 syncService.putServerSyncTime(foldername + '/' + file.name, file.modifiedDate);
                                             }
-                                            
                                         }
 
-                                        resolve();
+                                        index ++;
+
                                     }, (err) => {
-                                        resolve();
+                                        index ++;
                                     }); 
+                                }
+                                else {
+                                    index ++;
                                 }
                             }
                         }
+
+                        resolve();
                     }
                     else {
                         resolve();
@@ -180,7 +212,28 @@ export class TsiConnectionServiceProvider {
     return new Promise((resolve) => {
         if (serverFilenames) {
 
-            for (let serverFile of serverFilenames) {
+            // for (let serverFile of serverFilenames) {
+            //     let filename = serverFile.split('/').pop();
+            //     let path = serverFile.replace(filename, '');
+
+            //     let rx = new RegExp(dataService.customerFolder + '|Artikel|Kategorien|News');
+
+            //     if (path.match(rx) && path.match(rx)[0] != '') {
+            //         let localtime = Date.parse(syncService.getLocalSyncTime(serverFile));
+            //         let servertime = Date.parse(syncService.getServerSyncTime(serverFile));
+
+            //         if (localtime < servertime) {
+            //             this.downloadFile(syncService.getDataStoragePath(), serverFile, filename).then((res) => {
+            //                 syncService.putLocalSyncTime(serverFile, syncService.getServerSyncTime(serverFile));
+            //             });
+            //         }
+            //     }
+            // }
+
+            let index = 0;
+            while (index < serverFilenames.length) {
+
+                let serverFile = serverFilenames[index];
                 let filename = serverFile.split('/').pop();
                 let path = serverFile.replace(filename, '');
 
@@ -193,8 +246,15 @@ export class TsiConnectionServiceProvider {
                     if (localtime < servertime) {
                         this.downloadFile(syncService.getDataStoragePath(), serverFile, filename).then((res) => {
                             syncService.putLocalSyncTime(serverFile, syncService.getServerSyncTime(serverFile));
+                            index ++;
                         });
                     }
+                    else {
+                        index ++;
+                    }
+                }
+                else {
+                    index ++;
                 }
             }
 
