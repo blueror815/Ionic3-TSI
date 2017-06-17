@@ -115,111 +115,56 @@ export class TsiConnectionServiceProvider {
     });
   }
 
-  public readServerFiles(dataService, syncService) {
+ public async readServerFiles(dataService, syncService) {
     let files = [];
     console.log('ReadServer Files');
 
-    return new Promise((resolve) => {
-            this.checkFTP(this.server, this.username, this.password).then((res) => {
-            if(res) {
-                Ftp.ls('/').then((fileList) => {
-                    console.log('FileList', JSON.stringify(fileList));
-                    if (fileList && fileList.length > 0) {
+    await this.checkFTP(this.server, this.username, this.password).then(async (res) => {
+        if(res) {
+            await Ftp.ls('/').then(async (fileList) => {
+                console.log('FileList', JSON.stringify(fileList));
+                if (fileList && fileList.length > 0) {
 
-                        let rx = new RegExp(dataService.customerFolder + '|Artikel|Kategorien|News');
+                    let rx = new RegExp(dataService.customerFolder + '|Artikel|Kategorien|News');
+                    for (let i = 0; i < fileList.length; i++) {
+                        // code...
+                        let foldername = fileList[i].name;
+                        
+                        if (foldername.match(rx) && foldername.match(rx)[0] != '') {
+                            await Ftp.ls('/' + foldername + '/').then((files) => {
+                                console.log("Ftp get files :", JSON.stringify(files) );
+                                for (let file of files) {
+                                    console.log('Ftp File', JSON.stringify(file));
 
-                        let index = 0;
-                        for (let i = 0; i < fileList.length; i++) {
-                            // code...
-                            let foldername = fileList[i].name;
-                            
-                            if (foldername.match(rx) && foldername.match(rx)[0] != '') {
-                                Ftp.ls('/' + foldername + '/').then((files) => {
-                                    console.log("Ftp get Index :", index);
-                                    console.log("Ftp get files :", JSON.stringify(files) );
-                                    for (let file of files) {
-                                        console.log('Ftp File', JSON.stringify(file));
-
-                                        if (file.name != '.' && file.name != '..') {
-                                            syncService.putServerSyncTime(foldername + '/' + file.name, file.modifiedDate);
-                                        }
-                                        
+                                    if (file.name != '.' && file.name != '..') {
+                                        syncService.putServerSyncTime(foldername + '/' + file.name, file.modifiedDate);
                                     }
+                                }
+                            }, (err) => {
+                                console.log("Ftp get files :", JSON.stringify(err));
 
-                                    index ++;
-                                }, (err) => {
-                                    console.log("Ftp get files :", JSON.stringify(err));
-                                    index ++;
-                                }); 
-                            }
-                            else {
-                                index ++;
-                            }
-
-                            console.log("Ftp get Index :", index);
-                            
+                            }); 
                         }
+                        else {
 
-                        if (index == fileList.length) {
-                            resolve();
-                        }
-                        // let index = 0;
-                        // while (index < fileList.length) {
-                        //     if (fileList[index].name) {
-                        //         // code...
-                        //         let foldername = fileList[index].name;
-
-                        //         if (foldername.match(rx) && foldername.match(rx)[0] != '') {
-                        //             Ftp.ls(foldername + '/').then((files) => {
-                        //                 console.log("Ftp get files :", JSON.stringify(files));
-                        //                 for (let file of files) {
-                        //                     console.log('Ftp File', JSON.stringify(file));
-
-                        //                     if (file.name != '.' && file.name != '..') {
-                        //                         syncService.putServerSyncTime(foldername + '/' + file.name, file.modifiedDate);
-                        //                     }
-                        //                 }
-
-                        //                 index ++;
-
-                        //             }, (err) => {
-                        //                 index ++;
-                        //             }); 
-                        //         }
-                        //         else {
-                        //             index ++;
-                        //         }
-                        //     }
-                        //     else {
-                        //         index ++;
-                        //     }
-                        // }
+                        }              
                     }
-                    else {
-                        resolve();
-                    }
+                }
                 
-                }, (error) => {
+            }, (error) => {
 
-                    console.log("Ftp ls :", JSON.stringify(error));
-                    resolve();
-                });
-            }
-            else {
-                resolve();
-            }
-        });
+                console.log("Ftp ls :", JSON.stringify(error));
+                
+            });
+        }
     });
-    
-    
-    
   }
 
-  public downloadOutdatedFiles(dataService: TsiDataServiceProvider, syncService: TsiSyncDataServiceProvider) {
+  public async downloadOutdatedFiles(dataService: TsiDataServiceProvider, syncService: TsiSyncDataServiceProvider) {
     let serverFilenames = syncService.getServerFilenames();
     console.log('ServerFilenames', JSON.stringify(serverFilenames));
 
-    return new Promise((resolve) => {
+    return new Promise(async (resolve) => {
         if (serverFilenames) {
 
             let index = 0;
@@ -235,47 +180,14 @@ export class TsiConnectionServiceProvider {
                     let servertime = Date.parse(syncService.getServerSyncTime(serverFile));
 
                     if (localtime < servertime) {
-                        this.downloadFile(syncService.getDataStoragePath(), serverFile, filename).then((res) => {
+                        await this.downloadFile(syncService.getDataStoragePath(), serverFile, filename).then((res) => {
                             syncService.putLocalSyncTime(serverFile, syncService.getServerSyncTime(serverFile));
                         });
                     }
                 }
             }
-
-            resolve ();
-
-            // while (index < serverFilenames.length) {
-
-            //     let serverFile = serverFilenames[index];
-            //     let filename = serverFile.split('/').pop();
-            //     let path = serverFile.replace(filename, '');
-
-            //     let rx = new RegExp(dataService.customerFolder + '|Artikel|Kategorien|News');
-
-            //     if (path.match(rx) && path.match(rx)[0] != '') {
-            //         let localtime = Date.parse(syncService.getLocalSyncTime(serverFile));
-            //         let servertime = Date.parse(syncService.getServerSyncTime(serverFile));
-
-            //         if (localtime < servertime) {
-            //             this.downloadFile(syncService.getDataStoragePath(), serverFile, filename).then((res) => {
-            //                 syncService.putLocalSyncTime(serverFile, syncService.getServerSyncTime(serverFile));
-            //                 index ++;
-            //             });
-            //         }
-            //         else {
-            //             index ++;
-            //         }
-            //     }
-            //     else {
-            //         index ++;
-            //     }
-            // }
-        }
-        else {
-            resolve();
         }
     });
-    
   }
 
 

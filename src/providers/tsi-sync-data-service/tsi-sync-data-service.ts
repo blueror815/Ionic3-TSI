@@ -177,7 +177,7 @@ export class TsiSyncDataServiceProvider {
         })
     }
 
-    public writeSyncFile(disableScreen, loader) {
+    public async writeSyncFile(disableScreen, loader) {
 
         let syncTxt = '';
         for (let i = 0;i < this.syncFileTimesLocal.entries.length;i ++) {
@@ -186,58 +186,48 @@ export class TsiSyncDataServiceProvider {
 
         console.log('Sync Text', syncTxt);
 
-        return new Promise((resolve) => {
-            this.file.checkFile(this.getDataStoragePath(), "sync.dat").then((res) => {
-                if (!res) {
-                        this.file.writeFile(this.getDataStoragePath(), "sync.dat", syncTxt).then((res) => {
-                            console.log('sync text', JSON.stringify(res));
-                            resolve();
-                        }, (err) => {
-                            console.log('sync text', JSON.stringify(err));
-                            resolve();
-                        })
-                    }
-                    else {
-                        this.file.writeExistingFile(this.getDataStoragePath(), "sync.dat", syncTxt).then((res) => {
-                            console.log('sync text', JSON.stringify(res));
-                            resolve();
-                        }, (err) => {
-                            console.log('sync text', JSON.stringify(err));
-                            resolve();
-                        })
-                    } 
-
-                }, (err) => {
-                    console.log('SyncFile', JSON.stringify(err));
-
-                    this.file.writeFile(this.getDataStoragePath(), "sync.dat", syncTxt).then((res) => {
+        await this.file.checkFile(this.getDataStoragePath(), "sync.dat").then(async (res) => {
+            if (!res) {
+                    await this.file.writeFile(this.getDataStoragePath(), "sync.dat", syncTxt).then((res) => {
                         console.log('sync text', JSON.stringify(res));
-                        resolve();
+                        
                     }, (err) => {
                         console.log('sync text', JSON.stringify(err));
-                        resolve();
+                        
                     })
-                });
-        }) 
+                }
+                else {
+                    await this.file.writeExistingFile(this.getDataStoragePath(), "sync.dat", syncTxt).then((res) => {
+                        console.log('sync text', JSON.stringify(res));
+                        
+                    }, (err) => {
+                        console.log('sync text', JSON.stringify(err));
+                        
+                    })
+                } 
+
+            }, async (err) => {
+                console.log('SyncFile', JSON.stringify(err));
+
+                await this.file.writeFile(this.getDataStoragePath(), "sync.dat", syncTxt).then((res) => {
+                    console.log('sync text', JSON.stringify(res));
+                    
+                }, (err) => {
+                    console.log('sync text', JSON.stringify(err));
+                    
+            })
+        });
         
     }
 
     public readCatalogTabHeadersFile() {
     	// just to be sure
-        return new Promise((resolve) => {
-            this.parseFile(this.getCatalogTabHeadersFilename(), TsiParserConfigNames.PARSER_CONFIG_CATALOG_TAB_HEADERS, false, null, TsiConstants.READ_LOCAL_FILETIMES_PRIORITY).then((res) => {
-                resolve();
-            });
-        });
+        this.parseFile(this.getCatalogTabHeadersFilename(), TsiParserConfigNames.PARSER_CONFIG_CATALOG_TAB_HEADERS, false, null, TsiConstants.READ_LOCAL_FILETIMES_PRIORITY);
     }
 
     public readLocalFileTimes(disableScreen, loader)
     {
-        return new Promise((resolve) => {
-            this.parseFile(this.getSynchronizationFilename(), TsiParserConfigNames.PARSER_CONFIG_SYNCFILE, disableScreen, loader,  TsiConstants.READ_LOCAL_FILETIMES_PRIORITY).then((res) => {
-                resolve();
-            });
-        });
+        this.parseFile(this.getSynchronizationFilename(), TsiParserConfigNames.PARSER_CONFIG_SYNCFILE, disableScreen, loader,  TsiConstants.READ_LOCAL_FILETIMES_PRIORITY);
     }
 
     public getAllCustomerFolders(disableScreen, loader)
@@ -247,82 +237,45 @@ export class TsiSyncDataServiceProvider {
 
     public readServerFileTimes(disableScreen, loader)
     {
-        //this.execute( new ReadServerFileTimesTask( TSI_ClientService.getDataService().getStatusTextView(), disableScreen ) );
-        return new Promise((resolve) => {
-            this.connectionService.readServerFiles(this.dataService, this).then((res) => {
-                resolve();
-            });
-        });
+        this.connectionService.readServerFiles(this.dataService, this);
     }
 
-    public startAllParseTasks(disableScreen, loader)
+    public async startAllParseTasks(disableScreen, loader)
     {
         let filenames = this.getLocalFilenames();
-        return new Promise((resolve) => {
-            let index = 0;
+        
+        for (let filename of filenames) {
+            let mFilename = filename.split('/').pop();
+            let path = filename.replace(mFilename, '');
 
-            for (let filename of filenames) {
-                let mFilename = filename.split('/').pop();
-                let path = filename.replace(mFilename, '');
+            let rx = new RegExp(this.dataService.customerFolder + '|Artikel|Kategorien');
 
-                let rx = new RegExp(this.dataService.customerFolder + '|Artikel|Kategorien');
-
-                if (path.match(rx) && path.match(rx)[0] != '') {
-                    this.startTask(this.getDataStoragePath(), disableScreen).then((res) => {
-                        index ++;
-                        if (index == filenames.length) {
-                            resolve();
-                        }
-                    });
-                }
-                else {
-                    index ++;
-                    if (index == filenames.length) {
-                        resolve();
-                    }
-                }
+            if (path.match(rx) && path.match(rx)[0] != '') {
+                await this.startTask(this.getDataStoragePath(), disableScreen).then((res) => {
+                    
+                });
             }
-
             
-            // while(index < filenames.length) {
-            //     let mFilename = filenames[index].split('/').pop();
-            //     let path = filenames[index].replace(mFilename, '');
-
-            //     let rx = new RegExp(this.dataService.customerFolder + '|Artikel|Kategorien');
-
-            //     if (path.match(rx) && path.match(rx)[0] != '') {
-            //         this.startTask(this.getDataStoragePath(), disableScreen).then((res) => {
-            //             index ++;
-            //         })
-            //     }
-            // }
-            
-        });
+        }
     }
 
     public readShoppingCarts(disableScreen, loader)
     {
-        return new Promise((resolve) => {
-            resolve();
-        });
         //this.execute( new ReadShoppingCartsTask( TSI_ClientService.getDataService().getStatusTextView(), disableScreen, loader ) );
     }
 
     public downloadOutlatedFiles(disableScreen, loader) {
-        return new Promise((resolve) => {
-            this.connectionService.downloadOutdatedFiles(this.dataService, this).then((res) => {
-                resolve();
-            });
-        });
+        
+        this.connectionService.downloadOutdatedFiles(this.dataService, this);
     }
 
-    private parseFile(filePath, parseConfig, disableScreen, loader, priority)
+    private async parseFile(filePath, parseConfig, disableScreen, loader, priority)
     {
         let pathArray = filePath.split('/');
         let filename  = pathArray.pop();
                
-        return new Promise((resolve) => {
-            this.parserService.parse(filePath.replace(filename, ''), filename, parseConfig).then((res) => {
+        return new Promise(async (resolve) => {
+            await this.parserService.parse(filePath.replace(filename, ''), filename, parseConfig).then((res) => {
                 resolve();
             }, (err) => {
                 resolve();
@@ -394,52 +347,36 @@ export class TsiSyncDataServiceProvider {
         console.log('syncFileTimesLocal', JSON.stringify(this.syncFileTimesLocal));
     }
 
-    public startTask(filename, disableScreen) {
-        return new Promise((resolve) => {
-            if (filename.matches( ".*KundenDB.PSV" ))
-            {   
-                this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CUSTOMER, disableScreen, null, TsiConstants.PARSE_CUSTOMER_PRIORITY).then((res) => {
-                    resolve();
-                });
-            }
-            else if (filename.matches( ".*ArtikelDB.PSV" ))
-            {
-                this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_ARTICLE, disableScreen, null, TsiConstants.PARSE_ARTICLE_PRIORITY).then((res) => {
-                    resolve();
-                });
-            }
-            else if (filename.matches( ".*KategorieDB.PSV" ))
-            {
-                this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CATEGORY, disableScreen, null, TsiConstants.PARSE_CATEGORY_PRIORITY).then((res) => {
-                    resolve();
-                });
-            }
-            else if (filename.matches( ".*OrdersDB.PSV" ))
-            {
-                this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_ORDER, disableScreen, null, TsiConstants.PARSE_DEFAULT_PRIORITY).then((res) => {
-                    resolve();
-                });
-            }
-            else if (filename.matches( ".*KatalogDB.PSV" ))
-            {
-                this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CUSTOMER_CATALOG, disableScreen, null, TsiConstants.PARSE_DEFAULT_PRIORITY).then((res) => {
-                    resolve();
-                });
-            }
-            else if(filename.matches( ".*CatalogTabLabels.txt" ))
-            {
-                this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CATALOG_TAB_HEADERS, disableScreen, null, TsiConstants.PARSE_DEFAULT_PRIORITY).then((res) => {
-                    resolve();
-                });
-            }
-            else if(filename.matches(".*Configmaske.txt"))
-            {
-                this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_NEW_CUSTOMER_CONF, disableScreen, null, TsiConstants.PARSE_DEFAULT_PRIORITY).then((res) => {
-                    resolve();
-                });
-            }
-        })
+    public async startTask(filename, disableScreen) {
         
+        if (filename.matches( ".*KundenDB.PSV" ))
+        {   
+            await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CUSTOMER, disableScreen, null, TsiConstants.PARSE_CUSTOMER_PRIORITY);
+        }
+        else if (filename.matches( ".*ArtikelDB.PSV" ))
+        {
+            await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_ARTICLE, disableScreen, null, TsiConstants.PARSE_ARTICLE_PRIORITY);
+        }
+        else if (filename.matches( ".*KategorieDB.PSV" ))
+        {
+            await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CATEGORY, disableScreen, null, TsiConstants.PARSE_CATEGORY_PRIORITY);
+        }
+        else if (filename.matches( ".*OrdersDB.PSV" ))
+        {
+            await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_ORDER, disableScreen, null, TsiConstants.PARSE_DEFAULT_PRIORITY);
+        }
+        else if (filename.matches( ".*KatalogDB.PSV" ))
+        {
+            await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CUSTOMER_CATALOG, disableScreen, null, TsiConstants.PARSE_DEFAULT_PRIORITY);
+        }
+        else if(filename.matches( ".*CatalogTabLabels.txt" ))
+        {
+            await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CATALOG_TAB_HEADERS, disableScreen, null, TsiConstants.PARSE_DEFAULT_PRIORITY);
+        }
+        else if(filename.matches(".*Configmaske.txt"))
+        {
+            await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_NEW_CUSTOMER_CONF, disableScreen, null, TsiConstants.PARSE_DEFAULT_PRIORITY);
+        }
     }
 
     public getInternStoragePath()
