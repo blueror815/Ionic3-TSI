@@ -128,11 +128,46 @@ export class TsiConnectionServiceProvider {
 
                         let rx = new RegExp(dataService.customerFolder + '|Artikel|Kategorien|News');
 
-                        // for (let i = 0; i < fileList.length; i++) {
+                        let index = 0;
+                        for (let i = 0; i < fileList.length; i++) {
+                            // code...
+                            let foldername = fileList[i].name;
+                            
+                            if (foldername.match(rx) && foldername.match(rx)[0] != '') {
+                                Ftp.ls('/' + foldername + '/').then((files) => {
+                                    console.log("Ftp get Index :", index);
+                                    console.log("Ftp get files :", JSON.stringify(files) );
+                                    for (let file of files) {
+                                        console.log('Ftp File', JSON.stringify(file));
 
-                        //     if (fileList[i].name) {
+                                        if (file.name != '.' && file.name != '..') {
+                                            syncService.putServerSyncTime(foldername + '/' + file.name, file.modifiedDate);
+                                        }
+                                        
+                                    }
+
+                                    index ++;
+                                }, (err) => {
+                                    console.log("Ftp get files :", JSON.stringify(err));
+                                    index ++;
+                                }); 
+                            }
+                            else {
+                                index ++;
+                            }
+
+                            console.log("Ftp get Index :", index);
+                            
+                        }
+
+                        if (index == fileList.length) {
+                            resolve();
+                        }
+                        // let index = 0;
+                        // while (index < fileList.length) {
+                        //     if (fileList[index].name) {
                         //         // code...
-                        //         let foldername = fileList[i].name;
+                        //         let foldername = fileList[index].name;
 
                         //         if (foldername.match(rx) && foldername.match(rx)[0] != '') {
                         //             Ftp.ls(foldername + '/').then((files) => {
@@ -143,50 +178,22 @@ export class TsiConnectionServiceProvider {
                         //                     if (file.name != '.' && file.name != '..') {
                         //                         syncService.putServerSyncTime(foldername + '/' + file.name, file.modifiedDate);
                         //                     }
-                                            
                         //                 }
 
-                        //                 resolve();
+                        //                 index ++;
+
                         //             }, (err) => {
-                        //                 resolve();
+                        //                 index ++;
                         //             }); 
                         //         }
+                        //         else {
+                        //             index ++;
+                        //         }
+                        //     }
+                        //     else {
+                        //         index ++;
                         //     }
                         // }
-
-                        let index = 0;
-                        while (index < fileList.length) {
-                            if (fileList[index].name) {
-                                // code...
-                                let foldername = fileList[index].name;
-
-                                if (foldername.match(rx) && foldername.match(rx)[0] != '') {
-                                    Ftp.ls(foldername + '/').then((files) => {
-                                        console.log("Ftp get files :", JSON.stringify(files));
-                                        for (let file of files) {
-                                            console.log('Ftp File', JSON.stringify(file));
-
-                                            if (file.name != '.' && file.name != '..') {
-                                                syncService.putServerSyncTime(foldername + '/' + file.name, file.modifiedDate);
-                                            }
-                                        }
-
-                                        index ++;
-
-                                    }, (err) => {
-                                        index ++;
-                                    }); 
-                                }
-                                else {
-                                    index ++;
-                                }
-                            }
-                            else {
-                                index ++;
-                            }
-                        }
-
-                        resolve();
                     }
                     else {
                         resolve();
@@ -215,28 +222,9 @@ export class TsiConnectionServiceProvider {
     return new Promise((resolve) => {
         if (serverFilenames) {
 
-            // for (let serverFile of serverFilenames) {
-            //     let filename = serverFile.split('/').pop();
-            //     let path = serverFile.replace(filename, '');
-
-            //     let rx = new RegExp(dataService.customerFolder + '|Artikel|Kategorien|News');
-
-            //     if (path.match(rx) && path.match(rx)[0] != '') {
-            //         let localtime = Date.parse(syncService.getLocalSyncTime(serverFile));
-            //         let servertime = Date.parse(syncService.getServerSyncTime(serverFile));
-
-            //         if (localtime < servertime) {
-            //             this.downloadFile(syncService.getDataStoragePath(), serverFile, filename).then((res) => {
-            //                 syncService.putLocalSyncTime(serverFile, syncService.getServerSyncTime(serverFile));
-            //             });
-            //         }
-            //     }
-            // }
-
             let index = 0;
-            while (index < serverFilenames.length) {
 
-                let serverFile = serverFilenames[index];
+            for (let serverFile of serverFilenames) {
                 let filename = serverFile.split('/').pop();
                 let path = serverFile.replace(filename, '');
 
@@ -249,19 +237,39 @@ export class TsiConnectionServiceProvider {
                     if (localtime < servertime) {
                         this.downloadFile(syncService.getDataStoragePath(), serverFile, filename).then((res) => {
                             syncService.putLocalSyncTime(serverFile, syncService.getServerSyncTime(serverFile));
-                            index ++;
                         });
                     }
-                    else {
-                        index ++;
-                    }
-                }
-                else {
-                    index ++;
                 }
             }
 
-            resolve();
+            resolve ();
+
+            // while (index < serverFilenames.length) {
+
+            //     let serverFile = serverFilenames[index];
+            //     let filename = serverFile.split('/').pop();
+            //     let path = serverFile.replace(filename, '');
+
+            //     let rx = new RegExp(dataService.customerFolder + '|Artikel|Kategorien|News');
+
+            //     if (path.match(rx) && path.match(rx)[0] != '') {
+            //         let localtime = Date.parse(syncService.getLocalSyncTime(serverFile));
+            //         let servertime = Date.parse(syncService.getServerSyncTime(serverFile));
+
+            //         if (localtime < servertime) {
+            //             this.downloadFile(syncService.getDataStoragePath(), serverFile, filename).then((res) => {
+            //                 syncService.putLocalSyncTime(serverFile, syncService.getServerSyncTime(serverFile));
+            //                 index ++;
+            //             });
+            //         }
+            //         else {
+            //             index ++;
+            //         }
+            //     }
+            //     else {
+            //         index ++;
+            //     }
+            // }
         }
         else {
             resolve();

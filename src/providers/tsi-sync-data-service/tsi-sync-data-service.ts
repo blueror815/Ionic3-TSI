@@ -259,34 +259,45 @@ export class TsiSyncDataServiceProvider {
     {
         let filenames = this.getLocalFilenames();
         return new Promise((resolve) => {
-            // for (let filename of filenames) {
-            //     let mFilename = filename.split('/').pop();
-            //     let path = filename.replace(mFilename, '');
-
-            //     let rx = new RegExp(this.dataService.customerFolder + '|Artikel|Kategorien');
-
-            //     if (path.match(rx) && path.match(rx)[0] != '') {
-            //         this.startTask(this.getDataStoragePath(), disableScreen);
-            //     }
-            // }
-
             let index = 0;
-            while(index < filenames.length) {
-                let mFilename = filenames[index].split('/').pop();
-                let path = filenames[index].replace(mFilename, '');
+
+            for (let filename of filenames) {
+                let mFilename = filename.split('/').pop();
+                let path = filename.replace(mFilename, '');
 
                 let rx = new RegExp(this.dataService.customerFolder + '|Artikel|Kategorien');
 
                 if (path.match(rx) && path.match(rx)[0] != '') {
                     this.startTask(this.getDataStoragePath(), disableScreen).then((res) => {
                         index ++;
-                    })
+                        if (index == filenames.length) {
+                            resolve();
+                        }
+                    });
+                }
+                else {
+                    index ++;
+                    if (index == filenames.length) {
+                        resolve();
+                    }
                 }
             }
+
             
-            resolve();
+            // while(index < filenames.length) {
+            //     let mFilename = filenames[index].split('/').pop();
+            //     let path = filenames[index].replace(mFilename, '');
+
+            //     let rx = new RegExp(this.dataService.customerFolder + '|Artikel|Kategorien');
+
+            //     if (path.match(rx) && path.match(rx)[0] != '') {
+            //         this.startTask(this.getDataStoragePath(), disableScreen).then((res) => {
+            //             index ++;
+            //         })
+            //     }
+            // }
+            
         });
-        //this.execute( new StartAllParseTasksTask( TSI_ClientService.getDataService().getStatusTextView(), disableScreen, loader ) );
     }
 
     public readShoppingCarts(disableScreen, loader)
