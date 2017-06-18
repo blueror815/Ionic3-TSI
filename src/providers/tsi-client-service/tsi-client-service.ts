@@ -39,24 +39,21 @@ export class TsiClientServiceProvider {
     });
 
     //loader.present();
-    await this.syncService.readServerFileTimes(disableScreen, loader);
     await this.syncService.readLocalFileTimes(disableScreen, loader);
-    
-    
-    
-    // this.syncService.downloadOutlatedFiles(disableScreen, loader);
-    // this.syncService.startAllParseTasks(disableScreen, loader);
-    // this.syncService.writeSyncFile(disableScreen, loader);
+    await this.syncService.readServerFileTimes(disableScreen, loader);
+    await this.syncService.downloadOutlatedFiles(disableScreen, loader);
+    await this.syncService.startAllParseTasks(disableScreen, loader);
+    await this.syncService.writeSyncFile(disableScreen, loader);
         
-        // if (disableScreen)
-        //     this.syncService.readShoppingCarts( disableScreen );
-        
-        // this.syncService.readExpenditureSuggestionsFile( disableScreen );
-        // this.syncService.readExpendituresFile( disableScreen );
-        // this.syncService.readLicenceNumberSuggestionsFile( disableScreen );
-        // this.syncService.readLicenceNumberFile(  disableScreen );
-        // this.syncService.readExpandituresConfFile( disableScreen );
-        // this.syncService.readKmConfFile( disableScreen );
+    if (disableScreen)
+        await this.syncService.readShoppingCarts(disableScreen, loader);
+    
+    await this.syncService.readExpenditureSuggestionsFile(disableScreen, loader);
+    await this.syncService.readExpendituresFile(disableScreen, loader);
+    await this.syncService.readLicenceNumberSuggestionsFile(disableScreen, loader);
+    await this.syncService.readLicenceNumberFile(disableScreen, loader);
+    await this.syncService.readExpandituresConfFile(disableScreen, loader);
+    await this.syncService.readKmConfFile(disableScreen, loader);
 
   }
 

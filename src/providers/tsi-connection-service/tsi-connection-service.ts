@@ -119,10 +119,10 @@ export class TsiConnectionServiceProvider {
     let files = [];
     console.log('ReadServer Files');
 
-    return new Promise((resolve) => {
-        this.checkFTP(this.server, this.username, this.password).then((res) => {
+    return new Promise(async (resolve) => {
+        this.checkFTP(this.server, this.username, this.password).then(async (res) => {
             if(res) {
-                Ftp.ls('/').then(async (fileList) => {
+                await Ftp.ls('/').then(async (fileList) => {
                     console.log('FileList', JSON.stringify(fileList));
                     if (fileList && fileList.length > 0) {
 
@@ -132,8 +132,8 @@ export class TsiConnectionServiceProvider {
                             let foldername = fileList[i].name;
                             
                             if (foldername.match(rx) && foldername.match(rx)[0] != '') {
-                                Ftp.ls('/' + foldername + '/').then((files) => {
-                                    console.log("Ftp get files :", JSON.stringify(files) );
+                                await Ftp.ls('/' + foldername + '/').then((files) => {
+                                    console.log("Ftp get files :", JSON.stringify(files));
                                     for (let file of files) {
                                         console.log('Ftp File', JSON.stringify(file));
 
@@ -141,6 +141,7 @@ export class TsiConnectionServiceProvider {
                                             syncService.putServerSyncTime(foldername + '/' + file.name, file.modifiedDate);
                                         }
                                     }
+
                                 }, (err) => {
                                     console.log("Ftp get files :", JSON.stringify(err));
 
@@ -148,18 +149,19 @@ export class TsiConnectionServiceProvider {
                             }          
                         }
                     }
-                    
-                }, (error) => {
 
+                }, (error) => {
                     console.log("Ftp ls :", JSON.stringify(error));
-                    
                 });
+
             }
+
+            resolve();
         });
     }) 
   }
 
-  public async downloadOutdatedFiles(dataService: TsiDataServiceProvider, syncService: TsiSyncDataServiceProvider) {
+  public downloadOutdatedFiles(dataService: TsiDataServiceProvider, syncService: TsiSyncDataServiceProvider) {
     let serverFilenames = syncService.getServerFilenames();
     console.log('ServerFilenames', JSON.stringify(serverFilenames));
 
@@ -185,7 +187,10 @@ export class TsiConnectionServiceProvider {
                     }
                 }
             }
+
         }
+
+        resolve();
     });
   }
 

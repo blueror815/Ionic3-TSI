@@ -180,43 +180,47 @@ export class TsiSyncDataServiceProvider {
     public async writeSyncFile(disableScreen, loader) {
 
         let syncTxt = '';
-        for (let i = 0;i < this.syncFileTimesLocal.entries.length;i ++) {
-            syncTxt = syncTxt + this.syncFileTimesLocal.entries[i].key + "|" + this.syncFileTimesLocal.entries[i].value + "\n";
+        for (let key of Object.keys(this.syncFileTimesServer)) {
+            syncTxt = syncTxt + key + "|" + this.syncFileTimesLocal[key] + "\n";
         }
 
         console.log('Sync Text', syncTxt);
 
-        await this.file.checkFile(this.getDataStoragePath(), "sync.dat").then(async (res) => {
-            if (!res) {
+        return new Promise ((resolve) => {
+            this.file.checkFile(this.getDataStoragePath(), "sync.dat").then(async (res) => {
+                if (!res) {
+                        await this.file.writeFile(this.getDataStoragePath(), "sync.dat", syncTxt).then((res) => {
+                            console.log('sync text', JSON.stringify(res));
+                            
+                        }, (err) => {
+                            console.log('sync text', JSON.stringify(err));
+                            
+                        })
+                    }
+                    else {
+                        await this.file.writeExistingFile(this.getDataStoragePath(), "sync.dat", syncTxt).then((res) => {
+                            console.log('sync text', JSON.stringify(res));
+                            
+                        }, (err) => {
+                            console.log('sync text', JSON.stringify(err));
+                            
+                        })
+                    } 
+
+                }, async (err) => {
+                    console.log('SyncFile', JSON.stringify(err));
+
                     await this.file.writeFile(this.getDataStoragePath(), "sync.dat", syncTxt).then((res) => {
                         console.log('sync text', JSON.stringify(res));
                         
                     }, (err) => {
                         console.log('sync text', JSON.stringify(err));
                         
-                    })
-                }
-                else {
-                    await this.file.writeExistingFile(this.getDataStoragePath(), "sync.dat", syncTxt).then((res) => {
-                        console.log('sync text', JSON.stringify(res));
-                        
-                    }, (err) => {
-                        console.log('sync text', JSON.stringify(err));
-                        
-                    })
-                } 
+                })
 
-            }, async (err) => {
-                console.log('SyncFile', JSON.stringify(err));
-
-                await this.file.writeFile(this.getDataStoragePath(), "sync.dat", syncTxt).then((res) => {
-                    console.log('sync text', JSON.stringify(res));
-                    
-                }, (err) => {
-                    console.log('sync text', JSON.stringify(err));
-                    
-            })
-        });
+                resolve();
+            });
+        }) 
         
     }
 
@@ -225,9 +229,9 @@ export class TsiSyncDataServiceProvider {
         this.parseFile(this.getCatalogTabHeadersFilename(), TsiParserConfigNames.PARSER_CONFIG_CATALOG_TAB_HEADERS, false, null, TsiConstants.READ_LOCAL_FILETIMES_PRIORITY);
     }
 
-    public readLocalFileTimes(disableScreen, loader)
+    public async readLocalFileTimes(disableScreen, loader)
     {
-       this.parseFile(this.getSynchronizationFilename(), TsiParserConfigNames.PARSER_CONFIG_SYNCFILE, disableScreen, loader,  TsiConstants.READ_LOCAL_FILETIMES_PRIORITY);
+       await this.parseFile(this.getSynchronizationFilename(), TsiParserConfigNames.PARSER_CONFIG_SYNCFILE, disableScreen, loader,  TsiConstants.READ_LOCAL_FILETIMES_PRIORITY);
     }
 
     public getAllCustomerFolders(disableScreen, loader)
@@ -235,9 +239,9 @@ export class TsiSyncDataServiceProvider {
         //this.execute( new GetCustomerFolderTask( TSI_ClientService.getDataService().getStatusTextView(),  disableScreen, loader ) );
     }
 
-    public readServerFileTimes(disableScreen, loader)
+    public async readServerFileTimes(disableScreen, loader)
     {
-        this.connectionService.readServerFiles(this.dataService, this);
+        await this.connectionService.readServerFiles(this.dataService, this);
     }
 
     public async startAllParseTasks(disableScreen, loader)
@@ -266,9 +270,9 @@ export class TsiSyncDataServiceProvider {
         //this.execute( new ReadShoppingCartsTask( TSI_ClientService.getDataService().getStatusTextView(), disableScreen, loader ) );
     }
 
-    public downloadOutlatedFiles(disableScreen, loader) {
+    public async downloadOutlatedFiles(disableScreen, loader) {
         
-        this.connectionService.downloadOutdatedFiles(this.dataService, this);
+        await this.connectionService.downloadOutdatedFiles(this.dataService, this);
     }
 
     private parseFile(filePath, parseConfig, disableScreen, loader, priority)
@@ -277,60 +281,43 @@ export class TsiSyncDataServiceProvider {
         let filename  = pathArray.pop();
                
         return new Promise((resolve) => {
-            this.parserService.parse(filePath.replace(filename, ''), filename, parseConfig);
+            this.parserService.parse(filePath.replace(filename, ''), filename, parseConfig).then((res) => {
+                resolve();
+            }, (err) => {
+                resolve();
+            })
+
         }); 
     }
 
-    public readExpendituresFile( disableScreen, loader)
+    public async readExpendituresFile(disableScreen, loader)
     {
-        return new Promise((resolve) => {
-            this.parseFile(this.getExpendituresFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPENDITURES, disableScreen, loader, TsiConstants.PARSE_EXPENDITURES_PRIORITY);
-        });
+        await this.parseFile(this.getExpendituresFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPENDITURES, disableScreen, loader, TsiConstants.PARSE_EXPENDITURES_PRIORITY);
     }
 
-    public readExpenditureSuggestionsFile( disableScreen, loader)
+    public async readExpenditureSuggestionsFile(disableScreen, loader)
     {
-        return new Promise((resolve) => {
-            this.parseFile(this.getExpenditureSuggestionsFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPENDITURE_SUGGESTIONS, disableScreen, loader, TsiConstants.PARSE_EXPENDITURE_SUGGESTION_PRIORITY).then((res) => {
-                resolve();
-            });
-        });
+        await this.parseFile(this.getExpenditureSuggestionsFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPENDITURE_SUGGESTIONS, disableScreen, loader, TsiConstants.PARSE_EXPENDITURE_SUGGESTION_PRIORITY);
     }
 
-    public readLicenceNumberSuggestionsFile( disableScreen, loader)
+    public async readLicenceNumberSuggestionsFile(disableScreen, loader)
     {
-        return new Promise((resolve) => {
-            this.parseFile(this.getLicenceNumberSuggestionFilename(), TsiParserConfigNames.PARSER_CONFIG_LICENCE_NUMBER_SUGGESTIONS, disableScreen, loader, TsiConstants.PARSE_DEFAULT_PRIORITY).then((res) => {
-                resolve();
-            });
-        });
+        await this.parseFile(this.getLicenceNumberSuggestionFilename(), TsiParserConfigNames.PARSER_CONFIG_LICENCE_NUMBER_SUGGESTIONS, disableScreen, loader, TsiConstants.PARSE_DEFAULT_PRIORITY);
     }
 
-    public readLicenceNumberFile( disableScreen, loader)
+    public async readLicenceNumberFile(disableScreen, loader)
     {
-        return new Promise((resolve) => {
-            this.parseFile(this.getLicenceNumberFilename(), TsiParserConfigNames.PARSER_CONFIG_LICENCE_NUMBER, disableScreen, loader, TsiConstants.PARSE_DEFAULT_PRIORITY).then((res) => {
-                resolve();
-            });
-        });
+        await this.parseFile(this.getLicenceNumberFilename(), TsiParserConfigNames.PARSER_CONFIG_LICENCE_NUMBER, disableScreen, loader, TsiConstants.PARSE_DEFAULT_PRIORITY);
     }
 
-    public readExpandituresConfFile( disableScreen, loader)
+    public async readExpandituresConfFile(disableScreen, loader)
     {
-        return new Promise((resolve) => {
-            this.parseFile(this.getInternExpendituresConfFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPANDITURES_EMAIL, disableScreen, loader, TsiConstants.PARSE_DEFAULT_PRIORITY).then((res) => {
-                resolve();
-            });
-        });
+        await this.parseFile(this.getInternExpendituresConfFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPANDITURES_EMAIL, disableScreen, loader, TsiConstants.PARSE_DEFAULT_PRIORITY);
     }
 
-    public readKmConfFile( disableScreen, loader)
+    public async readKmConfFile( disableScreen, loader)
     {
-        return new Promise((resolve) => {
-            this.parseFile(this.getInternKmConfFilename(), TsiParserConfigNames.PARSER_CONFIG_KM_EMAIL, disableScreen, loader, TsiConstants.PARSE_DEFAULT_PRIORITY).then((res) => {
-                resolve();
-            });
-        });
+        await this.parseFile(this.getInternKmConfFilename(), TsiParserConfigNames.PARSER_CONFIG_KM_EMAIL, disableScreen, loader, TsiConstants.PARSE_DEFAULT_PRIORITY);
     }
 
     public putServerSyncTime(filename, time) {
@@ -481,17 +468,8 @@ export class TsiSyncDataServiceProvider {
     }
 
     public getFilenames(times : Map<string, string>) {
-        let result = [];
 
-        let filenames = times.entries;
-        for (let i = 0;i < filenames.length;i ++) {
-            result.push(filenames[i].key);
-        }
-
-        console.log('Times and Results', JSON.stringify(times));
-        console.log('Times and Results', JSON.stringify(result));
-
-        return result;
+        return Object.keys(times);
     }
 
     public getLocalSyncTime(filename) {
