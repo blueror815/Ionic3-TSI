@@ -227,7 +227,7 @@ export class TsiSyncDataServiceProvider {
 
     public readLocalFileTimes(disableScreen, loader)
     {
-        this.parseFile(this.getSynchronizationFilename(), TsiParserConfigNames.PARSER_CONFIG_SYNCFILE, disableScreen, loader,  TsiConstants.READ_LOCAL_FILETIMES_PRIORITY);
+       this.parseFile(this.getSynchronizationFilename(), TsiParserConfigNames.PARSER_CONFIG_SYNCFILE, disableScreen, loader,  TsiConstants.READ_LOCAL_FILETIMES_PRIORITY);
     }
 
     public getAllCustomerFolders(disableScreen, loader)
@@ -244,6 +244,8 @@ export class TsiSyncDataServiceProvider {
     {
         let filenames = this.getLocalFilenames();
         
+        console.log('Start All Parse Tasks', JSON.stringify(filenames));
+
         for (let filename of filenames) {
             let mFilename = filename.split('/').pop();
             let path = filename.replace(mFilename, '');
@@ -269,26 +271,20 @@ export class TsiSyncDataServiceProvider {
         this.connectionService.downloadOutdatedFiles(this.dataService, this);
     }
 
-    private async parseFile(filePath, parseConfig, disableScreen, loader, priority)
+    private parseFile(filePath, parseConfig, disableScreen, loader, priority)
     {
         let pathArray = filePath.split('/');
         let filename  = pathArray.pop();
                
-        return new Promise(async (resolve) => {
-            await this.parserService.parse(filePath.replace(filename, ''), filename, parseConfig).then((res) => {
-                resolve();
-            }, (err) => {
-                resolve();
-            })
+        return new Promise((resolve) => {
+            this.parserService.parse(filePath.replace(filename, ''), filename, parseConfig);
         }); 
     }
 
     public readExpendituresFile( disableScreen, loader)
     {
         return new Promise((resolve) => {
-            this.parseFile(this.getExpendituresFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPENDITURES, disableScreen, loader, TsiConstants.PARSE_EXPENDITURES_PRIORITY).then((res) => {
-                resolve();
-            });
+            this.parseFile(this.getExpendituresFilename(), TsiParserConfigNames.PARSER_CONFIG_EXPENDITURES, disableScreen, loader, TsiConstants.PARSE_EXPENDITURES_PRIORITY);
         });
     }
 

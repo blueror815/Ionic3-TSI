@@ -32,18 +32,21 @@ export class TsiClientServiceProvider {
     });
   }
 
-  public updateConfiguration(disableScreen) {
+  public async updateConfiguration(disableScreen) {
 
     let loader = this.loading.create({
       content: ""
     });
 
     //loader.present();
-    this.syncService.readLocalFileTimes(disableScreen, loader);
-    this.syncService.readServerFileTimes(disableScreen, loader);
-    this.syncService.downloadOutlatedFiles(disableScreen, loader);
-    this.syncService.startAllParseTasks(disableScreen, loader);
-    this.syncService.writeSyncFile(disableScreen, loader);
+    await this.syncService.readServerFileTimes(disableScreen, loader);
+    await this.syncService.readLocalFileTimes(disableScreen, loader);
+    
+    
+    
+    // this.syncService.downloadOutlatedFiles(disableScreen, loader);
+    // this.syncService.startAllParseTasks(disableScreen, loader);
+    // this.syncService.writeSyncFile(disableScreen, loader);
         
         // if (disableScreen)
         //     this.syncService.readShoppingCarts( disableScreen );
