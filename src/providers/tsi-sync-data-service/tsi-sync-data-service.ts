@@ -7,6 +7,7 @@ import { TsiDataServiceProvider } from '../tsi-data-service/tsi-data-service';
 import { TsiEmailServiceProvider } from '../tsi-email-service/tsi-email-service';
 import { TsiParserConfigNames } from '../../parser/TsiParserConfigNames';
 import { TsiParserServiceProvider } from '../tsi-parser-service/tsi-parser-service';
+import { TsiShoppingCartServiceProvider } from '../tsi-shopping-cart-service/tsi-shopping-cart-service';
 
 /*
   Generated class for the TsiSyncDataServiceProvider provider.
@@ -22,7 +23,8 @@ export class TsiSyncDataServiceProvider {
     public syncFileTimesServer : Map<string, string>;
 
     constructor(public file: File, public connectionService : TsiConnectionServiceProvider, public dataService : TsiDataServiceProvider,
-                public emailService : TsiEmailServiceProvider, public parserService: TsiParserServiceProvider, public zone: NgZone) {
+                public emailService : TsiEmailServiceProvider, public parserService: TsiParserServiceProvider,public shoppingService: TsiShoppingCartServiceProvider, 
+                public zone: NgZone) {
         console.log('Hello TsiSyncDataServiceProvider Provider');
         this.syncFileTimesLocal = new Map<string, string>();
         this.syncFileTimesServer = new Map<string, string>();
@@ -227,7 +229,7 @@ export class TsiSyncDataServiceProvider {
 
     public async readCatalogTabHeadersFile() {
     	// just to be sure
-       await  this.parseFile(this.getCatalogTabHeadersFilename(), TsiParserConfigNames.PARSER_CONFIG_CATALOG_TAB_HEADERS, false, null, TsiConstants.READ_LOCAL_FILETIMES_PRIORITY);
+       await this.parseFile(this.getCatalogTabHeadersFilename(), TsiParserConfigNames.PARSER_CONFIG_CATALOG_TAB_HEADERS, false, null, TsiConstants.READ_LOCAL_FILETIMES_PRIORITY);
     }
 
     public async readLocalFileTimes(disableScreen, loader)
@@ -266,9 +268,7 @@ export class TsiSyncDataServiceProvider {
             let rx = new RegExp(this.dataService.customerFolder + '|Artikel|Kategorien');
 
             if (path.match(rx) && path.match(rx)[0] != '') {
-                this.startTask(this.getDataStoragePath(), disableScreen).then((res) => {
-                    
-                });
+                await this.startTask(this.getDataStoragePath(), disableScreen);
             }
             
         }
@@ -281,6 +281,40 @@ export class TsiSyncDataServiceProvider {
         });
 
         let path = this.getShoppingCartPath();
+        return new Promise((resolve) => {
+            this.file.listDir(this.getDataStoragePath(), "carts").then(async (res) => {
+
+                console.log('Local Carts Files => ', JSON.stringify(res));
+
+                if (res && res.length > 0) {
+                    for (let img of res) {
+                        if (img.name != "." && img.name != "..") {
+                            let filename = img.name;
+
+                            let customerID = filename.substring(0, filename.lastIndexOf('.')).split('_')[1];
+
+                            console.log('CustomerID', customerID + filename);
+                            this.dataService.setChoosenCustomerViaID(customerID);
+
+                            if (this.shoppingService.shoppingCartExists(this.dataService.choosenCustomer.getCustomerID())) {
+                                if (filename.substring(filename.lastIndexOf('.')) == '.dat') {
+                                    await this.parseFile(this.getShoppingCartPath() + filename, TsiParserConfigNames.PARSER_CONFIG_SHOPPING_CART_DATA, false, loader, TsiConstants.READ_SERVER_FILETIMES_PRIORITY);
+                                }
+
+                                if (filename.substring(filename.lastIndexOf('.')) == '.txt') {
+                                    await this.parseFile(this.getShoppingCartPath() + filename, TsiParserConfigNames.PARSER_CONFIG_SHOPPING_CART_ORDERS, false, loader, TsiConstants.READ_SERVER_FILETIMES_PRIORITY);
+                                }
+                            }
+                        }
+                    } 
+                }
+
+                resolve();
+            }, (err) => {
+                resolve();
+            })
+
+        })
 
     }
 
@@ -350,6 +384,8 @@ export class TsiSyncDataServiceProvider {
 
     public async startTask(filename, disableScreen) {
         
+        console.log('Start Task', filename);
+
         if (filename.matches( ".*KundenDB.PSV" ))
         {   
             await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CUSTOMER, disableScreen, null, TsiConstants.PARSE_CUSTOMER_PRIORITY);

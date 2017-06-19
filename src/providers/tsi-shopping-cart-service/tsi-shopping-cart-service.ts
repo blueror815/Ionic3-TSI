@@ -45,4 +45,8 @@ export class TsiShoppingCartServiceProvider {
         this.shoppingCarts.set( customerID, shoppingCart );
     }
 
+    public shoppingCartExists(customerID) {
+        return this.shoppingCarts[customerID.toString()] != null && Object.keys(this.shoppingCarts[customerID.toString()]).length > 0;
+    }
+
 }

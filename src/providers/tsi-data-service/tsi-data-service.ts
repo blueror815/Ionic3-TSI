@@ -123,13 +123,17 @@ export class TsiDataServiceProvider {
     }
 
     public getCustomer(id) {
-        let result = this.customers.get( id );
+        let result = this.customers.get(id);
         let temp = id;
+
+        console.log('Result and Temp', JSON.stringify(result) + temp);
+
         while (result == null && temp.charAt( 0 ) == '0')
         {
             temp = temp.substring( 1 );
             result = this.customers.get( temp );
         }
+
         if (result == null)
         {
             result = new TsiCustomer();
@@ -139,8 +143,10 @@ export class TsiDataServiceProvider {
             result.setOrderBlock( "" );
             result.setFormatCode( "" );
             result.setMinOrderQuantity( "0" );
-            this.putCustomer( result );
+            this.putCustomer(result);
         }
+
+        console.log('Result', JSON.stringify(result));
         return result;
     }
 
@@ -152,6 +158,12 @@ export class TsiDataServiceProvider {
     public getCustomerOnlyBusinessUnit() {
         this.customerBusinessUnit = ["SLE - SELH", "VEN - VENDING", "LEH - REWE", "APO - APOTHEKEN"];
         return this.customerBusinessUnit;
+    }
+
+    public setChoosenCustomerViaID(choosenCustomerID) {
+        let customer = this.getCustomer(choosenCustomerID);
+        this.selectedCustomer = customer;
+        this.choosenCustomer = customer;
     }
 
     public getArticle(articleID){
