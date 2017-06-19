@@ -26,6 +26,14 @@ export class CreateClientModalPage {
 
   	}
 
+	cancel() {
+		this.onModalDismiss();
+	}
+
+	save() {
+		this.onModalDismiss();
+	}
+
   	onModalDismiss() {
   		this.viewCtrl.dismiss();
   	}

@@ -1,47 +1,47 @@
 <ion-header>
-  	<ion-navbar color="lightColor">
-  		<img class="logo" src="assets/images/icon.png"/>
-    	<ion-title>Neukunden anlegen</ion-title>
-  	</ion-navbar>
+    <ion-navbar color="lightColor">
+        <img class="logo" src="assets/images/icon.png" />
+        <ion-title>Neukunden anlegen</ion-title>
+    </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-	<ion-fab top right edge>
-	    <button ion-fab mini><ion-icon ios="ios-more" md="md-more"></ion-icon></button>
-	    <ion-fab-list>
-	    	<div class="fav-button-container">
-		      	<button>Speichem</button>
-		      	<button>Abbrechen</button>
-	      	</div>
-	    </ion-fab-list>
-  	</ion-fab>
+    <ion-fab top right edge>
+        <button ion-fab mini><ion-icon ios="ios-more" md="md-more"></ion-icon></button>
+        <ion-fab-list>
+            <div class="fav-button-container">
+                <button (click)="save()">Speichem</button>
+                <button (click)="cancel()">Abbrechen</button>
+            </div>
+        </ion-fab-list>
+    </ion-fab>
 
-  	<ion-split-pane>
-	  <!--  our side menu  -->
-	  	<ion-menu color="lightColor" [content]="content">
-		    <ion-content>
-				<ion-list>
-			        <ion-item (click)="setCategory('sales_area')">
-			          	<h2>Vertriebsbereich</h2>
-			        </ion-item>
-			        <ion-item (click)="setCategory('name')">
-			          	<h2>Name</h2>
-			        </ion-item>
-			        <ion-item (click)="setCategory('communication')">
-			          	<h2>Kommunikation</h2>
-			        </ion-item>
-			        <ion-item (click)="setCategory('date')">
-			          	<h2>Daten</h2>
-			        </ion-item>
-			        <ion-item (click)="setCategory('contact_person')">
-			          	<h2>Ansprechpartner</h2>
-			        </ion-item>
-				</ion-list>
-		    </ion-content>
-	  	</ion-menu>
+    <ion-split-pane>
+        <!--  our side menu  -->
+        <ion-menu color="lightColor" [content]="content">
+            <ion-content>
+                <ion-list>
+                    <ion-item (click)="setCategory('sales_area')">
+                        <h2>Vertriebsbereich</h2>
+                    </ion-item>
+                    <ion-item (click)="setCategory('name')">
+                        <h2>Name</h2>
+                    </ion-item>
+                    <ion-item (click)="setCategory('communication')">
+                        <h2>Kommunikation</h2>
+                    </ion-item>
+                    <ion-item (click)="setCategory('date')">
+                        <h2>Daten</h2>
+                    </ion-item>
+                    <ion-item (click)="setCategory('contact_person')">
+                        <h2>Ansprechpartner</h2>
+                    </ion-item>
+                </ion-list>
+            </ion-content>
+        </ion-menu>
 
-	  	<!-- the main content -->
-	  	<ion-nav [root]="rootPage" main #content></ion-nav>
-	</ion-split-pane>
+        <!-- the main content -->
+        <ion-nav [root]="rootPage" main #content></ion-nav>
+    </ion-split-pane>
 </ion-content>
