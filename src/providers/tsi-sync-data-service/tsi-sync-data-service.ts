@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { File } from '@ionic-native/file';
 import { TsiConstants } from '../../utils/TsiConstants';
@@ -22,7 +22,7 @@ export class TsiSyncDataServiceProvider {
     public syncFileTimesServer : Map<string, string>;
 
     constructor(public file: File, public connectionService : TsiConnectionServiceProvider, public dataService : TsiDataServiceProvider,
-                public emailService : TsiEmailServiceProvider, public parserService: TsiParserServiceProvider) {
+                public emailService : TsiEmailServiceProvider, public parserService: TsiParserServiceProvider, public zone: NgZone) {
         console.log('Hello TsiSyncDataServiceProvider Provider');
         this.syncFileTimesLocal = new Map<string, string>();
         this.syncFileTimesServer = new Map<string, string>();
@@ -180,8 +180,9 @@ export class TsiSyncDataServiceProvider {
     public async writeSyncFile(disableScreen, loader) {
 
         let syncTxt = '';
+    
         for (let key of Object.keys(this.syncFileTimesServer)) {
-            syncTxt = syncTxt + key + "|" + this.syncFileTimesLocal[key] + "\n";
+            syncTxt = syncTxt + key + "|" + this.syncFileTimesServer[key.toString()] + "\n";
         }
 
         console.log('Sync Text', syncTxt);
@@ -224,9 +225,9 @@ export class TsiSyncDataServiceProvider {
         
     }
 
-    public readCatalogTabHeadersFile() {
+    public async readCatalogTabHeadersFile() {
     	// just to be sure
-        this.parseFile(this.getCatalogTabHeadersFilename(), TsiParserConfigNames.PARSER_CONFIG_CATALOG_TAB_HEADERS, false, null, TsiConstants.READ_LOCAL_FILETIMES_PRIORITY);
+       await  this.parseFile(this.getCatalogTabHeadersFilename(), TsiParserConfigNames.PARSER_CONFIG_CATALOG_TAB_HEADERS, false, null, TsiConstants.READ_LOCAL_FILETIMES_PRIORITY);
     }
 
     public async readLocalFileTimes(disableScreen, loader)
@@ -241,11 +242,19 @@ export class TsiSyncDataServiceProvider {
 
     public async readServerFileTimes(disableScreen, loader)
     {
+        this.zone.run(() => {
+            loader.setContent("Schaue, ob neue Daten vorliegen...");
+        });
+
         await this.connectionService.readServerFiles(this.dataService, this);
     }
 
     public async startAllParseTasks(disableScreen, loader)
     {
+        this.zone.run(() => {
+            loader.setContent("Füge Aufgaben hinzu...");
+        });
+
         let filenames = this.getLocalFilenames();
         
         console.log('Start All Parse Tasks', JSON.stringify(filenames));
@@ -265,7 +274,7 @@ export class TsiSyncDataServiceProvider {
         }
     }
 
-    public readShoppingCarts(disableScreen, loader)
+    public async readShoppingCarts(disableScreen, loader)
     {
         //this.execute( new ReadShoppingCartsTask( TSI_ClientService.getDataService().getStatusTextView(), disableScreen, loader ) );
     }
@@ -279,7 +288,11 @@ export class TsiSyncDataServiceProvider {
     {
         let pathArray = filePath.split('/');
         let filename  = pathArray.pop();
-               
+        
+        this.zone.run(() => {
+            loader.setContent('Analysiere Datei ' + filename + '...');
+        });
+
         return new Promise((resolve) => {
             this.parserService.parse(filePath.replace(filename, ''), filename, parseConfig).then((res) => {
                 resolve();

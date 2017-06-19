@@ -16,7 +16,8 @@ import { LoadingController } from 'ionic-angular';
 @Injectable()
 export class TsiClientServiceProvider {
 
-  constructor(public dataService : TsiDataServiceProvider, public syncService: TsiSyncDataServiceProvider, public dialog : Dialogs, public loading: LoadingController) {
+  constructor(public dataService : TsiDataServiceProvider, public syncService: TsiSyncDataServiceProvider, public dialog : Dialogs, 
+              public loading: LoadingController) {
     console.log('Hello TsiClientServiceProvider Provider');
   
   }
@@ -38,7 +39,7 @@ export class TsiClientServiceProvider {
       content: ""
     });
 
-    //loader.present();
+    loader.present();
     await this.syncService.readLocalFileTimes(disableScreen, loader);
     await this.syncService.readServerFileTimes(disableScreen, loader);
     await this.syncService.downloadOutlatedFiles(disableScreen, loader);
@@ -54,6 +55,7 @@ export class TsiClientServiceProvider {
     await this.syncService.readLicenceNumberFile(disableScreen, loader);
     await this.syncService.readExpandituresConfFile(disableScreen, loader);
     await this.syncService.readKmConfFile(disableScreen, loader);
+    loader.dismiss();
 
   }
 
