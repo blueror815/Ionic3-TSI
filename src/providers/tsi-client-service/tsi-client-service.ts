@@ -55,6 +55,7 @@ export class TsiClientServiceProvider {
     await this.syncService.readLicenceNumberFile(disableScreen, loader);
     await this.syncService.readExpandituresConfFile(disableScreen, loader);
     await this.syncService.readKmConfFile(disableScreen, loader);
+    
     loader.dismiss();
 
   }

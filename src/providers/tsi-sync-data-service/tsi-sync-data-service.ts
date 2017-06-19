@@ -268,7 +268,7 @@ export class TsiSyncDataServiceProvider {
             let rx = new RegExp(this.dataService.customerFolder + '|Artikel|Kategorien');
 
             if (path.match(rx) && path.match(rx)[0] != '') {
-                await this.startTask(this.getDataStoragePath(), disableScreen);
+                await this.startTask(this.getDataStoragePath() + mFilename, disableScreen, loader);
             }
             
         }
@@ -382,38 +382,43 @@ export class TsiSyncDataServiceProvider {
         console.log('syncFileTimesLocal', JSON.stringify(this.syncFileTimesLocal));
     }
 
-    public async startTask(filename, disableScreen) {
+    public async startTask(filename, disableScreen, loader) {
         
         console.log('Start Task', filename);
 
-        if (filename.matches( ".*KundenDB.PSV" ))
-        {   
-            await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CUSTOMER, disableScreen, null, TsiConstants.PARSE_CUSTOMER_PRIORITY);
-        }
-        else if (filename.matches( ".*ArtikelDB.PSV" ))
-        {
-            await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_ARTICLE, disableScreen, null, TsiConstants.PARSE_ARTICLE_PRIORITY);
-        }
-        else if (filename.matches( ".*KategorieDB.PSV" ))
-        {
-            await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CATEGORY, disableScreen, null, TsiConstants.PARSE_CATEGORY_PRIORITY);
-        }
-        else if (filename.matches( ".*OrdersDB.PSV" ))
-        {
-            await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_ORDER, disableScreen, null, TsiConstants.PARSE_DEFAULT_PRIORITY);
-        }
-        else if (filename.matches( ".*KatalogDB.PSV" ))
-        {
-            await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CUSTOMER_CATALOG, disableScreen, null, TsiConstants.PARSE_DEFAULT_PRIORITY);
-        }
-        else if(filename.matches( ".*CatalogTabLabels.txt" ))
-        {
-            await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CATALOG_TAB_HEADERS, disableScreen, null, TsiConstants.PARSE_DEFAULT_PRIORITY);
-        }
-        else if(filename.matches(".*Configmaske.txt"))
-        {
-            await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_NEW_CUSTOMER_CONF, disableScreen, null, TsiConstants.PARSE_DEFAULT_PRIORITY);
-        }
+        return new Promise (async (resolve) => {
+            if (filename.matches( ".*KundenDB.PSV" ))
+            {   
+                await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CUSTOMER, disableScreen, loader, TsiConstants.PARSE_CUSTOMER_PRIORITY);
+            }
+            else if (filename.matches( ".*ArtikelDB.PSV" ))
+            {
+                await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_ARTICLE, disableScreen, loader, TsiConstants.PARSE_ARTICLE_PRIORITY);
+            }
+            else if (filename.matches( ".*KategorieDB.PSV" ))
+            {
+                await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CATEGORY, disableScreen, loader, TsiConstants.PARSE_CATEGORY_PRIORITY);
+            }
+            else if (filename.matches( ".*OrdersDB.PSV" ))
+            {
+                await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_ORDER, disableScreen, loader, TsiConstants.PARSE_DEFAULT_PRIORITY);
+            }
+            else if (filename.matches( ".*KatalogDB.PSV" ))
+            {
+                await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CUSTOMER_CATALOG, disableScreen, loader, TsiConstants.PARSE_DEFAULT_PRIORITY);
+            }
+            else if(filename.matches( ".*CatalogTabLabels.txt" ))
+            {
+                await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CATALOG_TAB_HEADERS, disableScreen, loader, TsiConstants.PARSE_DEFAULT_PRIORITY);
+            }
+            else if(filename.matches(".*Configmaske.txt"))
+            {
+                await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_NEW_CUSTOMER_CONF, disableScreen, loader, TsiConstants.PARSE_DEFAULT_PRIORITY);
+            }
+
+            resolve();
+        });
+        
     }
 
     public getInternStoragePath()
