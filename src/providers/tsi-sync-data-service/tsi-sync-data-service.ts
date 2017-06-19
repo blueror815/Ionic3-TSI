@@ -266,7 +266,7 @@ export class TsiSyncDataServiceProvider {
             let rx = new RegExp(this.dataService.customerFolder + '|Artikel|Kategorien');
 
             if (path.match(rx) && path.match(rx)[0] != '') {
-                await this.startTask(this.getDataStoragePath(), disableScreen).then((res) => {
+                this.startTask(this.getDataStoragePath(), disableScreen).then((res) => {
                     
                 });
             }
@@ -276,7 +276,12 @@ export class TsiSyncDataServiceProvider {
 
     public async readShoppingCarts(disableScreen, loader)
     {
-        //this.execute( new ReadShoppingCartsTask( TSI_ClientService.getDataService().getStatusTextView(), disableScreen, loader ) );
+        this.zone.run(() => {
+            loader.setContent('Lade gespeicherte Warenkörbe...');
+        });
+
+        let path = this.getShoppingCartPath();
+
     }
 
     public async downloadOutlatedFiles(disableScreen, loader) {
@@ -465,6 +470,10 @@ export class TsiSyncDataServiceProvider {
         return this.getDataStoragePath() + folder + "/ordersdb.psv";
     }
 
+    public getShoppingCartPath() {
+        return this.getDataStoragePath() + 'carts/';
+    }
+
     public getFilenameWithVersion(filename)
     {
         let result = "";
@@ -486,9 +495,16 @@ export class TsiSyncDataServiceProvider {
     }
 
     public getLocalSyncTime(filename) {
-        let time = this.syncFileTimesLocal.get(filename);
+        let time = this.syncFileTimesLocal[filename.toString()];
         if (time) {
-            return time;
+            let timeArray = time.split(' ');
+            let dateArray = timeArray[0].split('-');
+
+            let stamp = Date.UTC(dateArray[0], dateArray[1], dateArray[2]);
+            // time = dateArray[1] + ' ' + dateArray[2] + ' ' + dateArray[0] + ' ' + timeArray[1] + ' ' + timeArray[2];
+            console.log('Time', stamp);
+
+            return stamp;
         }
         else {
             return '-1';
@@ -496,9 +512,17 @@ export class TsiSyncDataServiceProvider {
     }
 
     public getServerSyncTime(filename) {
-        let time = this.syncFileTimesServer.get(filename);
+        let time = this.syncFileTimesServer[filename.toString()];
+
         if (time) {
-            return time;
+            let timeArray = time.split(' ');
+            let dateArray = timeArray[0].split('-');
+
+            let stamp = Date.UTC(dateArray[0], dateArray[1], dateArray[2]);
+            // time = dateArray[1] + ' ' + dateArray[2] + ' ' + dateArray[0] + ' ' + timeArray[1] + ' ' + timeArray[2];
+            console.log('Time', stamp);
+
+            return stamp;
         }
         else {
             return '-1';

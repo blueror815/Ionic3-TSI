@@ -177,8 +177,12 @@ export class TsiConnectionServiceProvider {
                 let rx = new RegExp(dataService.customerFolder + '|Artikel|Kategorien|News');
 
                 if (path.match(rx) && path.match(rx)[0] != '') {
-                    let localtime = Date.parse(syncService.getLocalSyncTime(serverFile));
-                    let servertime = Date.parse(syncService.getServerSyncTime(serverFile));
+                    
+                    let localtime = syncService.getLocalSyncTime(serverFile);
+                    let servertime = syncService.getServerSyncTime(serverFile);
+
+                    console.log('Local Time', localtime);
+                    console.log('Server Time', servertime);
 
                     if (localtime < servertime) {
                         await this.downloadFile(syncService.getDataStoragePath(), serverFile, filename).then((res) => {
