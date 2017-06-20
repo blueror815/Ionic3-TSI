@@ -11,7 +11,7 @@ export class TsiOrderLineProcessor extends TsiAbstractLineProcessor<TsiRawOrder>
 
     public parse(line: string, sourceFileName: string) {
         let result = new TsiRawOrder();
-        let lineItems = line.split( "\\|" );
+        let lineItems = line.split( "|" );
         
         let index = 0;
         result.customerID = lineItems[index++];
@@ -23,13 +23,11 @@ export class TsiOrderLineProcessor extends TsiAbstractLineProcessor<TsiRawOrder>
         result.vpe_size = lineItems[index++];
         result.price = lineItems[index++];
 
-        lineItems = null;
         return result;
     }
 
     public process(lineResult: TsiRawOrder) {
         this.dataService.putOrder( lineResult );
-        lineResult = null;
     }
 
 }

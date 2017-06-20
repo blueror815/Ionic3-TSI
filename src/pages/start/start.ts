@@ -64,7 +64,9 @@ export class StartPage {
 		let categories = this.dataService.mainCategories;
 		
 		this.left_items = [];
-		
+		this.right_item = '';
+		this.right_title = '';
+
 		for(let i = 0;i < categories.values.length;i ++) {
 			let category = categories.values[i];
 			this.left_items.push(category.name);

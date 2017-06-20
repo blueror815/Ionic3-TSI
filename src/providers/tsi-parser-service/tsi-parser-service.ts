@@ -60,14 +60,14 @@ export class TsiParserServiceProvider {
   }
 
   public addParserConfig(name, lineProcessor) {
-    this.parserConfigs.set(name, lineProcessor);
+    this.parserConfigs[name] = lineProcessor;
   }
 
   public parse(filePath, fileName, parserConfigname) {
-    let lineProcessor = this.parserConfigs.get( parserConfigname );
+    let lineProcessor = this.parserConfigs[parserConfigname];
 
     console.log ( "///////////////////", "Parser" );
-    console.log ( "Parsing File: " + lineProcessor, "Parser" );
+    console.log ( "Parsing File: " + fileName, "Parser" );
     console.log ( "///////////////////", "Parser" );
     
     return new Promise((resolve, reject) => {

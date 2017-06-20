@@ -13,7 +13,7 @@ export class TsiCustomerLineProcessor extends TsiAbstractLineProcessor<TsiCustom
     public parse(line: string, sourceFileName: string) {
         this.index = 0;
         let result = new TsiCustomer();
-        let lineItems = line.split( "\\|" );
+        let lineItems = line.split( "|" );
         
         result.setName( this.nextString(lineItems) );
         result.setCity_short( this.nextString(lineItems)  );

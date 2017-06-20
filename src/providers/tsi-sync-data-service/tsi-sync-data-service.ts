@@ -261,17 +261,22 @@ export class TsiSyncDataServiceProvider {
         
         console.log('Start All Parse Tasks', JSON.stringify(filenames));
 
-        for (let filename of filenames) {
-            let mFilename = filename.split('/').pop();
-            let path = filename.replace(mFilename, '');
+        return new Promise(async (resolve) => {
+            for (let filename of filenames) {
+                let mFilename = filename.split('/').pop();
+                let path = filename.replace(mFilename, '');
 
-            let rx = new RegExp(this.dataService.customerFolder + '|Artikel|Kategorien');
+                let rx = new RegExp(this.dataService.customerFolder + '|Artikel|Kategorien');
 
-            if (path.match(rx) && path.match(rx)[0] != '') {
-                await this.startTask(this.getDataStoragePath() + mFilename, disableScreen, loader);
+                if (path.match(rx) && path.match(rx)[0] != '') {
+                    await this.startTask(this.getDataStoragePath() + mFilename, disableScreen, loader);
+                }
             }
-            
-        }
+
+            resolve();
+        })
+
+        
     }
 
     public async readShoppingCarts(disableScreen, loader)
@@ -382,43 +387,54 @@ export class TsiSyncDataServiceProvider {
         console.log('syncFileTimesLocal', JSON.stringify(this.syncFileTimesLocal));
     }
 
-    public async startTask(filename, disableScreen, loader) {
+    public startTask(filename, disableScreen, loader) {
         
         console.log('Start Task', filename);
 
         return new Promise (async (resolve) => {
-            if (filename.matches( ".*KundenDB.PSV" ))
-            {   
-                await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CUSTOMER, disableScreen, loader, TsiConstants.PARSE_CUSTOMER_PRIORITY);
-            }
-            else if (filename.matches( ".*ArtikelDB.PSV" ))
+            if (filename.match( ".*KundenDB.PSV" ))
             {
-                await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_ARTICLE, disableScreen, loader, TsiConstants.PARSE_ARTICLE_PRIORITY);
+                console.log('Start Task', ".*KundenDB.PSV");   
+                //await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CUSTOMER, disableScreen, loader, TsiConstants.PARSE_CUSTOMER_PRIORITY);
+                
             }
-            else if (filename.matches( ".*KategorieDB.PSV" ))
+            else if (filename.match( ".*ArtikelDB.PSV" ))
             {
-                await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CATEGORY, disableScreen, loader, TsiConstants.PARSE_CATEGORY_PRIORITY);
+                console.log('Start Task', ".*ArtikelDB.PSV");
+                //await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_ARTICLE, disableScreen, loader, TsiConstants.PARSE_ARTICLE_PRIORITY);
             }
-            else if (filename.matches( ".*OrdersDB.PSV" ))
+            else if (filename.match( ".*KategorieDB.PSV" ))
             {
-                await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_ORDER, disableScreen, loader, TsiConstants.PARSE_DEFAULT_PRIORITY);
+                console.log('Start Task', ".*KategorieDB.PSV");
+                //await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CATEGORY, disableScreen, loader, TsiConstants.PARSE_CATEGORY_PRIORITY);
             }
-            else if (filename.matches( ".*KatalogDB.PSV" ))
+            else if (filename.match( ".*OrdersDB.PSV" ))
             {
-                await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CUSTOMER_CATALOG, disableScreen, loader, TsiConstants.PARSE_DEFAULT_PRIORITY);
+                console.log('Start Task', ".*OrdersDB.PSV");
+                //await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_ORDER, disableScreen, loader, TsiConstants.PARSE_DEFAULT_PRIORITY);
             }
-            else if(filename.matches( ".*CatalogTabLabels.txt" ))
+            else if (filename.match( ".*KatalogDB.PSV" ))
             {
+                console.log('Start Task', ".*KatalogDB.PSV");
+                //await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CUSTOMER_CATALOG, disableScreen, loader, TsiConstants.PARSE_DEFAULT_PRIORITY);
+            }
+            else if(filename.match( ".*CatalogTabLabels.txt" ))
+            {
+                console.log('Start Task', ".*CatalogTabLabels.txt");
                 await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CATALOG_TAB_HEADERS, disableScreen, loader, TsiConstants.PARSE_DEFAULT_PRIORITY);
             }
-            else if(filename.matches(".*Configmaske.txt"))
+            else if(filename.match(".*Configmaske.txt"))
             {
+                console.log('Start Task', ".*Configmaske.txt");
                 await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_NEW_CUSTOMER_CONF, disableScreen, loader, TsiConstants.PARSE_DEFAULT_PRIORITY);
+            }
+            else {
+                console.log('Start Task');
+                
             }
 
             resolve();
         });
-        
     }
 
     public getInternStoragePath()
@@ -542,7 +558,6 @@ export class TsiSyncDataServiceProvider {
             let dateArray = timeArray[0].split('-');
 
             let stamp = Date.UTC(dateArray[0], dateArray[1], dateArray[2]);
-            // time = dateArray[1] + ' ' + dateArray[2] + ' ' + dateArray[0] + ' ' + timeArray[1] + ' ' + timeArray[2];
             console.log('Time', stamp);
 
             return stamp;
@@ -560,7 +575,6 @@ export class TsiSyncDataServiceProvider {
             let dateArray = timeArray[0].split('-');
 
             let stamp = Date.UTC(dateArray[0], dateArray[1], dateArray[2]);
-            // time = dateArray[1] + ' ' + dateArray[2] + ' ' + dateArray[0] + ' ' + timeArray[1] + ' ' + timeArray[2];
             console.log('Time', stamp);
 
             return stamp;

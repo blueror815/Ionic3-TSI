@@ -381,15 +381,15 @@ export class TsiDataServiceProvider {
 
     public putOrder(rawOrder : TsiRawOrder)
     {
-        let ordersOfCustomer = this.orders.get(rawOrder.customerID );
+        let ordersOfCustomer = this.orders[rawOrder.customerID];
         if (ordersOfCustomer == null)
             ordersOfCustomer = new Map<string, Map<string, TsiOrder>>();
         
-        let orderList = ordersOfCustomer.get(rawOrder.billCounter);
+        let orderList = ordersOfCustomer[rawOrder.billCounter];
         if (orderList == null)
             orderList = new Map<string, TsiOrder>();
         
-        let order = orderList.get(rawOrder.position);
+        let order = orderList[rawOrder.position];
         if (order == null)
             order = new TsiOrder();
 
