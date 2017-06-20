@@ -52,7 +52,7 @@ export class StartPage {
 				this.dataService.clearAccountVectors();
 				this.clientService.updateConfiguration(true);
 				
-				this.updateCategories();
+				//this.updateCategories();
 			}, (err) => {
 				this.presentConfigModal();
 			})

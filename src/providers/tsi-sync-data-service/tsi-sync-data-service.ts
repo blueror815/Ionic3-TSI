@@ -208,7 +208,9 @@ export class TsiSyncDataServiceProvider {
                             console.log('sync text', JSON.stringify(err));
                             
                         })
-                    } 
+                    }
+
+                    resolve(); 
 
                 }, async (err) => {
                     console.log('SyncFile', JSON.stringify(err));
