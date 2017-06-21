@@ -12,7 +12,7 @@ export class TsiNewCustomerConfLineProcessor extends TsiAbstractLineProcessor<st
     public parse(line: string, sourceFileName: string) {
         this.index = 0;
         let newEntry = new TsiConfigEntry();
-        let lineItems = line.split( "\\|" );
+        let lineItems = line.split( "|" );
         if(lineItems[0] == "KTOART")
         {
             newEntry.setEntryType( lineItems[0] );

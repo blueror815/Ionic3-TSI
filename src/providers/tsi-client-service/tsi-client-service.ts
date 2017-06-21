@@ -43,18 +43,18 @@ export class TsiClientServiceProvider {
     await this.syncService.readLocalFileTimes(disableScreen, loader);
     await this.syncService.readServerFileTimes(disableScreen, loader);
     await this.syncService.downloadOutlatedFiles(disableScreen, loader);
-    //await this.syncService.startAllParseTasks(disableScreen, loader);
+    await this.syncService.startAllParseTasks(disableScreen, loader);
     await this.syncService.writeSyncFile(disableScreen, loader);
-    console.log('Pass sync file');    
-    //if (disableScreen)
-        //await this.syncService.readShoppingCarts(disableScreen, loader);
+
+    if (disableScreen)
+        await this.syncService.readShoppingCarts(disableScreen, loader);
     
-    // await this.syncService.readExpenditureSuggestionsFile(disableScreen, loader);
-    // await this.syncService.readExpendituresFile(disableScreen, loader);
-    // await this.syncService.readLicenceNumberSuggestionsFile(disableScreen, loader);
-    // await this.syncService.readLicenceNumberFile(disableScreen, loader);
-    // await this.syncService.readExpandituresConfFile(disableScreen, loader);
-    // await this.syncService.readKmConfFile(disableScreen, loader);
+    await this.syncService.readExpenditureSuggestionsFile(disableScreen, loader);
+    await this.syncService.readExpendituresFile(disableScreen, loader);
+    await this.syncService.readLicenceNumberSuggestionsFile(disableScreen, loader);
+    await this.syncService.readLicenceNumberFile(disableScreen, loader);
+    await this.syncService.readExpandituresConfFile(disableScreen, loader);
+    await this.syncService.readKmConfFile(disableScreen, loader);
     
     loader.dismiss();
 

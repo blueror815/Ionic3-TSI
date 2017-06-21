@@ -8,7 +8,7 @@ export class TsiLicenceNumberLineProcessor extends TsiAbstractLineProcessor<stri
     }
 
     public parse(line: string, sourceFileName: string) {
-        let lineItems = line.split( "\\;" );
+        let lineItems = line.split( ";" );
         
         let index = 0;
         this.dataService.internLicence = lineItems[index++];

@@ -9,7 +9,7 @@ export class TsiExpendituresConfLineProcessor extends TsiAbstractLineProcessor<s
     }
 
     public parse(line: string, sourceFileName: string) {
-        let lineItems = line.split( "\\|" );
+        let lineItems = line.split( "|" );
         if (lineItems[0] == TsiConstants.EMAIL_INTERN_ECPENDITURES_KEY)
             this.dataService.expenditureEmail = lineItems[1];
         return null;

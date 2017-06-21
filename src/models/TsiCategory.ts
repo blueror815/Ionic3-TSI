@@ -29,4 +29,12 @@ export class TsiCategory {
 
         return this.childs;
     }
+
+    public getId() {
+        return this.id;
+    }
+
+    public setId(id) {
+        this.id = id;
+    }
 }

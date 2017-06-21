@@ -15,6 +15,7 @@ export class TsiCustomerLineProcessor extends TsiAbstractLineProcessor<TsiCustom
         let result = new TsiCustomer();
         let lineItems = line.split( "|" );
         
+        console.log('Customer Line Items', JSON.stringify(lineItems));
         result.setName( this.nextString(lineItems) );
         result.setCity_short( this.nextString(lineItems)  );
         result.setStreet( this.nextString(lineItems)  );
@@ -39,7 +40,10 @@ export class TsiCustomerLineProcessor extends TsiAbstractLineProcessor<TsiCustom
         result.setLimitClass( this.nextString(lineItems)  );
         result.setCreditLimit( this.nextString(lineItems)  );
         result.setCreditLWimitAvailable( this.nextString(lineItems)  );
+
         return result;
+
+
     }
 
     private nextString(lineItems : string[]) {

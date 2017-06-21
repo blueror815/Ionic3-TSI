@@ -10,8 +10,8 @@ export class TsiCategoryLineProcessor extends TsiAbstractLineProcessor<TsiCatego
     }
 
     public parse(line: string, sourceFileName: string) {
-        let result = new TsiCategory(null, null);
-        let lineItems = line.split("\\|");
+        let result = new TsiCategory('', '');
+        let lineItems = line.split("|");
         
         result.id = lineItems[0];
         result.name = lineItems[1];

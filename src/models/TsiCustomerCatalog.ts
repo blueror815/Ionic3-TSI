@@ -1,7 +1,7 @@
 import { TsiArticle } from './TsiArticle';
 export class TsiCustomerCatalog {
 
-    private articles = [];
+    private articles;
 
     constructor() {
         this.articles = [];

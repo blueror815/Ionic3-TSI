@@ -11,7 +11,8 @@ export class TsiCustomerCatalogLineProcessor extends TsiAbstractLineProcessor<Ts
     }
 
     public parse(line: string, sourceFileName: string) {
-        let lineItems = line.split( "\\|" );
+        let lineItems = line.split( "|" );
+
         this.customerID = lineItems[0];
         let articleID = lineItems[1];
 
@@ -27,7 +28,7 @@ export class TsiCustomerCatalogLineProcessor extends TsiAbstractLineProcessor<Ts
 
         result.addArticle(article);
 
-        return line;
+        return result;
     }
 
     public process(lineResult: TsiCustomerCatalog) {

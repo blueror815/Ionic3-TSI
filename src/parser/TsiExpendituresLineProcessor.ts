@@ -12,7 +12,7 @@ export class TsiExpendituresLineProcessor extends TsiAbstractLineProcessor<TsiEx
 
     public parse(line: string, sourceFileName: string) {
         let result = new TsiExpenditure(null, null, null, null);
-        let lineItems = line.split( "\\;" );
+        let lineItems = line.split( ";" );
         
         let index = 0;
         result.setRecordID( lineItems[index++] );

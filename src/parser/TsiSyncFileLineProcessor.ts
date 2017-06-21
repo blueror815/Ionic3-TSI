@@ -9,7 +9,7 @@ export class TsiSyncFileLineProcessor extends TsiAbstractLineProcessor<SyncFileD
     }
 
     public parse(line: string, sourceFileName: string) {
-        let lineItems = line.split("\\|");
+        let lineItems = line.split("|");
         let fileDescription = new SyncFileDescription(lineItems[0], parseInt(lineItems[1]));
         return fileDescription;
     }

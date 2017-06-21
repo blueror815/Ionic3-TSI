@@ -15,7 +15,7 @@ export class TsiShoppingCartOrdersLineProcessor extends TsiAbstractLineProcessor
     public parse(line: string, sourceFileName: string) {
         let result = new TsiShoppingCartLineResult();
         result.sourceFilename = sourceFileName;
-        let lineItems = line.split( "\\;" );
+        let lineItems = line.split( ";" );
 
         if (lineItems.length > 1 && !lineItems[0].startsWith( "KUN" ) && !lineItems[0].startsWith( "TXT" ))
         {
@@ -49,7 +49,7 @@ export class TsiShoppingCartOrdersLineProcessor extends TsiAbstractLineProcessor
         this.shoppingService.setShoppingCart( customerID.replaceFirst( "^0+(?!$)", "" ), loadedCart );
         if (lineResult.customerData != null)
         {
-            let lineItems = lineResult.customerData.split( "\\|" );
+            let lineItems = lineResult.customerData.split( "|" );
             if (lineItems[1].equals( "KTOART" ) && lineItems.length > 2)
                 readedCustomer.setAccountType( lineItems[2] );
             if (lineItems[1].equals( "AG0002" ) && lineItems.length > 2)

@@ -397,28 +397,28 @@ export class TsiSyncDataServiceProvider {
             if (filename.match( ".*KundenDB.PSV" ))
             {
                 console.log('Start Task', ".*KundenDB.PSV");   
-                //await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CUSTOMER, disableScreen, loader, TsiConstants.PARSE_CUSTOMER_PRIORITY);
+                await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CUSTOMER, disableScreen, loader, TsiConstants.PARSE_CUSTOMER_PRIORITY);
                 
             }
             else if (filename.match( ".*ArtikelDB.PSV" ))
             {
                 console.log('Start Task', ".*ArtikelDB.PSV");
-                //await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_ARTICLE, disableScreen, loader, TsiConstants.PARSE_ARTICLE_PRIORITY);
+                await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_ARTICLE, disableScreen, loader, TsiConstants.PARSE_ARTICLE_PRIORITY);
             }
             else if (filename.match( ".*KategorieDB.PSV" ))
             {
                 console.log('Start Task', ".*KategorieDB.PSV");
-                //await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CATEGORY, disableScreen, loader, TsiConstants.PARSE_CATEGORY_PRIORITY);
+                await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CATEGORY, disableScreen, loader, TsiConstants.PARSE_CATEGORY_PRIORITY);
             }
             else if (filename.match( ".*OrdersDB.PSV" ))
             {
                 console.log('Start Task', ".*OrdersDB.PSV");
-                //await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_ORDER, disableScreen, loader, TsiConstants.PARSE_DEFAULT_PRIORITY);
+                await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_ORDER, disableScreen, loader, TsiConstants.PARSE_DEFAULT_PRIORITY);
             }
             else if (filename.match( ".*KatalogDB.PSV" ))
             {
                 console.log('Start Task', ".*KatalogDB.PSV");
-                //await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CUSTOMER_CATALOG, disableScreen, loader, TsiConstants.PARSE_DEFAULT_PRIORITY);
+                await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CUSTOMER_CATALOG, disableScreen, loader, TsiConstants.PARSE_DEFAULT_PRIORITY);
             }
             else if(filename.match( ".*CatalogTabLabels.txt" ))
             {

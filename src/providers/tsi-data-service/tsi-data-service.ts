@@ -120,10 +120,47 @@ export class TsiDataServiceProvider {
         console.log('Hello TsiDataServiceProvider Provider');
 
         this.categoryArticles = new Map<TsiCategory, Map<string, TsiArticle>>();
+        this.customers = new Map<string, TsiCustomer>();
+        this.allCategories = new Map<string, TsiCategory>();
+        this.mainCategories = new Map<string, TsiCategory>();
+        this.articlesViaID = new Map<string, TsiArticle>();
+        this.articlesViaIDTmp = new Map<string, TsiArticle>();
+        this.articlesViaEANVPE = new Map<string, TsiArticle>();
+        this.articlesViaEANVKE = new Map<string, TsiArticle>();
+        
+        this.customersCatalogs = new Map<string, TsiCustomerCatalog>();
+
+        // KundenID , AuftragsID, BestellungsID
+        this.orders = new Map<string, Map<string, Map<string, TsiOrder>>>();
+        
+        this.accountType = [];
+        this.accountLanguage = [];
+        this.accountContactLanguage = [];
+        this.accountContactGender = [];
+        this.accountNewsletter = [];
+        this.accountUseMail = [];
+        this.accountPayments = [];
+        this.accountPricegroup = [];
+        this.accountCountry = [];
+        this.accountShippingType = [];
+
+        this.top50Articles = [];
+        this.refundfreeArticles = [];
+        this.refundArticles = [];
+        this.newcomerArticles = [];
+        this.specialArticles = [];
+        this.discontinuedLineArticles = [];
+        this.postenArticles = [];
+        this.customerArticles = [];
+        this.seasonArticles  = [];
+        this.halalArticles  = [];
+        this.rabattArticles = [];
+
+        this.expenditureEntries = [];
     }
 
     public getCustomer(id) {
-        let result = this.customers.get(id);
+        let result = this.customers[id];
         let temp = id;
 
         console.log('Result and Temp', JSON.stringify(result) + temp);
@@ -131,7 +168,7 @@ export class TsiDataServiceProvider {
         while (result == null && temp.charAt( 0 ) == '0')
         {
             temp = temp.substring( 1 );
-            result = this.customers.get( temp );
+            result = this.customers[temp];
         }
 
         if (result == null)
@@ -167,22 +204,24 @@ export class TsiDataServiceProvider {
     }
 
     public getArticle(articleID){
-        let article = this.articlesViaID.get(articleID);
+        let article = this.articlesViaID[articleID];
         if (this.choosenCustomer != null && article != null) {
-            if (!article.getUnit().equalsIgnoreCase(this.choosenCustomer.getInfo()))
-                article = this.articlesViaIDTmp.get( articleID );
+            if (!article.getUnit().toUpperCase() == this.choosenCustomer.getInfo().toUpperCase())
+                article = this.articlesViaIDTmp[articleID];
         }
         if (article == null)
-            article = this.articlesViaEANVPE.get( articleID );
+            article = this.articlesViaEANVPE[articleID];
         if (article == null)
-            article = this.articlesViaEANVKE.get( articleID );
+            article = this.articlesViaEANVKE[articleID];
+
+        console.log('Article', JSON.stringify(article));
         return article;
     }
 
       public putArticle(article){
 
         // All Articles
-        if (this.articlesViaID.get(article.getArticleNumber()) != null)
+        if (this.articlesViaID[article.getArticleNumber()] != null)
         {
             // this.articlesViaIDTmp.set( article.getArticleNumber(), this.articlesViaID.get(article.getArticleNumber()));
             // this.articlesViaID.set( article.getArticleNumber(), article );
@@ -206,7 +245,7 @@ export class TsiDataServiceProvider {
         if (category == null)
             return;
 
-        let articlesOfCategory = this.categoryArticles.get(category);
+        let articlesOfCategory = this.categoryArticles[category];
 
         if (articlesOfCategory == null) {
             articlesOfCategory = new Map<string, TsiArticle>();
@@ -236,19 +275,19 @@ export class TsiDataServiceProvider {
                 this.refundfreeArticles.push( article );
 
         // newcomer
-        if (article.getNew_comer().equals( "N" ))
+        if (article.getNew_comer() == "N")
             this.newcomerArticles.push( article );
 
         // special
-        if (article.getSeason_article().equals( "SAI" ))
+        if (article.getSeason_article() == "SAI")
             this.specialArticles.push( article );
 
         // discontinued line
-        if (article.getDiscontinued_line().equals( "A" ))
+        if (article.getDiscontinued_line() == "A")
             this.discontinuedLineArticles.push( article );
 
         // posten
-        if (article.getPosten_article().equals( "P" ))
+        if (article.getPosten_article() == "P")
             this.postenArticles.push( article );
 
         // season
@@ -257,7 +296,7 @@ export class TsiDataServiceProvider {
                 this.seasonArticles.push( article );
 
         // halal
-        if (article.getHalal() != null && article.getHalal().equals( "H" )) {
+        if (article.getHalal() != null && article.getHalal() == "H") {
             this.halalArticles.push(article);
         }
 
@@ -271,18 +310,20 @@ export class TsiDataServiceProvider {
     {
         //this.customers.set(customer.getCustomerID(), customer);
         this.customers[customer.getCustomerID()] = customer;
+
+        console.log('Dataservice customers', JSON.stringify(this.customers));
     }
 
     public putCustomerCatalog( customerID,  customer)
     {
         //this.customersCatalogs.set( customerID, customer );
-        this.customersCatalogs[customerID] = customer;
+        this.customersCatalogs[customerID.toString()] = customer;
     }
 
     public getCustomerCatalog(customerID)
     {
         //return this.customersCatalogs.get(customerID);
-        return this.customersCatalogs[customerID];
+        return this.customersCatalogs[customerID.toString()];
     }
 
 	public clearArticleCategories()
@@ -363,8 +404,8 @@ export class TsiDataServiceProvider {
 
     public putSubCategory(mainCategoryID, category)
     {
-        let mainCategory = this.mainCategories.get(mainCategoryID);
-        if (mainCategory.getChild( category.getId() ) == null)
+        let mainCategory = this.mainCategories[mainCategoryID];
+        if (mainCategory.getChild( category.id ) == null)
         {
             mainCategory.addChild( category );
             //this.allCategories.set( category.getId(), category );

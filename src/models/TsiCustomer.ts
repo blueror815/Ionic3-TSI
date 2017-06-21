@@ -15,7 +15,7 @@ export class TsiCustomer extends TsiSortableObj {
     }
 
     
-    public  getName()
+    public getName()
     {
         if (this.getAttribute( 0 ) != null)
             return this.getAttribute( 0 );
@@ -23,7 +23,7 @@ export class TsiCustomer extends TsiSortableObj {
             return "";
     }
 
-    public  setName( name)
+    public setName( name)
     {
         this.setAttribute( 0, name );
     }
@@ -69,13 +69,13 @@ export class TsiCustomer extends TsiSortableObj {
 
     public  getZip()
     {
-        if (this.getAttribute( 4 ) != null)
+        if (this.getAttribute(4) != null)
             return this.getAttribute( 4 );
         else
             return "";
     }
 
-    public  setZip( zip)
+    public  setZip(zip)
     {
         this.setAttribute( 4, zip );
     }

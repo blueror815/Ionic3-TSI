@@ -12,7 +12,7 @@ export class TsiShoppingCartDataLineProcessor extends TsiAbstractLineProcessor<T
 
     public parse(line: string, sourceFileName: string) {
         let result = new TsiRawOrder();
-        let lineItems = line.split( "\\|" );
+        let lineItems = line.split( "|" );
         
         let index = 0;
         result.customerID = lineItems[index++];

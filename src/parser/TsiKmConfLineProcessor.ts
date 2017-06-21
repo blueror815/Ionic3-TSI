@@ -9,7 +9,7 @@ export class TsiKmConfLineProcessor extends TsiAbstractLineProcessor<string> {
     }
 
     public parse(line: string, sourceFileName: string) {
-        let lineItems = line.split( "\\|" );
+        let lineItems = line.split( "|" );
         if (lineItems[0] == TsiConstants.EMAIL_INTERN_KM_KEY)
             this.dataService.kmEmail = lineItems[1];
         return null;

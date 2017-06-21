@@ -33,7 +33,7 @@ export class TsiShoppingCart {
     {
         this.modified = true;
 
-        let entry = this.entrys.get(id);
+        let entry = this.entrys[id];
         if (entry == null)
         {
             entry = new TsiShoppingCartEntry(id, this.dataService);
