@@ -6,7 +6,7 @@ export class TsiCategory {
     constructor(name : string, id : string) {
         this.name = name;
         this.id = id;
-        this.childs = new Map();
+        this.childs = new Map<string, TsiCategory>();
     }
 
     public addChild(child : TsiCategory) {

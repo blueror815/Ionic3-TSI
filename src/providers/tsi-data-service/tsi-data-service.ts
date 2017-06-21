@@ -214,7 +214,7 @@ export class TsiDataServiceProvider {
         if (article == null)
             article = this.articlesViaEANVKE[articleID];
 
-        console.log('Article', JSON.stringify(article));
+        //console.log('Article', JSON.stringify(article));
         return article;
     }
 
@@ -310,8 +310,6 @@ export class TsiDataServiceProvider {
     {
         //this.customers.set(customer.getCustomerID(), customer);
         this.customers[customer.getCustomerID()] = customer;
-
-        console.log('Dataservice customers', JSON.stringify(this.customers));
     }
 
     public putCustomerCatalog( customerID,  customer)
@@ -400,14 +398,16 @@ export class TsiDataServiceProvider {
             this.mainCategories[mainCategoryID] = category;
             this.allCategories[category.getId()] = category;
         }
+
+        console.log('Main Category', JSON.stringify(this.mainCategories));
     }
 
     public putSubCategory(mainCategoryID, category)
     {
         let mainCategory = this.mainCategories[mainCategoryID];
-        if (mainCategory.getChild( category.id ) == null)
+        if (mainCategory.getChild(category.getId()) == null)
         {
-            mainCategory.addChild( category );
+            mainCategory.addChild(category);
             //this.allCategories.set( category.getId(), category );
             this.allCategories[category.getId()] = category;
         }

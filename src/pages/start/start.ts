@@ -44,15 +44,15 @@ export class StartPage {
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad StartPage');
 		setTimeout(() => {
-			this.parserService.parse(this.dataService.file.documentsDirectory + "TSI/", "config.dat", TsiParserConfigNames.PARSER_CONFIG_CONF).then((res) => {
+			this.parserService.parse(this.dataService.file.documentsDirectory + "TSI/", "config.dat", TsiParserConfigNames.PARSER_CONFIG_CONF).then(async (res) => {
 				console.log("StartImage :", this.dataService.startImgFileName);
 				this.background_img = this.dataService.startImgFileName;
 
 				this.dataService.clearCatalogTabHeaders();
 				this.dataService.clearAccountVectors();
-				this.clientService.updateConfiguration(true);
+				await this.clientService.updateConfiguration(true);
 				
-				//this.updateCategories();
+				this.updateCategories();
 			}, (err) => {
 				this.presentConfigModal();
 			})

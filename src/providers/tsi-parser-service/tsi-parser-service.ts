@@ -90,7 +90,7 @@ export class TsiParserServiceProvider {
         //   });
         // }
 
-        this.dataService.file.readAsText(filePath, fileName).then((res) => {
+        this.dataService.file.readAsBinaryString(filePath, fileName).then((res) => {
             console.log("Config Bat file", JSON.stringify(res));
 
             if (res) {
