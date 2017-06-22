@@ -265,7 +265,7 @@ export class TsiDataServiceProvider {
          */
 
         // Top50
-        if (article.getTop_50_pos().length() > 0)
+        if (article.getTop_50_pos().length > 0)
             this.top50Articles.push(article);
 
         // refund
@@ -303,7 +303,7 @@ export class TsiDataServiceProvider {
         }
 
         // rabatt
-        if ((article.getRebate1() != null && article.getRebate1().length() != 0 && parseFloat(article.getRebate1()) > 0) || (article.getRebate2() != null && article.getRebate2().length() != 0 && parseFloat(article.getRebate2()) > 0)) {
+        if ((article.getRebate1() != null && article.getRebate1().length != 0 && parseFloat(article.getRebate1()) > 0) || (article.getRebate2() != null && article.getRebate2().length != 0 && parseFloat(article.getRebate2()) > 0)) {
             this.rabattArticles.push(article);
         }
     }
@@ -347,7 +347,7 @@ export class TsiDataServiceProvider {
         if (this.expenditureEntries.length > 1)
         {
             let lastExpenditure = this.expenditureEntries[this.expenditureEntries.length - 2];
-            index = parseInt( lastExpenditure.getRecordID() );
+            index = parseInt( lastExpenditure.getRecordID());
             index++;
         }
         expenditure.setRecordID( index.toString() );

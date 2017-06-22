@@ -13,6 +13,8 @@ export class TsiCustomerCatalogLineProcessor extends TsiAbstractLineProcessor<Ts
     public parse(line: string, sourceFileName: string) {
         let lineItems = line.split( "|" );
 
+        console.log('Customer LineItems', JSON.stringify(lineItems));
+        
         this.customerID = lineItems[0];
         let articleID = lineItems[1];
 
@@ -28,11 +30,14 @@ export class TsiCustomerCatalogLineProcessor extends TsiAbstractLineProcessor<Ts
 
         result.addArticle(article);
 
+        console.log('Customer Article', JSON.stringify(result));
+
         return result;
     }
 
     public process(lineResult: TsiCustomerCatalog) {
         this.dataService.putCustomerCatalog(this.customerID, lineResult);
+        console.log('Customer Catalog', JSON.stringify(lineResult));
     }
 
 }

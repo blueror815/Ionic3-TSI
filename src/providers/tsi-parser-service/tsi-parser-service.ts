@@ -71,27 +71,8 @@ export class TsiParserServiceProvider {
     console.log ( "///////////////////", "Parser" );
     
     return new Promise((resolve, reject) => {
-
-        // if (fileName.match(".*KundenDB.PSV")) {
-        //   this.dataService.file.readAsBinaryString(filePath, fileName).then((res) => {
-        //       console.log("PSV file", JSON.stringify(res.toString()));
-
-        //       // let linesText = res.split("\n");
-        //       // for (let line of linesText) {
-        //       //   let lineResult : Object = lineProcessor.parse(line, fileName);
-        //       //   lineProcessor.process(lineResult);
-        //       // }
-              
-
-        //       resolve(true);
-        //   }, (err) => {
-        //       console.log("error for checking file", err);
-        //       reject(err);
-        //   });
-        // }
-
         this.dataService.file.readAsBinaryString(filePath, fileName).then((res) => {
-            console.log("Config Bat file", JSON.stringify(res));
+            console.log("Read File", JSON.stringify(res));
 
             if (res) {
               let linesText = res.split("\n");
