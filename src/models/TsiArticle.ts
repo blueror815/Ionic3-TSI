@@ -267,7 +267,7 @@ export class TsiArticle extends TsiSortableObj {
 
     public getImageURL()
     {
-     return this.getArticleNumber() + ".jpg";
+        return this.getArticleNumber() + ".jpg";
     }
     
     public  setAvalible(avalible)

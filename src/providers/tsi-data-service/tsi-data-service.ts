@@ -235,7 +235,9 @@ export class TsiDataServiceProvider {
 
         // this.articlesViaEANVPE.set( article.getGTIN_VPE(), article );
         // this.articlesViaEANVKE.set( article.getGTIN_VKE(), article );
+        this.articlesViaEANVPE[article.getGTIN_VPE()] = article;
         this.articlesViaEANVKE[article.getGTIN_VKE()] = article;
+
 
         // Only Category
         let categoryId = article.getCategory();
