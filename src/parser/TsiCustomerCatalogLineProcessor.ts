@@ -13,26 +13,31 @@ export class TsiCustomerCatalogLineProcessor extends TsiAbstractLineProcessor<Ts
     public parse(line: string, sourceFileName: string) {
         let lineItems = line.split( "|" );
 
-        console.log('Customer LineItems', JSON.stringify(lineItems));
+        //console.log('Customer LineItems', JSON.stringify(lineItems));
+        if (lineItems.length < 2) {
+            return null;
+        }
+        else {
+            this.customerID = lineItems[0];
+            let articleID = lineItems[1];
+
+            let article = this.dataService.getArticle(articleID);
+            if (article == null) {
+                article = this.dataService.createDummyArticle(articleID);
+            }
+
+            let result = this.dataService.getCustomerCatalog(this.customerID);
+            if (result == null) {
+                result = new TsiCustomerCatalog();
+            }
+
+            result.addArticle(article);
+
+            //console.log('Customer Article', JSON.stringify(result));
+
+            return result;
+        }
         
-        this.customerID = lineItems[0];
-        let articleID = lineItems[1];
-
-        let article = this.dataService.getArticle(articleID);
-        if (article == null) {
-            article = this.dataService.createDummyArticle(articleID);
-        }
-
-        let result = this.dataService.getCustomerCatalog(this.customerID);
-        if (result == null) {
-            result = new TsiCustomerCatalog();
-        }
-
-        result.addArticle(article);
-
-        console.log('Customer Article', JSON.stringify(result));
-
-        return result;
     }
 
     public process(lineResult: TsiCustomerCatalog) {

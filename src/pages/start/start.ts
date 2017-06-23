@@ -4,6 +4,7 @@ import { TsiDataServiceProvider } from '../../providers/tsi-data-service/tsi-dat
 import { TsiParserServiceProvider } from '../../providers/tsi-parser-service/tsi-parser-service';
 import { TsiParserConfigNames } from '../../parser/TsiParserConfigNames';
 import { TsiClientServiceProvider } from '../../providers/tsi-client-service/tsi-client-service';
+import { Tabs } from "ionic-angular/navigation/nav-interfaces";
 
 /**
  * Generated class for the StartPage page.
@@ -31,7 +32,9 @@ export class StartPage {
 		'Non Food',
 		'Vending-Fullprodukte',
 		'RABATT'
-	]
+	];
+
+	public categories = [];
 	public right_title = 'Waschen im';
 	public right_item = "CLENTI FLUSSIGN";
 
@@ -64,14 +67,20 @@ export class StartPage {
 		let categories = this.dataService.mainCategories;
 		
 		this.left_items = [];
+		
 		this.right_item = '';
 		this.right_title = '';
 
-		for(let i = 0;i < categories.values.length;i ++) {
-			let category = categories.values[i];
-			this.left_items.push(category.name);
+		for (let key of Object.keys(categories)) {
+			this.categories.push(categories[key]);
+			this.left_items.push(categories[key].name); 
 		}
-		
+
+
+		if (this.left_items.length > 0) {
+			this.left_items.push('RABATT');
+		}
+
 		console.log('Start Categories', JSON.stringify(categories));
 	}
 
@@ -89,5 +98,19 @@ export class StartPage {
 
 	ionViewWillEnter() {
 
+	}
+
+	onCategorySelect = (element, i) => {
+
+		if (element.value == 'RABATT') {
+			this.dataService.setCatalogViewIndex(11);
+		}
+		else {
+			this.dataService.setIndexOfCatalogTabTab(0);
+			this.dataService.choosenCategory = this.categories[i];
+		}
+		
+		var tabs : Tabs = this.navCtrl.parent;
+		tabs.select(3, {});
 	}
 }

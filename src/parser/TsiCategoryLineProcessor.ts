@@ -12,15 +12,24 @@ export class TsiCategoryLineProcessor extends TsiAbstractLineProcessor<TsiCatego
     public parse(line: string, sourceFileName: string) {
         let result = new TsiCategory('', '');
         let lineItems = line.split("|");
-        
-        result.id = lineItems[0];
-        result.name = lineItems[1];
 
-        return result;
+        console.log('Category LineItems', JSON.stringify(lineItems));
+
+        if (lineItems.length < 2) {
+            return null;
+        }
+        else {
+            result.id = lineItems[0];
+            result.name = lineItems[1];
+            return result;
+        }
     }
 
     public process(lineResult: TsiCategory) {
         let id = lineResult.id;
+
+        console.log('Category ID', id);
+
         let mainCatID = id.substring(0,1);
 
         let intID = parseInt(id.substring(1));

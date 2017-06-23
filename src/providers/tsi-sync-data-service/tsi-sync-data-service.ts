@@ -418,7 +418,7 @@ export class TsiSyncDataServiceProvider {
             else if (filename.match( ".*KatalogDB.PSV" ))
             {
                 console.log('Start Task', ".*KatalogDB.PSV");
-                await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CUSTOMER_CATALOG, disableScreen, loader, TsiConstants.PARSE_DEFAULT_PRIORITY);
+                //await this.parseFile(filename, TsiParserConfigNames.PARSER_CONFIG_CUSTOMER_CATALOG, disableScreen, loader, TsiConstants.PARSE_DEFAULT_PRIORITY);
             }
             else if(filename.match( ".*CatalogTabLabels.txt" ))
             {

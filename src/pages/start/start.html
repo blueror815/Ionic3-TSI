@@ -1,23 +1,23 @@
 <ion-content>
-	<div>
-    	<img [src]="background_img" class="background-img" />
-	</div>
+    <div>
+        <img [src]="background_img" class="background-img" />
+    </div>
     <ion-grid class="overlay-container">
-    	<ion-row>
-    		<ion-col class="left-col" col-6>
-    			<ion-row class="left-button-container" *ngFor="let l_item of left_items">
-    				<span class="left-button">{{l_item}}</span>
-    			</ion-row>
-    		</ion-col>
+        <ion-row>
+            <ion-col class="left-col" col-6>
+                <ion-row class="left-button-container" *ngFor="let l_item of left_items" let i=i ndex>
+                    <span class="left-button" (click)="onCategorySelect($event.target, i)">{{l_item}}</span>
+                </ion-row>
+            </ion-col>
 
-    		<ion-col class="right-col" col-6>
-    			<ion-row class="right-title-container">
-    				<h2>{{right_title}}</h2>
-    			</ion-row>
-    			<ion-row class="right-item">
-    				<h5>{{right_item}}</h5>
-    			</ion-row>
-    		</ion-col>
-    	</ion-row>
+            <ion-col class="right-col" col-6>
+                <ion-row class="right-title-container">
+                    <h2>{{right_title}}</h2>
+                </ion-row>
+                <ion-row class="right-item">
+                    <h5>{{right_item}}</h5>
+                </ion-row>
+            </ion-col>
+        </ion-row>
     </ion-grid>
 </ion-content>

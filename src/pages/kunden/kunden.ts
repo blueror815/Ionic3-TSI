@@ -38,4 +38,8 @@ export class KundenPage {
 
 	   	newClientModal.present();
   	}
+
+    public refreshGUI() {
+		
+	}
 }

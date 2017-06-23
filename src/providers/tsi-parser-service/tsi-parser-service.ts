@@ -69,7 +69,7 @@ export class TsiParserServiceProvider {
     console.log ( "///////////////////", "Parser" );
     console.log ( "Parsing File: " + fileName, "Parser" );
     console.log ( "///////////////////", "Parser" );
-    
+
     return new Promise((resolve, reject) => {
         this.dataService.file.readAsBinaryString(filePath, fileName).then((res) => {
             console.log("Read File", JSON.stringify(res));
@@ -78,7 +78,11 @@ export class TsiParserServiceProvider {
               let linesText = res.split("\n");
               for (let line of linesText) {
                 let lineResult : Object = lineProcessor.parse(line, fileName);
-                lineProcessor.process(lineResult);
+
+                if (lineResult) {
+                  lineProcessor.process(lineResult);
+                }
+                
               } 
             }
 

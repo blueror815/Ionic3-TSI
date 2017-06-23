@@ -401,7 +401,7 @@ export class TsiDataServiceProvider {
             this.allCategories[category.getId()] = category;
         }
 
-        console.log('Main Category', JSON.stringify(this.mainCategories));
+        //console.log('Main Category', JSON.stringify(this.mainCategories));
     }
 
     public putSubCategory(mainCategoryID, category)
@@ -465,5 +465,17 @@ export class TsiDataServiceProvider {
         this.accountPricegroup = [];
         this.accountCountry = [];
         this.accountShippingType = [];
+    }
+
+    private catalogViewIndex;
+
+    public setCatalogViewIndex(index) {
+        this.catalogViewIndex = index;
+    }
+
+    private indexOfCatalogTabTab;
+
+    public setIndexOfCatalogTabTab(index) {
+        this.indexOfCatlogTabTab = index;
     }
 }
