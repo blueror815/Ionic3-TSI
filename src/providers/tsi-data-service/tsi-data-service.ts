@@ -501,7 +501,7 @@ export class TsiDataServiceProvider {
                 else {
                     let info = TsiUtil.getArticleUnit();
                     let customer = this.customers[key];
-                    if (customer.getInfo().equalsIgnoreCase(info)) {
+                    if (customer.getInfo().toUpperCase() == info.toUpperCase()) {
                         result.push(customer);
                     }
                 }
@@ -510,9 +510,9 @@ export class TsiDataServiceProvider {
             {
                 let customer = this.customers[key];
                 let filterUC = filter.toUpperCase();
-                if (customer.getName().toUpperCase().contains( filterUC ) || customer.getCity().toUpperCase().contains( filterUC ) || customer.getAbc().toUpperCase().contains( filterUC )
-                        || customer.getDateLastVisit().toUpperCase().contains( filterUC ) || customer.getStreet().toUpperCase().contains( filterUC )
-                        || customer.getZip().toUpperCase().contains( filterUC ) || customer.getCustomerID().toUpperCase().contains( filter ))
+                if (customer.getName().toUpperCase().contains(filterUC) || customer.getCity().toUpperCase().contains(filterUC) || customer.getAbc().toUpperCase().contains(filterUC)
+                        || customer.getDateLastVisit().toUpperCase().contains(filterUC) || customer.getStreet().toUpperCase().contains(filterUC)
+                        || customer.getZip().toUpperCase().contains(filterUC) || customer.getCustomerID().toUpperCase().contains(filter))
                 {
 
                     if (index == 0) {

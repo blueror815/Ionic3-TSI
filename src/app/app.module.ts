@@ -23,6 +23,7 @@ import { TsiParserServiceProvider } from '../providers/tsi-parser-service/tsi-pa
 import { TsiShoppingCartServiceProvider } from '../providers/tsi-shopping-cart-service/tsi-shopping-cart-service';
 import { TsiSyncDataServiceProvider } from '../providers/tsi-sync-data-service/tsi-sync-data-service';
 // import { IonProductCellComponent } from '../components/ion-product-cell/ion-product-cell';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -54,6 +55,7 @@ import { TsiSyncDataServiceProvider } from '../providers/tsi-sync-data-service/t
     ImagePicker,
     Dialogs,
     File,
+    DatePipe,
     Ftp,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     TsiClientServiceProvider,
