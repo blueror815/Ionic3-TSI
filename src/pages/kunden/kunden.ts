@@ -99,11 +99,12 @@ export class KundenPage {
 
 	public generateCustomer(customer: TsiCustomer) {
 		let result = [];
-		result.push(new Map(['Name', customer.getName()]));
-		result.push(new Map(['Kundennummer', customer.getCustomerID()]));
-		result.push(new Map(['Telefon', customer.getPhoneNumber()]));
-		result.push(new Map(['Fax', customer.getFaxNumber()]));
-		result.push(new Map(['E-Mail', customer.getEmail()]));
+
+		result.push(new Map([['Name', customer.getName()]]));
+		result.push(new Map([['Kundennummer', customer.getCustomerID()]]));
+		result.push(new Map([['Telefon', customer.getPhoneNumber()]]));
+		result.push(new Map([['Fax', customer.getFaxNumber()]]));
+		result.push(new Map([['E-Mail', customer.getEmail()]]));
 
 		let lastVisit = '';
 		if (customer.getDateLastVisit() == '00000000') {
@@ -113,7 +114,24 @@ export class KundenPage {
 			lastVisit = TsiUtil.parseAndFormatDate(customer.getDateLastVisit(), 'dd.MM.yyyy');
 		}
 
-		//result.push(new Map(['letzter Besuch', lastVisit]));
+		result.push(new Map([['letzter Besuch', lastVisit]]));
 
+		let lastRG = '';
+		if (customer.getDateLastRG() == '00000000') {
+			lastRG = ' nicht vorhanden';
+		}
+		else {
+			lastRG = TsiUtil.parseAndFormatDate(customer.getDateLastRG(), 'dd.MM.yyyy');
+		}
+
+		result.push(new Map([["Datum letzte Rechnung", lastRG]]));
+        result.push(new Map([["Betrag letzte Rechnung", TsiUtil.formatMoney(customer.getValueLastRG(), 3)]]));
+        result.push(new Map([["Kreditlimit", TsiUtil.formatMoney(customer.getCreditLimit(), 3)]]));
+        result.push(new Map([["Limit verfügbar", TsiUtil.formatMoney(customer.getCreditLimitAvailable(), 3)]]));
+        result.push(new Map([["Mindestauftragsmenge", customer.getMinOrderQuantity()]]));
+        if (customer.getOrderBlock().length > 0)
+            result.push( new Map([["AufragsSperre", customer.getOrderBlock()]]));
+
+        return result;
 	}
 }

@@ -179,12 +179,12 @@ export class TsiCustomer extends TsiSortableObj {
             return "";
     }
 
-    public  setCodeWE( codeWE)
+    public setCodeWE( codeWE)
     {
         this.setAttribute( 12, codeWE );
     }
 
-    public  getInfo()
+    public getInfo()
     {
         if (this.getAttribute( 13 ) != null)
             return this.getAttribute( 13 );
@@ -192,20 +192,20 @@ export class TsiCustomer extends TsiSortableObj {
             return "";
     }
 
-    public  setInfo( info)
+    public setInfo( info)
     {
         this.setAttribute( 13, info );
     }
 
-    public  getMinOrderQuantity()
+    public getMinOrderQuantity()
     {
-        if (this.getAttribute( 14 ) != null)
+        if (this.getAttribute(14) != null)
             return this.getAttribute( 14 );
         else
             return "";
     }
 
-    public  setMinOrderQuantity( minOrderQuantity)
+    public setMinOrderQuantity( minOrderQuantity)
     {
         this.setAttribute( 14, minOrderQuantity );
     }

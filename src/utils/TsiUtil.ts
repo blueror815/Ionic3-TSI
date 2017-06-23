@@ -39,5 +39,40 @@ export class TsiUtil {
         return datePipe.transform(sourceDate, pattern);
     }
 
+    public static formatMoney(value, digits) {
+        if (value == null || value.length == 0) {
+            value = '0';
+        }
+
+        let result = value.toFixed(digits);
+
+        let indexOfDot = result.indexOf('.');
+        if (indexOfDot != -1) {
+            result = TsiUtil.removeChar(result, indexOfDot);
+            result = TsiUtil.insertChar(result, ',', indexOfDot);
+        }
+
+        return result + ' €';
+    }
+
+    public static insertChar(source, ch, index)
+    {
+        return source.substring( 0, index ) + ch + source.substring( index );
+    }
+
+    public static removeChar(source, index)
+    {
+        return source.substring( 0, index ) + source.substring( index + 1 );
+    }
+
+    // public static roundAndToString(number, digits) {
+    //     let pattern = '0.';
+    //     for (let i = 0;i < digits;i ++) {
+    //         pattern += '0';
+    //     }
+
+
+    // }
+
 
 }

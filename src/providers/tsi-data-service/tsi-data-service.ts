@@ -487,4 +487,49 @@ export class TsiDataServiceProvider {
     public getTabHostOfMainScreen() {
         return this.mainTabHost;
     }
+
+    public getCustomersAsVector(filter, index) {
+        let result = [];
+
+        for (let key of Object.keys(this.customers))
+        {
+            if (filter == null || filter.length == 0)
+            {
+                if (index == 0) {
+                    result.push();
+                }
+                else {
+                    let info = TsiUtil.getArticleUnit();
+                    let customer = this.customers[key];
+                    if (customer.getInfo().equalsIgnoreCase(info)) {
+                        result.push(customer);
+                    }
+                }
+            }
+            else
+            {
+                let customer = this.customers[key];
+                let filterUC = filter.toUpperCase();
+                if (customer.getName().toUpperCase().contains( filterUC ) || customer.getCity().toUpperCase().contains( filterUC ) || customer.getAbc().toUpperCase().contains( filterUC )
+                        || customer.getDateLastVisit().toUpperCase().contains( filterUC ) || customer.getStreet().toUpperCase().contains( filterUC )
+                        || customer.getZip().toUpperCase().contains( filterUC ) || customer.getCustomerID().toUpperCase().contains( filter ))
+                {
+
+                    if (index == 0) {
+                        result.push(customer);
+                    }
+                    else {
+                        let info = TsiUtil.getArticleUnit();
+                        if (customer.getInfo() == info) {
+                            result.push(customer);
+                        }
+                    }
+                }
+            }
+        }
+
+        //Collections.sort( result, getSortCompartor( TSI_Customer.class ) );
+
+        return result;
+    }
 }
