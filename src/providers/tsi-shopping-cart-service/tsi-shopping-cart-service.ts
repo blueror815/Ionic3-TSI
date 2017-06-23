@@ -13,33 +13,33 @@ import { TsiDataServiceProvider } from '../tsi-data-service/tsi-data-service';
 @Injectable()
 export class TsiShoppingCartServiceProvider {
 
-  private tempVPEArticles : Map<string, number> = null;
-  private tempPALArticles : Map<string, number> = null;
-  private shoppingCarts : Map<string, TsiShoppingCart> = null;
+    private tempVPEArticles : Map<string, number>;
+    private tempPALArticles : Map<string, number>;
+    private shoppingCarts : Map<string, TsiShoppingCart> ;
 
-  constructor(public http: Http, public dataService: TsiDataServiceProvider) {
-    console.log('Hello TsiShoppingCartServiceProvider Provider');
-    this.tempPALArticles = new Map();
-    this.tempVPEArticles = new Map();
-    this.shoppingCarts = new Map();
-  }
+    constructor(public http: Http, public dataService: TsiDataServiceProvider) {
+        console.log('Hello TsiShoppingCartServiceProvider Provider');
+        this.tempPALArticles = new Map();
+        this.tempVPEArticles = new Map();
+        this.shoppingCarts = new Map();
+    }
 
     public getShoppingCart(customerID)
     {
         let result = null;
         if (customerID != null)
         {
-            result = this.shoppingCarts.get( customerID );
+            result = this.shoppingCarts[customerID];
             if (result == null)
             {
                 result = new TsiShoppingCart(customerID, this.dataService);
                 result.setCreationDate( new Date().getTime() );
-                this.shoppingCarts.set( customerID, result );
+                this.shoppingCarts[customerID] = result;
             }
         }
         return result;
     }
-    
+
     public setShoppingCart( customerID, shoppingCart)
     {
         this.shoppingCarts.set( customerID, shoppingCart );
@@ -47,6 +47,20 @@ export class TsiShoppingCartServiceProvider {
 
     public shoppingCartExists(customerID) {
         return this.shoppingCarts[customerID.toString()] != null && Object.keys(this.shoppingCarts[customerID.toString()]).length > 0;
+    }
+
+    public getActualShoppingCart() {
+        let result = null;
+        let customer = this.dataService.choosenCustomer;
+        if (customer != null)
+            result = this.getShoppingCart(customer.getCustomerID());
+
+        return result;
+    }
+
+    public clearTempArticles()
+    {
+        this.tempVPEArticles.clear();
     }
 
 }

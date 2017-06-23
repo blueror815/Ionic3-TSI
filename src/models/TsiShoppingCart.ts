@@ -21,6 +21,16 @@ export class TsiShoppingCart {
         this.entrys = new Map<string, TsiShoppingCartEntry>();
     }
 
+    public getEntriesAsVector() {
+        let result = [];
+
+        for (let key of Object.keys(this.entrys)) {
+            result.push(this.entrys[key]);
+        }
+
+        return result;
+    }
+
     public setEntriesFromVector(entries : [TsiShoppingCartEntry])
     {
         for(let i=0; i<entries.length; i++)

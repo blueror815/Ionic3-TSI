@@ -16,6 +16,7 @@ import { TsiShoppingCartEntry } from '../../models/TsiShoppingCartEntry';
 import { TsiExpenditure } from '../../models/TsiExpenditure';
 import { TsiUtil } from '../../utils/TsiUtil';
 import { TsiRawOrder } from '../../models/TsiRawOrder';
+import { Tabs } from 'ionic-angular/navigation/nav-interfaces';
 
 
 @Injectable()
@@ -81,8 +82,6 @@ export class TsiDataServiceProvider {
     public catalogTabHeaders;
     public expenditureEmail;
     public kmEmail;
-
-    public  mainTabHost;
     public  tvStatus;
     public  llStatus;
     public  ivInvalidate;
@@ -112,6 +111,8 @@ export class TsiDataServiceProvider {
     public  bmpSign : Blob;
 
     public sortAttributes: Map<any, string>;
+
+    public mainTabHost: Tabs;
 
     // public Hashtable<Class<?>, ESortType> sortTypes;
     // public Hashtable<Class<?>, Comparator<TSI_SortableObject>> sortComparators;
@@ -477,5 +478,13 @@ export class TsiDataServiceProvider {
 
     public setIndexOfCatalogTabTab(index) {
         this.indexOfCatlogTabTab = index;
+    }
+
+    public setTabHostOfMainScreen(mainTab) {
+        this.mainTabHost = mainTab;
+    }
+
+    public getTabHostOfMainScreen() {
+        return this.mainTabHost;
     }
 }

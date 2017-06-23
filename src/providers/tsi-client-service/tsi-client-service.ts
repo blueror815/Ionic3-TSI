@@ -28,7 +28,7 @@ export class TsiClientServiceProvider {
     this.dialog.alert(message, '', 'OK').then((res) => {
       this.dataService.preventCodeScanning = false;
       if (showCustomerScreen) {
-
+        this.dataService.getTabHostOfMainScreen().select(1, {});
       }
     });
   }

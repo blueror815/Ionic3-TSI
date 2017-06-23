@@ -1,4 +1,5 @@
 import { TsiArticle } from '../models/TsiArticle';
+import { DatePipe } from "@angular/common/common";
 
 export class TsiUtil {
     public static nUnitIndex = 0;
@@ -31,6 +32,11 @@ export class TsiUtil {
 
     public static checkReservationDate(article : TsiArticle) {
         return true;
+    }
+
+    public static parseAndFormatDate(sourceDate, pattern) {
+        let datePipe = new DatePipe('en-US');
+        return datePipe.transform(sourceDate, pattern);
     }
 
 

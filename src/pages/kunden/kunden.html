@@ -60,13 +60,13 @@
             <ion-col col-8>
                 <ion-row class="customer-button-container">
                     <ion-col>
-                        <button id="aus-btn" ion-button full>KUNDE AUSWÄHLEN</button>
+                        <button id="aus-btn" (click)="onSetCustomer()" ion-button full>KUNDE AUSWÄHLEN</button>
                     </ion-col>
                     <ion-col>
                         <button id="anl-btn" (click)="onCreateClient()" ion-button full>KUNDE ANLEGEN</button>
                     </ion-col>
                     <ion-col>
-                        <button id="pra-btn" ion-button full>PRÄSENTATIONSKATALOG</button>
+                        <button id="pra-btn" (click)="onPresentCatalog()" ion-button full>PRÄSENTATIONSKATALOG</button>
                     </ion-col>
                 </ion-row>
             </ion-col>
