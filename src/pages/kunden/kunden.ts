@@ -123,7 +123,7 @@ export class KundenPage {
 			this.items.push(item);
 		}
 
-		console.log('this ------------- Items', JSON.stringify(this.items));
+		
 		if (this.dataService.selectedCustomer != null) {
 			// for (let mCustomer of customers) {
 			// 	let item : any;
