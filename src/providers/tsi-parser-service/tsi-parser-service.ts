@@ -72,8 +72,7 @@ export class TsiParserServiceProvider {
 
     return new Promise((resolve, reject) => {
         this.dataService.file.readAsBinaryString(filePath, fileName).then((res) => {
-            console.log("Read File", JSON.stringify(res));
-
+            //console.log("Read File", JSON.stringify(res));
             let splitKey = "\r\n";
 
             if (fileName == "config.dat" || fileName == "sync.dat") {
@@ -88,7 +87,6 @@ export class TsiParserServiceProvider {
                 if (lineResult) {
                   lineProcessor.process(lineResult);
                 }
-                
               } 
             }
 

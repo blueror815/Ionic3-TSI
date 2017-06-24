@@ -24,19 +24,23 @@ export class KundenPage {
 	public select_unit : string = "";
 	public customer : string = "";
 	public customerUnits = [];
-
+	public items = [];
+	public item = {name: '', priority: '', lastVisit: '', customerGroup: '', location: ''};
 
   	constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public dataService: TsiDataServiceProvider,
 	  			public clientService: TsiClientServiceProvider, public shoppingService: TsiShoppingCartServiceProvider, public dialog: Dialogs) {
-		this.customerUnits = this.dataService.getCustomerBusinessUnit();
-		this.select_unit = this.customerUnits[0];
+		
   	}
 
   	ionViewDidLoad() {
     	console.log('ionViewDidLoad KundenPage');
 
-		// this.dataService.putCustomer(this.dataService.selectedCustomer);
-		// this.onSetCustomer();
+		//this.dataService.putCustomer(this.dataService.selectedCustomer);
+		//this.onSetCustomer();
+
+		this.customerUnits = this.dataService.getCustomerBusinessUnit();
+		this.select_unit = this.customerUnits[0];
+		this.refreshGUI();
   	}
 
   	onCreateClient() {
@@ -48,6 +52,12 @@ export class KundenPage {
 
 	   	newClientModal.present();
   	}
+	
+	onCustomerUnitChange = (customerUnit) => {
+		this.select_unit = customerUnit;
+		TsiUtil.nUnitIndex = this.customerUnits.indexOf(customerUnit);
+		this.refreshGUI();
+	}
 
 	onSetCustomer() {
 		let selectedCustomer = this.dataService.selectedCustomer;
@@ -95,11 +105,42 @@ export class KundenPage {
 
     public refreshGUI() {
 		let customers = this.dataService.getCustomersAsVector(this.customer, TsiUtil.nUnitIndex);
+		//console.log('Customers', JSON.stringify(customers));
+
+		this.items = [];
+
+		for (let mCustomer of customers) {
+
+			let item = {name: '', priority: '', lastVisit: '', customerGroup: '', location: ''};
+
+			item.name = mCustomer.getName();
+			item.priority = mCustomer.getAbc();
+			item.lastVisit = '';
+			item.customerGroup = mCustomer.getAfi();
+			item.location = mCustomer.getCity();
+
+			console.log("----->item<----",  item)
+			this.items.push(item);
+		}
+
+		console.log('this ------------- Items', JSON.stringify(this.items));
+		if (this.dataService.selectedCustomer != null) {
+			// for (let mCustomer of customers) {
+			// 	let item : any;
+			// 	item.name = mCustomer.getName();
+			// 	item.priority = mCustomer.getAbc();
+			// 	item.lastVisit = '';
+			// 	item.customerGroup = mCustomer.getAfi();
+			// 	item.location = mCustomer.getCity();
+
+			// 	this.items.push(item);
+			// }
+		}
 		
 	}
 
 	public showChoosenCustomer(customer) {
-		
+		this.refreshGUI();
 	}
 
 	public generateCustomer(customer: TsiCustomer) {

@@ -26,8 +26,6 @@ export class MainTabPage {
     	this.tab5 = 'ShoppingCartPage';
       	this.tab6 = 'InfoPage';
       	this.tab7 = 'InternPage';
-
-		this.dataService.mainTabHost = this.navCtrl.parent;
 	}
 
     ionViewWillEnter() {

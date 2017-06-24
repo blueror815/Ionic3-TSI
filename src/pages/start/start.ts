@@ -41,7 +41,7 @@ export class StartPage {
 	constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, 
 				public dataService: TsiDataServiceProvider, public parserService:TsiParserServiceProvider,
 				public clientService: TsiClientServiceProvider) {
-		
+		this.dataService.mainTabHost = this.navCtrl.parent;
 	}
 
 	ionViewDidLoad() {

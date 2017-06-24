@@ -490,13 +490,14 @@ export class TsiDataServiceProvider {
 
     public getCustomersAsVector(filter, index) {
         let result = [];
+        
 
         for (let key of Object.keys(this.customers))
         {
             if (filter == null || filter.length == 0)
             {
                 if (index == 0) {
-                    result.push();
+                    result.push(this.customers[key]);
                 }
                 else {
                     let info = TsiUtil.getArticleUnit();
@@ -530,6 +531,7 @@ export class TsiDataServiceProvider {
 
         //Collections.sort( result, getSortCompartor( TSI_Customer.class ) );
 
+        console.log('Customers Result', JSON.stringify(result));
         return result;
     }
 }
