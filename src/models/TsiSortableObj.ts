@@ -1,10 +1,11 @@
 export abstract class TsiSortableObj {
     
     protected  attributes = [];
-    private    attributeIndexSynonyms = new Map();
+    private    attributeIndexSynonyms : Map<string, number>;
 
     constructor(public attributeCount : number) {
         //this.attributes = new Array[this.attributeCount];
+        this.attributeIndexSynonyms = new Map<string, number>();
         //console.log('Set Attribute Count', attributeCount);
     }
 

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { TsiDataServiceProvider } from '../../providers/tsi-data-service/tsi-data-service';
 
 @IonicPage()
 @Component({
@@ -17,7 +18,7 @@ export class MainTabPage {
   	tab7: any;
 
 
-  	constructor(public navCtrl: NavController, public navParams: NavParams) {
+  	constructor(public navCtrl: NavController, public navParams: NavParams, public dataService: TsiDataServiceProvider) {
   		this.tab1 = 'StartPage';
     	this.tab2 = 'KundenPage';
 		this.tab3 = 'AuftragPage';
@@ -25,6 +26,8 @@ export class MainTabPage {
     	this.tab5 = 'ShoppingCartPage';
       	this.tab6 = 'InfoPage';
       	this.tab7 = 'InternPage';
+
+		this.dataService.mainTabHost = this.navCtrl.parent;
 	}
 
     ionViewWillEnter() {

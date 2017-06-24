@@ -13,7 +13,7 @@ export class TsiCategoryLineProcessor extends TsiAbstractLineProcessor<TsiCatego
         let result = new TsiCategory('', '');
         let lineItems = line.split("|");
 
-        console.log('Category LineItems', JSON.stringify(lineItems));
+        //console.log('Category LineItems', JSON.stringify(lineItems));
 
         if (lineItems.length < 2) {
             return null;
@@ -27,9 +27,6 @@ export class TsiCategoryLineProcessor extends TsiAbstractLineProcessor<TsiCatego
 
     public process(lineResult: TsiCategory) {
         let id = lineResult.id;
-
-        console.log('Category ID', id);
-
         let mainCatID = id.substring(0,1);
 
         let intID = parseInt(id.substring(1));

@@ -110,7 +110,7 @@ export class StartPage {
 			this.dataService.choosenCategory = this.categories[i];
 		}
 		
-		var tabs : Tabs = this.navCtrl.parent;
-		tabs.select(3, {});
+		//var tabs : Tabs = this.navCtrl.parent;
+		this.dataService.mainTabHost.select(3, {});
 	}
 }

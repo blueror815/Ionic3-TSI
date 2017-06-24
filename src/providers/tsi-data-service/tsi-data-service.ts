@@ -207,7 +207,7 @@ export class TsiDataServiceProvider {
     public getArticle(articleID){
         let article = this.articlesViaID[articleID];
         if (this.choosenCustomer != null && article != null) {
-            if (!article.getUnit().toUpperCase() == this.choosenCustomer.getInfo().toUpperCase())
+            if (article.getUnit().toUpperCase() != this.choosenCustomer.getInfo().toUpperCase())
                 article = this.articlesViaIDTmp[articleID];
         }
         if (article == null)
@@ -318,13 +318,13 @@ export class TsiDataServiceProvider {
     public putCustomerCatalog( customerID,  customer)
     {
         //this.customersCatalogs.set( customerID, customer );
-        this.customersCatalogs[customerID.toString()] = customer;
+        this.customersCatalogs[customerID] = customer;
     }
 
     public getCustomerCatalog(customerID)
     {
         //return this.customersCatalogs.get(customerID);
-        return this.customersCatalogs[customerID.toString()];
+        return this.customersCatalogs[customerID];
     }
 
 	public clearArticleCategories()

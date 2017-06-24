@@ -74,8 +74,14 @@ export class TsiParserServiceProvider {
         this.dataService.file.readAsBinaryString(filePath, fileName).then((res) => {
             console.log("Read File", JSON.stringify(res));
 
+            let splitKey = "\r\n";
+
+            if (fileName == "config.dat" || fileName == "sync.dat") {
+              splitKey = "\n";
+            }
+
             if (res) {
-              let linesText = res.split("\n");
+              let linesText = res.split(splitKey);
               for (let line of linesText) {
                 let lineResult : Object = lineProcessor.parse(line, fileName);
 

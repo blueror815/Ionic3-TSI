@@ -18,8 +18,8 @@ export class TsiCustomerCatalogLineProcessor extends TsiAbstractLineProcessor<Ts
             return null;
         }
         else {
-            this.customerID = lineItems[0];
-            let articleID = lineItems[1];
+            this.customerID = lineItems[0].toString();
+            let articleID = lineItems[1].toString();
 
             let article = this.dataService.getArticle(articleID);
             if (article == null) {
@@ -31,9 +31,7 @@ export class TsiCustomerCatalogLineProcessor extends TsiAbstractLineProcessor<Ts
                 result = new TsiCustomerCatalog();
             }
 
-            result.addArticle(article);
-
-            //console.log('Customer Article', JSON.stringify(result));
+            if (article) result.addArticle(article);
 
             return result;
         }
@@ -42,7 +40,6 @@ export class TsiCustomerCatalogLineProcessor extends TsiAbstractLineProcessor<Ts
 
     public process(lineResult: TsiCustomerCatalog) {
         this.dataService.putCustomerCatalog(this.customerID, lineResult);
-        console.log('Customer Catalog', JSON.stringify(lineResult));
     }
 
 }

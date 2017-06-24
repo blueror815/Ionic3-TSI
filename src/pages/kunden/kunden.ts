@@ -22,6 +22,7 @@ import { TsiUtil } from '../../utils/TsiUtil';
 export class KundenPage {
 
 	public select_unit : string = "";
+	public customer : string = "";
 	public customerUnits = [];
 
 
@@ -33,6 +34,9 @@ export class KundenPage {
 
   	ionViewDidLoad() {
     	console.log('ionViewDidLoad KundenPage');
+
+		// this.dataService.putCustomer(this.dataService.selectedCustomer);
+		// this.onSetCustomer();
   	}
 
   	onCreateClient() {
@@ -90,7 +94,8 @@ export class KundenPage {
 	}
 
     public refreshGUI() {
-
+		let customers = this.dataService.getCustomersAsVector(this.customer, TsiUtil.nUnitIndex);
+		
 	}
 
 	public showChoosenCustomer(customer) {
