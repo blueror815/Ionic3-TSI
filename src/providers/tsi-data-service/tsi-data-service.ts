@@ -534,4 +534,76 @@ export class TsiDataServiceProvider {
         console.log('Customers Result', JSON.stringify(result));
         return result;
     }
+
+    public getMainCategoriesAsVector() {
+        let result = [];
+
+        for (let key of Object.keys(this.mainCategories)) {
+            result.push(this.mainCategories[key]);
+        }
+
+        return result;
+    }
+
+    public getArticlesAsVector(filter, choosenCategory : TsiCategory) {
+        let result = [];
+
+        if (choosenCategory) {
+            this.addArticlesOfCategoryToVector(result, choosenCategory, filter);
+
+            for(let key of Object.keys(choosenCategory.getChilds())) {
+                this.addArticlesOfCategoryToVector(result, choosenCategory.getChilds()[key], filter);
+            }
+        }
+        else {
+            let categories = this.getMainCategoriesAsVector();
+            for (let category of categories) {
+                result.push(this.getArticlesAsVector(filter, category));
+            }
+        }
+
+        let searchedArticles = [];
+
+        let unit = '';
+        if (this.choosenCustomer) {
+            unit = this.choosenCustomer.getInfo();
+        }
+        else {
+            unit = TsiUtil.getArticleUnit();
+        }
+
+        if (unit.length == 0) {
+            return result;
+        }
+        else {
+            for (let article of result) {
+                if (article.getUnit().toLowerCase() == unit.toLowerCase()) {
+                    searchedArticles.push(article);
+                }
+            }
+
+            return searchedArticles;
+        }
+    }
+
+    public addArticlesOfCategoryToVector(articles, category, filter) {
+        let articlesOfCategory = this.categoryArticles[category];
+
+        let articlesOfCategoryVector = [];
+        if (articlesOfCategory) {
+            for (let key of Object.keys(articlesOfCategory)) {
+                let article = articlesOfCategory[key];
+
+                let nameLC = article.getName().toLowerCase();
+                let numberLC = article.getArticleNumber().toLowerCase();
+
+                if (filter == null || filter.length == 0 || numberLC.contains(filter.toLowerCase()) || nameLC.contains(filter.toLowerCase())) {
+                    articlesOfCategoryVector.push(article);
+                }
+            }
+        }
+
+        articles.push(articlesOfCategoryVector);
+    }
+
 }

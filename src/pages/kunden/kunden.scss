@@ -35,13 +35,13 @@ page-kunden {
                     height: 100%;
                     height: -webkit-calc(100% - 80px);
                     height: -moz-calc(100%-45px);
+                    text-align: center;
                     ion-row.table-header {
                         background-color: lime;
                         ion-col {
                             border-left: 1px solid black;
                             // border-top: 1px solid black;
                             border-bottom: 1px solid black;
-                            text-align: center;
                         }
                         ion-col:first-child {
                             border-left: 0px !important

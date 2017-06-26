@@ -136,7 +136,7 @@ export class KundenPage {
 			}
 
 			item.lastVisit = lastVisit;
-			item.customerGroup = mCustomer.getAfi();
+			item.customerGroup = TsiUtil.getAFIFullName(mCustomer.getAfi());
 			item.location = mCustomer.getCity();
 
 			this.items.push(item);

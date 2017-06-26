@@ -38,8 +38,19 @@ export class TsiUtil {
     }
 
     public static parseAndFormatDate(sourceDate, pattern) {
+        let year = parseInt(sourceDate.substring(0, 4));
+        let month = parseInt(sourceDate.substring(4, 6));
+        let date = parseInt(sourceDate.substring(6));
+
+        console.log('Source Date - Year', year);
+        console.log('Source Date - Month', month);
+        console.log('Source Date - Date', date);
+
+        let newDate = new Date();
+        newDate.setFullYear(year, month, date);
+
         let datePipe = new DatePipe('en-US');
-        return datePipe.transform(sourceDate, pattern);
+        return datePipe.transform(newDate, pattern);
     }
 
     public static formatMoney(value, digits) {
@@ -66,6 +77,29 @@ export class TsiUtil {
     public static removeChar(source, index)
     {
         return source.substring( 0, index ) + source.substring( index + 1 );
+    }
+
+    public static getAFIFullName(afi) {
+        let result = '';
+        
+        if (afi) {
+            if (afi == 'A') {
+                result = 'Angebotskunde';
+            }
+            else {
+                if (afi == 'F') {
+                    result = 'Filiale';
+                }
+                else {
+                    if (afi == 'I') {
+                        result = 'Interessent';
+                    }
+                }
+            }
+
+        }
+
+        return result;
     }
 
     // public static roundAndToString(number, digits) {
