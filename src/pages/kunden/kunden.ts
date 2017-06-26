@@ -25,7 +25,8 @@ export class KundenPage {
 	public customer : string = "";
 	public customerUnits = [];
 	public items = [];
-	public item = {name: '', priority: '', lastVisit: '', customerGroup: '', location: ''};
+	public detail = {name: '', customerID: '', phone: '', fax: '', email: '', lastVisit: '', lastRG: '', 
+					   rgValue: '', creditLimit: '', creditLimitAvailable: '' , orderQuantity: '', orderBlock: ''};
 
   	constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public dataService: TsiDataServiceProvider,
 	  			public clientService: TsiClientServiceProvider, public shoppingService: TsiShoppingCartServiceProvider, public dialog: Dialogs) {
@@ -56,6 +57,17 @@ export class KundenPage {
 	onCustomerUnitChange = (customerUnit) => {
 		this.select_unit = customerUnit;
 		TsiUtil.nUnitIndex = this.customerUnits.indexOf(customerUnit);
+		this.refreshGUI();
+	}
+
+	onSelectCustomer = (index, element) => {
+
+		element.style.backgroundColor = 'blue';
+
+		console.log("Index" , index);
+		this.dataService.selectedCustomer = this.dataService.getCustomersAsVector(this.customer, TsiUtil.nUnitIndex)[index];
+
+		console.log("Selected Customer", JSON.stringify(this.dataService.selectedCustomer));
 		this.refreshGUI();
 	}
 
@@ -113,28 +125,47 @@ export class KundenPage {
 
 			let item = {name: '', priority: '', lastVisit: '', customerGroup: '', location: ''};
 
-			item.name = mCustomer.getName();
+			item.name = mCustomer.getName() + '\n\n' + mCustomer.getStreet() + '\n' + mCustomer.getZip() + ' ' + mCustomer.getCity();
 			item.priority = mCustomer.getAbc();
-			item.lastVisit = '';
+			let lastVisit = '';
+			if (mCustomer.getDateLastVisit() == '00000000') {
+				lastVisit = ' nicht vorhanden';
+			}
+			else {
+				lastVisit = TsiUtil.parseAndFormatDate(mCustomer.getDateLastVisit(), 'dd.MM.yyyy');
+			}
+
+			item.lastVisit = lastVisit;
 			item.customerGroup = mCustomer.getAfi();
 			item.location = mCustomer.getCity();
 
-			console.log("----->item<----",  item)
 			this.items.push(item);
 		}
 
-		
-		if (this.dataService.selectedCustomer != null) {
-			// for (let mCustomer of customers) {
-			// 	let item : any;
-			// 	item.name = mCustomer.getName();
-			// 	item.priority = mCustomer.getAbc();
-			// 	item.lastVisit = '';
-			// 	item.customerGroup = mCustomer.getAfi();
-			// 	item.location = mCustomer.getCity();
+		this.detail = {name: '', customerID: '', phone: '', fax: '', email: '', lastVisit: '', lastRG: '', 
+					   rgValue: '', creditLimit: '', creditLimitAvailable: '' , orderQuantity: '', orderBlock: ''};
 
-			// 	this.items.push(item);
-			// }
+		if (this.dataService.selectedCustomer) {
+			
+			let pairCustomers = this.generateCustomer(this.dataService.selectedCustomer);
+			if (pairCustomers) {
+				this.detail.name = 'Name = ' + pairCustomers[0];
+				this.detail.customerID = 'Kundennummer = ' + pairCustomers[1];
+				this.detail.phone = 'Telefon = ' + pairCustomers[2];
+				this.detail.fax = 'Fax = ' + pairCustomers[3];
+				this.detail.email = 'E-Mail = ' + pairCustomers[4];
+				this.detail.lastVisit = 'letzter Besuch = ' + pairCustomers[5];
+				this.detail.lastRG = 'Datum letzte Rechnung = ' + pairCustomers[6];
+				this.detail.rgValue = 'Betrag letzte Rechnung = ' + pairCustomers[7];
+				this.detail.creditLimit = 'Kreditlimit = ' + pairCustomers[8];
+				this.detail.creditLimitAvailable = 'Limit verfügbarName = ' + pairCustomers[9];
+				this.detail.orderQuantity = 'Mindestauftragsmenge = ' + pairCustomers[10];
+				if (pairCustomers[11]) {
+					this.detail.orderBlock = 'AufragsSperre = ' + pairCustomers[11];
+				}
+
+				console.log("Detail", JSON.stringify(this.detail));
+			}
 		}
 		
 	}
@@ -144,13 +175,17 @@ export class KundenPage {
 	}
 
 	public generateCustomer(customer: TsiCustomer) {
+		console.log('TsiCustomer', JSON.stringify(customer));
+
 		let result = [];
 
-		result.push(new Map([['Name', customer.getName()]]));
-		result.push(new Map([['Kundennummer', customer.getCustomerID()]]));
-		result.push(new Map([['Telefon', customer.getPhoneNumber()]]));
-		result.push(new Map([['Fax', customer.getFaxNumber()]]));
-		result.push(new Map([['E-Mail', customer.getEmail()]]));
+		result.push(customer.getName());
+		result.push(customer.getCustomerID());
+		result.push(customer.getPhoneNumber());
+		result.push(customer.getFaxNumber());
+		result.push(customer.getEmail());
+
+		console.log('Generate Customer 1 ====>', JSON.stringify(result));
 
 		let lastVisit = '';
 		if (customer.getDateLastVisit() == '00000000') {
@@ -160,7 +195,9 @@ export class KundenPage {
 			lastVisit = TsiUtil.parseAndFormatDate(customer.getDateLastVisit(), 'dd.MM.yyyy');
 		}
 
-		result.push(new Map([['letzter Besuch', lastVisit]]));
+		result.push(lastVisit);
+
+		console.log('Generate Customer 2 ====>', JSON.stringify(result));
 
 		let lastRG = '';
 		if (customer.getDateLastRG() == '00000000') {
@@ -170,13 +207,18 @@ export class KundenPage {
 			lastRG = TsiUtil.parseAndFormatDate(customer.getDateLastRG(), 'dd.MM.yyyy');
 		}
 
-		result.push(new Map([["Datum letzte Rechnung", lastRG]]));
-        result.push(new Map([["Betrag letzte Rechnung", TsiUtil.formatMoney(customer.getValueLastRG(), 3)]]));
-        result.push(new Map([["Kreditlimit", TsiUtil.formatMoney(customer.getCreditLimit(), 3)]]));
-        result.push(new Map([["Limit verfügbar", TsiUtil.formatMoney(customer.getCreditLimitAvailable(), 3)]]));
-        result.push(new Map([["Mindestauftragsmenge", customer.getMinOrderQuantity()]]));
+		result.push(lastRG);
+
+		console.log('Generate Customer 3 ===>', JSON.stringify(result));
+
+        result.push(TsiUtil.formatMoney(customer.getValueLastRG(), 3));
+        result.push(TsiUtil.formatMoney(customer.getCreditLimit(), 3));
+        result.push(TsiUtil.formatMoney(customer.getCreditLimitAvailable(), 3));
+        result.push(customer.getMinOrderQuantity());
         if (customer.getOrderBlock().length > 0)
-            result.push( new Map([["AufragsSperre", customer.getOrderBlock()]]));
+            result.push(customer.getOrderBlock());
+
+		console.log('Generate Customer 4 ===>', JSON.stringify(result));
 
         return result;
 	}

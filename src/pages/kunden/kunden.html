@@ -29,7 +29,7 @@
                         </ion-col>
                     </ion-row>
 
-                    <ion-row class="table-row" *ngFor="let item of items">
+                    <ion-row class="table-row" *ngFor="let item of items; let i = index" (click)="onSelectCustomer(i, $event.target)" ng-class-odd="'odd'" ng-class-even="'even'">
                         <ion-col col-3>
                             {{item.name}}
                         </ion-col>
@@ -55,7 +55,42 @@
 
             <ion-col col-4>
                 <div class="customer-detail-listview-container">
-
+                    <ion-row class="table-row">
+                        {{detail.name}}
+                    </ion-row>
+                    <ion-row class="table-row">
+                        {{detail.customerID}}
+                    </ion-row>
+                    <ion-row class="table-row">
+                        {{detail.phone}}
+                    </ion-row>
+                    <ion-row class="table-row">
+                        {{detail.fax}}
+                    </ion-row>
+                    <ion-row class="table-row">
+                        {{detail.email}}
+                    </ion-row>
+                    <ion-row class="table-row">
+                        {{detail.lastVisit}}
+                    </ion-row>
+                    <ion-row class="table-row">
+                        {{detail.lastRG}}
+                    </ion-row>
+                    <ion-row class="table-row">
+                        {{detail.rgValue}}
+                    </ion-row>
+                    <ion-row class="table-row">
+                        {{detail.creditLimit}}
+                    </ion-row>
+                    <ion-row class="table-row">
+                        {{detail.creditLimitAvailable}}
+                    </ion-row>
+                    <ion-row class="table-row">
+                        {{detail.orderQuantity}}
+                    </ion-row>
+                    <ion-row class="table-row">
+                        {{detail.orderBlock}}
+                    </ion-row>
                 </div>
             </ion-col>
         </ion-row>

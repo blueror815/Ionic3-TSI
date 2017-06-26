@@ -47,7 +47,7 @@ export class TsiUtil {
             value = '0';
         }
 
-        let result = value.toFixed(digits);
+        let result = parseInt(value).toFixed(digits).toString();
 
         let indexOfDot = result.indexOf('.');
         if (indexOfDot != -1) {
