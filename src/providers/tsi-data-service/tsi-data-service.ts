@@ -219,7 +219,7 @@ export class TsiDataServiceProvider {
         return article;
     }
 
-      public putArticle(article){
+    public putArticle(article : TsiArticle){
 
         // All Articles
         if (this.articlesViaID[article.getArticleNumber()] != null)
@@ -242,13 +242,17 @@ export class TsiDataServiceProvider {
 
         // Only Category
         let categoryId = article.getCategory();
+        console.log('ArticlesOfCategory =>', JSON.stringify(categoryId));
+        console.log('ArticlesOfCategory0 =>', JSON.stringify(this.allCategories));
 
         let category = this.allCategories[categoryId];
+        console.log('ArticlesOfCategory1 =>', JSON.stringify(category));
 
         if (category == null)
             return;
 
         let articlesOfCategory = this.categoryArticles[category];
+
 
         if (articlesOfCategory == null) {
             articlesOfCategory = new Map<string, TsiArticle>();
@@ -258,6 +262,7 @@ export class TsiDataServiceProvider {
 
         //articlesOfCategory.set( article.getArticleNumber() + article.getUnit(), article );
         articlesOfCategory[article.getArticleNumber() + article.getUnit()] = article;
+        console.log('ArticlesOfCategory2 =>', JSON.stringify(articlesOfCategory));
 
         // Main Category
         /*
@@ -307,6 +312,8 @@ export class TsiDataServiceProvider {
         if ((article.getRebate1() != null && article.getRebate1().length != 0 && parseFloat(article.getRebate1()) > 0) || (article.getRebate2() != null && article.getRebate2().length != 0 && parseFloat(article.getRebate2()) > 0)) {
             this.rabattArticles.push(article);
         }
+
+        console.log('ArticlesOfCategory3 =>', JSON.stringify(this.categoryArticles));
     }
 
     public putCustomer(customer)
@@ -399,7 +406,8 @@ export class TsiDataServiceProvider {
             // this.mainCategories.set( mainCategoryID, category );
             // this.allCategories.set( category.getId(), category );
             this.mainCategories[mainCategoryID] = category;
-            this.allCategories[category.getId()] = category;
+            this.allCategories[category.getId().toString()] = category;
+            console.log('All Categories =>', JSON.stringify(this.allCategories));
         }
 
         //console.log('Main Category', JSON.stringify(this.mainCategories));
@@ -412,7 +420,7 @@ export class TsiDataServiceProvider {
         {
             mainCategory.addChild(category);
             //this.allCategories.set( category.getId(), category );
-            this.allCategories[category.getId()] = category;
+            this.allCategories[category.getId().toString()] = category;
         }
     }
 
@@ -538,9 +546,12 @@ export class TsiDataServiceProvider {
     public getMainCategoriesAsVector() {
         let result = [];
 
+        console.log('Main Categories', JSON.stringify(this.mainCategories));
         for (let key of Object.keys(this.mainCategories)) {
             result.push(this.mainCategories[key]);
         }
+
+        console.log('Main Categories', JSON.stringify(result));
 
         return result;
     }
@@ -548,6 +559,7 @@ export class TsiDataServiceProvider {
     public getArticlesAsVector(filter, choosenCategory : TsiCategory) {
         let result = [];
 
+        console.log('ChoosenCategory =>', JSON.stringify(choosenCategory))
         if (choosenCategory) {
             this.addArticlesOfCategoryToVector(result, choosenCategory, filter);
 
@@ -587,7 +599,11 @@ export class TsiDataServiceProvider {
     }
 
     public addArticlesOfCategoryToVector(articles, category, filter) {
+        console.log('Category =>', JSON.stringify(category));
+
         let articlesOfCategory = this.categoryArticles[category];
+
+        console.log('ArticlesOfCategory =>', JSON.stringify(this.categoryArticles));
 
         let articlesOfCategoryVector = [];
         if (articlesOfCategory) {
@@ -597,13 +613,15 @@ export class TsiDataServiceProvider {
                 let nameLC = article.getName().toLowerCase();
                 let numberLC = article.getArticleNumber().toLowerCase();
 
-                if (filter == null || filter.length == 0 || numberLC.contains(filter.toLowerCase()) || nameLC.contains(filter.toLowerCase())) {
+                if (filter == null || filter.length == 0 || numberLC.indexOf(filter.toLowerCase()) >= 0 || nameLC.indexOf(filter.toLowerCase()) >= 0) {
                     articlesOfCategoryVector.push(article);
                 }
             }
         }
 
         articles.push(articlesOfCategoryVector);
+
+        console.log('Articles', JSON.stringify(articles));
     }
 
 }

@@ -13,7 +13,7 @@ export class TsiArticleLineProcessor extends TsiAbstractLineProcessor<TsiArticle
     public parse(line: string, sourceFileName: string) {
         let result = new TsiArticle();
 
-        let lineItems = line.split('\\|');
+        let lineItems = line.split('|');
 
         result.setArticleNumber( lineItems[0] );
 
@@ -63,6 +63,7 @@ export class TsiArticleLineProcessor extends TsiAbstractLineProcessor<TsiArticle
 
     public process(lineResult: TsiArticle) {
         let article = lineResult;
+        console.log('Article =>', JSON.stringify(article));
         this.dataService.putArticle(article);
     }
 

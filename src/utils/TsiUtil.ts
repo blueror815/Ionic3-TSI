@@ -42,10 +42,6 @@ export class TsiUtil {
         let month = parseInt(sourceDate.substring(4, 6));
         let date = parseInt(sourceDate.substring(6));
 
-        console.log('Source Date - Year', year);
-        console.log('Source Date - Month', month);
-        console.log('Source Date - Date', date);
-
         let newDate = new Date();
         newDate.setFullYear(year, month, date);
 
