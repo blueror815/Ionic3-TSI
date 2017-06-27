@@ -5,7 +5,7 @@ import { TsiDataServiceProvider } from '../tsi-data-service/tsi-data-service';
 import { Dialogs } from '@ionic-native/dialogs';
 import { TsiParserConfigNames } from '../../parser/TsiParserConfigNames';
 import { TsiSyncDataServiceProvider } from '../tsi-sync-data-service/tsi-sync-data-service';
-import { LoadingController } from 'ionic-angular';
+import { LoadingController, ToastController } from 'ionic-angular';
 
 /*
   Generated class for the TsiClientServiceProvider provider.
@@ -17,7 +17,7 @@ import { LoadingController } from 'ionic-angular';
 export class TsiClientServiceProvider {
 
   constructor(public dataService : TsiDataServiceProvider, public syncService: TsiSyncDataServiceProvider, public dialog : Dialogs, 
-              public loading: LoadingController) {
+              public loading: LoadingController, public toastCtrl: ToastController) {
     console.log('Hello TsiClientServiceProvider Provider');
   
   }
@@ -31,6 +31,15 @@ export class TsiClientServiceProvider {
         this.dataService.getTabHostOfMainScreen().select(1, {});
       }
     });
+  }
+
+  public showToast(message, time) {
+    let toast =	this.toastCtrl.create({
+				message: message,
+				duration: time,
+				position: 'bottom'
+			});
+		toast.present();
   }
 
   public async updateConfiguration(disableScreen) {

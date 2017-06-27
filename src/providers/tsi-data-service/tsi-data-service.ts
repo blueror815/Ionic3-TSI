@@ -246,19 +246,21 @@ export class TsiDataServiceProvider {
         console.log('ArticlesOfCategory0 =>', JSON.stringify(this.allCategories));
 
         let category = this.allCategories[categoryId];
+        
         console.log('ArticlesOfCategory1 =>', JSON.stringify(category));
 
         if (category == null)
             return;
-
+       
         let articlesOfCategory = this.categoryArticles[category];
-
 
         if (articlesOfCategory == null) {
             articlesOfCategory = new Map<string, TsiArticle>();
             //this.categoryArticles.set( category, articlesOfCategory );
             this.categoryArticles[category] = articlesOfCategory;
         }
+
+        console.log('ArticlesOfCategory1 =>', JSON.stringify(this.categoryArticles));
 
         //articlesOfCategory.set( article.getArticleNumber() + article.getUnit(), article );
         articlesOfCategory[article.getArticleNumber() + article.getUnit()] = article;
@@ -614,14 +616,53 @@ export class TsiDataServiceProvider {
                 let numberLC = article.getArticleNumber().toLowerCase();
 
                 if (filter == null || filter.length == 0 || numberLC.indexOf(filter.toLowerCase()) >= 0 || nameLC.indexOf(filter.toLowerCase()) >= 0) {
-                    articlesOfCategoryVector.push(article);
+                    //articlesOfCategoryVector.push(article);
+                    articles.push(article);
                 }
             }
         }
 
-        articles.push(articlesOfCategoryVector);
+        //articles.push(articlesOfCategoryVector);
 
         console.log('Articles', JSON.stringify(articles));
     }
 
+    public getLastAvailableOrders(customerID) {
+        let result = [];
+        let customer = this.getCustomer(customerID);
+        if (customer) {
+            let orderList = this.orders[customer.getCustomerID()];
+            for (let key of Object.keys(orderList)) {
+                let orders = orderList[key];
+
+
+                let str = TsiUtil.getOrderNameFromIds(key) + '( vom ' +   + ' ) ';
+                result.push(str);
+            }
+        }
+
+        return result;
+    }
+
+    public getSuggestionOrders(customerID, id) {
+        let result = [];
+
+        if (id) {
+            let ordersOfCustomer = this.orders[customerID];
+
+            if (ordersOfCustomer) {
+                for (let key of Object.keys(ordersOfCustomer)) {
+                    if (key == id) {
+                        let order = ordersOfCustomer[key];
+
+                        for (let mKey of Object.keys(order)) {
+                            result.push(order[mKey]);
+                        }
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
 }

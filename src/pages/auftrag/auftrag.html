@@ -65,11 +65,11 @@
 
                 <ion-row class="bottom-btn-container">
                     <ion-col col-8>
-                        <button ion-button full class="complete-btn">KOMPLETTE RECHNUNG ODER VORSCHLAG</button>
+                        <button ion-button full class="complete-btn" (click)="onOrderAddAllSuggestionArticles()">KOMPLETTE RECHNUNG ODER VORSCHLAG</button>
                     </ion-col>
 
                     <ion-col col-4>
-                        <button ion-button full class="goods-btn">ZUM WARENKORB</button>
+                        <button ion-button full class="goods-btn" (click)="onOrderAddSuggestionArticle()">ZUM WARENKORB</button>
                     </ion-col>
                 </ion-row>
             </ion-col>
@@ -80,11 +80,11 @@
 
             <ion-col col-4>
                 <ion-row>
-                    <img class="img-responsive" [src]="img_url" />
+                    <img class="img-responsive" [src]="img_url" (click)="onOrderArticleImage()" />
                 </ion-row>
 
                 <ion-row class="infor-btn-container">
-                    <button ion-button full>INFODETAILS ARTIKEL</button>
+                    <button ion-button full (click)="onOrderShowInfo()">INFODETAILS ARTIKEL</button>
                 </ion-row>
 
                 <ion-row class="amount-container">
@@ -97,8 +97,8 @@
                     </ion-col>
 
                     <ion-col class="amount-btn-container" col-2>
-                        <div class="min-btn"></div>
-                        <div class="plus-btn"></div>
+                        <div class="min-btn" (click)="onOrderVPESub()"></div>
+                        <div class="plus-btn" (click)="onOrderVPEAdd()"></div>
                     </ion-col>
                 </ion-row>
 
@@ -112,13 +112,13 @@
                     </ion-col>
 
                     <ion-col class="amount-btn-container" col-2>
-                        <div class="min-btn"></div>
-                        <div class="plus-btn"></div>
+                        <div class="min-btn" (click)="onOrderPALSub()"></div>
+                        <div class="plus-btn" (click)="onOrderPALAdd()"></div>
                     </ion-col>
                 </ion-row>
 
                 <ion-row class="add-btn-container">
-                    <button ion-button full>HINZUFUGEN</button>
+                    <button ion-button full (click)="onOrderAddToCart()">HINZUFUGEN</button>
                 </ion-row>
             </ion-col>
 

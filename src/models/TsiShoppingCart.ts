@@ -39,7 +39,7 @@ export class TsiShoppingCart {
         }
     }
 
-    public  addVpeArticle( id,  count,  write)
+    public addVpeArticle( id,  count,  write)
     {
         this.modified = true;
 
@@ -56,7 +56,7 @@ export class TsiShoppingCart {
             this.writeCart();
     }
 
-    public  addPalArticle( id,  count,  write)
+    public addPalArticle( id,  count,  write)
     {
         this.modified = true;
 
@@ -280,5 +280,14 @@ export class TsiShoppingCart {
         //     }
         // } );
         // TSI_ClientService.getShoppingCartService().setShoppingCart( customerID, shoppingCart );
+    }
+
+    public containArticle(articleNumber) {
+        if (this.entrys[articleNumber]) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }

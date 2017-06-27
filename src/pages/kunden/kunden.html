@@ -29,7 +29,7 @@
                         </ion-col>
                     </ion-row>
 
-                    <ion-row class="table-row" *ngFor="let item of items; let i = index" (click)="onSelectCustomer(i, $event.target)" ng-class-odd="'odd'" ng-class-even="'even'">
+                    <ion-row class="table-row" *ngFor="let item of items; let i = index" (click)="onSelectCustomer(i, $event.target)">
                         <ion-col col-3>
                             {{item.name}}
                         </ion-col>

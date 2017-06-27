@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { TsiShoppingCart } from '../../models/TsiShoppingCart';
 import { TsiDataServiceProvider } from '../tsi-data-service/tsi-data-service';
+import { TsiClientServiceProvider } from '../tsi-client-service/tsi-client-service';
 
 /*
   Generated class for the TsiShoppingCartServiceProvider provider.
@@ -17,7 +18,7 @@ export class TsiShoppingCartServiceProvider {
     private tempPALArticles : Map<string, number>;
     private shoppingCarts : Map<string, TsiShoppingCart> ;
 
-    constructor(public http: Http, public dataService: TsiDataServiceProvider) {
+    constructor(public http: Http, public dataService: TsiDataServiceProvider, public clientService: TsiClientServiceProvider) {
         console.log('Hello TsiShoppingCartServiceProvider Provider');
         this.tempPALArticles = new Map();
         this.tempVPEArticles = new Map();
@@ -58,9 +59,155 @@ export class TsiShoppingCartServiceProvider {
         return result;
     }
 
+    public actualShoppingCartContains(article) {
+        let result = false;
+        let shoppingCart = this.getActualShoppingCart();
+        if (shoppingCart) {
+            result = shoppingCart.containArticle(article.getArticleNumber());
+        }
+
+        return result;
+    }
+
     public clearTempArticles()
     {
         this.tempVPEArticles.clear();
+    }
+
+    public addTempVPEArticle(id, count : number) {
+        let oldCount = this.tempVPEArticles[id];
+
+        if (oldCount) {
+            oldCount = 0;
+        }
+
+        let newCount : number = oldCount + count;
+        newCount = Math.max(newCount, 999);
+        newCount = Math.min(newCount, 0);
+
+        this.tempVPEArticles[id] = newCount;
+    }
+
+
+    public addTempPALArticle(id, count) {
+        let oldCount = this.tempPALArticles[id];
+
+        if (oldCount) {
+            oldCount = 0;
+        }
+
+        let newCount : number = oldCount + count;
+        newCount = Math.max(newCount, 999);
+        newCount = Math.min(newCount, 0);
+
+        this.tempPALArticles[id] = newCount;
+        this.tempVPEArticles[id] = 0;
+    }
+
+    public getTempVPEArticleCount(id) {
+        let result = 0;
+        let count = this.tempVPEArticles[id];
+        if (count) {
+            result = count;
+        }
+
+        return result;
+    }
+
+    public setTempVPEArticle(id, count) {
+        this.tempVPEArticles[id] = count;
+    }
+
+    public getTempPALArticleCount(id) {
+        let result = 0;
+        let count = this.tempPALArticles[id];
+        if (count) {
+            result = count;
+        }
+
+        return result;
+    }
+
+    public setTempPALArticle(id, count) {
+        this.tempPALArticles[id] = count;
+    }
+
+    public addTempVPEArticlesToFixed(articleID, showDialog, checkOutOfStock) {
+        let tempArticleCount = this.getTempVPEArticleCount(articleID);
+        if (tempArticleCount != 0) {
+
+            let customer = this.dataService.choosenCustomer;
+            if (customer) {
+                if (checkOutOfStock) {
+                        
+                }
+                else {
+                    this.getShoppingCart(customer.getCustomerID()).addVpeArticle(articleID, tempArticleCount, true);
+                    this.tempVPEArticles.delete(articleID);
+                }
+            }
+            else {
+                if (showDialog) {
+                    this.clientService.showDialog('Bitte wählen Sie zuerst einen Kunden aus.', true);
+                }
+            }
+        }
+    }
+
+    public addTempPALArticlesToFixed(articleID, showDialog, checkOutOfStock) {
+        let tempArticleCount = this.getTempPALArticleCount(articleID);
+        if (tempArticleCount != 0) {
+
+            let customer = this.dataService.choosenCustomer;
+            if (customer) {
+                if (checkOutOfStock) {
+                        
+                }
+                else {
+                    this.getShoppingCart(customer.getCustomerID()).addPalArticle(articleID, tempArticleCount, true);
+                    this.tempPALArticles.delete(articleID);
+                }
+            }
+            else {
+                if (showDialog) {
+                    this.clientService.showDialog('Bitte wählen Sie zuerst einen Kunden aus.', true);
+                }
+            }
+        }
+    }
+
+    public addAllTempArticlesToFixed(id) {
+        let customer = this.dataService.choosenCustomer;
+        if (customer) {
+            this.addTempVPEArticlesToFixed(id, false, false);
+            this.addTempPALArticlesToFixed(id, false, false);
+            this.checkOutOfStock(id);
+        }
+        else {
+            this.clientService.showDialog('Bitte wählen Sie zuerst einen Kunden aus.', true);
+        }
+    }
+
+    private checkOutOfStock(articleID) {
+
+    }
+
+    public addTempArticleCountToFixedIfNotExists(article) {
+        if (this.actualShoppingCartContains(article)) {
+            this.showAlreadyExistToast(article);
+        }
+        else {
+            this.addAllTempArticlesToFixed(article.getArticleNumber());
+            this.showArticleAddedToast(article);
+        }
+    }
+
+    public showAlreadyExistToast(article) {
+        this.clientService.showToast(article.getName() + " befindet sich bereits im Warenkorb!", 1000);
+    }
+
+    public showArticleAddedToast(article) {
+        this.clientService.showToast(article.getName() + " wurde in den Warenkorb hinzugefügt!", 1000);
     }
 
 }

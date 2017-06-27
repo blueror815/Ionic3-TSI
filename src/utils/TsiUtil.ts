@@ -98,6 +98,23 @@ export class TsiUtil {
         return result;
     }
 
+    public static getOrderNameFromIds(orderID)
+    {
+        let result = '';
+        if (orderID == "1")
+            result = "Letzte Rechnung";
+        else
+            if (orderID == "2")
+                result = "Vorletzte Rechnung";
+            else
+                if (orderID == "3")
+                    result = "Drittletzte Rechnung";
+                else
+                    if (orderID == "99")
+                        result = "Vorschlag";
+        return result;
+    }
+
     // public static roundAndToString(number, digits) {
     //     let pattern = '0.';
     //     for (let i = 0;i < digits;i ++) {
