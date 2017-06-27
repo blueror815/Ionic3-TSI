@@ -25,6 +25,9 @@ export class AuftragPage {
 	public articles = [];
 	public orders = [];
 	public articleFilter = '';
+	private scrollToArticle = false;
+	public edtVPE = '---';
+	public edtPAL = '---';
 	
   	constructor(public navCtrl: NavController, public navParams: NavParams, public dataService: TsiDataServiceProvider, 
 	  			public syncService: TsiSyncDataServiceProvider,public shoppingService: TsiShoppingCartServiceProvider,
@@ -59,6 +62,49 @@ export class AuftragPage {
 	public refreshGUI() {
 		let article = this.dataService.choosenArticle;
 		
+		this.articles = [];
+
+		let articles = this.dataService.getArticlesAsVector(this.articleFilter, null);
+
+		console.log('Articles =>', JSON.stringify(articles));
+
+		for (let article of articles) {
+			let item = {articleID : '', articleName: ''};
+			item.articleID = article.getArticleNumber();
+			item.articleName = article.getName();
+
+			this.articles.push(item);
+		}
+
+		if (article) {
+			this.img_url = article.getImageURL();
+			let count = this.shoppingService.getTempVPEArticleCount(article.getArticleNumber());
+			let palCount = this.shoppingService.getTempPALArticleCount(article.getArticleNumber());
+			this.edtVPE = count.toString();
+			this.edtPAL = palCount.toString();
+		}
+		else {
+			this.edtVPE = '---';
+			this.edtPAL = '---';
+		}
+
+		if (this.scrollToArticle) {
+			let index = articles.indexOf(article);
+
+			this.scrollToArticle = false;
+		}
+
+		let customer = this.dataService.choosenCustomer;
+		if (customer) {
+			let orders = this.dataService.getLastAvailableOrders(customer.getCustomerID());
+
+			if (orders != null && orders.length > 0) {
+				this.orders = this.dataService.getSuggestionOrders(customer.getCustomerID(), this.dataService.choosenOrderSuggestionType);
+			}
+			else {
+				this.orders = [];
+			}
+		}
 	}
 
 	onSelectArticle = (index, element) => {
@@ -76,7 +122,7 @@ export class AuftragPage {
 	onOrderArticleImage() {
 		let article = this.dataService.choosenArticle;
 		if (article) {
-			this.img_url = this.syncService.getGraphicsStoragePath() + article.getImageURL();
+			//this.img_url = this.syncService.getGraphicsStoragePath() + article.getImageURL();
 
 		}
 	}

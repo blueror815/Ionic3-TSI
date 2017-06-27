@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { TsiShoppingCart } from '../../models/TsiShoppingCart';
 import { TsiDataServiceProvider } from '../tsi-data-service/tsi-data-service';
@@ -18,7 +17,7 @@ export class TsiShoppingCartServiceProvider {
     private tempPALArticles : Map<string, number>;
     private shoppingCarts : Map<string, TsiShoppingCart> ;
 
-    constructor(public http: Http, public dataService: TsiDataServiceProvider, public clientService: TsiClientServiceProvider) {
+    constructor(public dataService: TsiDataServiceProvider) {
         console.log('Hello TsiShoppingCartServiceProvider Provider');
         this.tempPALArticles = new Map();
         this.tempVPEArticles = new Map();
@@ -148,7 +147,7 @@ export class TsiShoppingCartServiceProvider {
             }
             else {
                 if (showDialog) {
-                    this.clientService.showDialog('Bitte wählen Sie zuerst einen Kunden aus.', true);
+                    //this.clientService.showDialog('Bitte wählen Sie zuerst einen Kunden aus.', true);
                 }
             }
         }
@@ -170,7 +169,7 @@ export class TsiShoppingCartServiceProvider {
             }
             else {
                 if (showDialog) {
-                    this.clientService.showDialog('Bitte wählen Sie zuerst einen Kunden aus.', true);
+                    //this.clientService.showDialog('Bitte wählen Sie zuerst einen Kunden aus.', true);
                 }
             }
         }
@@ -184,7 +183,7 @@ export class TsiShoppingCartServiceProvider {
             this.checkOutOfStock(id);
         }
         else {
-            this.clientService.showDialog('Bitte wählen Sie zuerst einen Kunden aus.', true);
+            //this.clientService.showDialog('Bitte wählen Sie zuerst einen Kunden aus.', true);
         }
     }
 
@@ -203,11 +202,11 @@ export class TsiShoppingCartServiceProvider {
     }
 
     public showAlreadyExistToast(article) {
-        this.clientService.showToast(article.getName() + " befindet sich bereits im Warenkorb!", 1000);
+        //this.clientService.showToast(article.getName() + " befindet sich bereits im Warenkorb!", 1000);
     }
 
     public showArticleAddedToast(article) {
-        this.clientService.showToast(article.getName() + " wurde in den Warenkorb hinzugefügt!", 1000);
+        //this.clientService.showToast(article.getName() + " wurde in den Warenkorb hinzugefügt!", 1000);
     }
 
 }

@@ -62,12 +62,10 @@ export class KundenPage {
 
 	onSelectCustomer = (index, element) => {
 
-		element.style.backgroundColor = 'blue';
-
-		console.log("Index" , index);
+		//element.style.backgroundColor = 'blue';
 		this.dataService.selectedCustomer = this.dataService.getCustomersAsVector(this.customer, TsiUtil.nUnitIndex)[index];
 
-		console.log("Selected Customer", JSON.stringify(this.dataService.selectedCustomer));
+		//console.log("Selected Customer", JSON.stringify(this.dataService.selectedCustomer));
 		this.refreshGUI();
 	}
 
@@ -119,32 +117,9 @@ export class KundenPage {
 		let customers = this.dataService.getCustomersAsVector(this.customer, TsiUtil.nUnitIndex);
 		//console.log('Customers', JSON.stringify(customers));
 
-		this.items = [];
-
-		for (let mCustomer of customers) {
-
-			let item = {name: '', priority: '', lastVisit: '', customerGroup: '', location: ''};
-
-			item.name = mCustomer.getName() + '\n\n' + mCustomer.getStreet() + '\n' + mCustomer.getZip() + ' ' + mCustomer.getCity();
-			item.priority = mCustomer.getAbc();
-			let lastVisit = '';
-			if (mCustomer.getDateLastVisit() == '00000000') {
-				lastVisit = ' nicht vorhanden';
-			}
-			else {
-				lastVisit = TsiUtil.parseAndFormatDate(mCustomer.getDateLastVisit(), 'dd.MM.yyyy');
-			}
-
-			item.lastVisit = lastVisit;
-			item.customerGroup = TsiUtil.getAFIFullName(mCustomer.getAfi());
-			item.location = mCustomer.getCity();
-
-			this.items.push(item);
-		}
-
 		this.detail = {name: '', customerID: '', phone: '', fax: '', email: '', lastVisit: '', lastRG: '', 
 					   rgValue: '', creditLimit: '', creditLimitAvailable: '' , orderQuantity: '', orderBlock: ''};
-
+		
 		if (this.dataService.selectedCustomer) {
 			
 			let pairCustomers = this.generateCustomer(this.dataService.selectedCustomer);
@@ -167,6 +142,29 @@ export class KundenPage {
 				console.log("Detail", JSON.stringify(this.detail));
 			}
 		}
+
+		this.items = [];
+
+		for (let mCustomer of customers) {
+
+			let item = {name: '', priority: '', lastVisit: '', customerGroup: '', location: ''};
+
+			item.name = mCustomer.getName() + '\n\n' + mCustomer.getStreet() + '\n' + mCustomer.getZip() + ' ' + mCustomer.getCity();
+			item.priority = mCustomer.getAbc();
+			let lastVisit = '';
+			if (mCustomer.getDateLastVisit() == '00000000') {
+				lastVisit = ' nicht vorhanden';
+			}
+			else {
+				lastVisit = TsiUtil.parseAndFormatDate(mCustomer.getDateLastVisit(), 'dd.MM.yyyy');
+			}
+
+			item.lastVisit = lastVisit;
+			item.customerGroup = TsiUtil.getAFIFullName(mCustomer.getAfi());
+			item.location = mCustomer.getCity();
+
+			this.items.push(item);
+		}	
 		
 	}
 
