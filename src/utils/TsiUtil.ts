@@ -115,6 +115,26 @@ export class TsiUtil {
         return result;
     }
 
+    public static getIdOfOrderName(item)
+    {
+        let result = '';
+        if (item)
+        {
+            if (item.startsWith( "Letzte Rechnung" ))
+                result = "1";
+            else
+                if (item.startsWith( "Vorletzte Rechnung" ))
+                    result = "2";
+                else
+                    if (item.startsWith( "Drittletzte Rechnung" ))
+                        result = "3";
+                    else
+                        if (item.startsWith( "Vorschlag" ))
+                            result = "99";
+        }
+        return result;
+    }
+
     // public static roundAndToString(number, digits) {
     //     let pattern = '0.';
     //     for (let i = 0;i < digits;i ++) {

@@ -5,6 +5,7 @@ import { TsiSyncDataServiceProvider } from '../../providers/tsi-sync-data-servic
 import { Dialogs } from '@ionic-native/dialogs';
 import { TsiOrder } from '../../models/TsiOrder';
 import { TsiShoppingCartServiceProvider } from '../../providers/tsi-shopping-cart-service/tsi-shopping-cart-service';
+import { TsiUtil } from '../../utils/TsiUtil';
 
 /**
  * Generated class for the AuftragPage page.
@@ -21,7 +22,9 @@ export class AuftragPage {
 
 	public img_url: string = "assets/images/not_avalible.png";
 
-	public items = [];
+	public articles = [];
+	public orders = [];
+	public articleFilter = '';
 	
   	constructor(public navCtrl: NavController, public navParams: NavParams, public dataService: TsiDataServiceProvider, 
 	  			public syncService: TsiSyncDataServiceProvider,public shoppingService: TsiShoppingCartServiceProvider,
@@ -31,7 +34,7 @@ export class AuftragPage {
   	ionViewDidLoad() {
     	console.log('ionViewDidLoad AuftragPage');
 
-		this.items = [];
+		this.articles = [];
 
 		let articles = this.dataService.getArticlesAsVector('', null);
 
@@ -42,13 +45,32 @@ export class AuftragPage {
 			item.articleID = article.getArticleNumber();
 			item.articleName = article.getName();
 
-			this.items.push(item);
+			this.articles.push(item);
+		}
+
+		this.orders = [];
+
+		if (this.dataService.choosenCustomer) {
+			this.orders = this.dataService.getLastAvailableOrders(this.dataService.choosenCustomer.getCustomerID());
 		}
 
   	}
 
 	public refreshGUI() {
+		let article = this.dataService.choosenArticle;
 		
+	}
+
+	onSelectArticle = (index, element) => {
+		let articles = this.dataService.getArticlesAsVector('', null);
+		this.dataService.choosenArticle = articles[index];
+		this.refreshGUI();
+	}
+
+	onSelectOrder = (index, element) => {
+		let orderID = TsiUtil.getIdOfOrderName(this.orders[index]);
+		this.dataService.choosenOrderSuggestionType = orderID;
+		this.refreshGUI();
 	}
 
 	onOrderArticleImage() {

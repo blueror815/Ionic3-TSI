@@ -1,7 +1,7 @@
 <ion-content>
     <ion-row class="top-input-container">
         <span class="placeholder">Artikesuche: </span>
-        <ion-input type="text" [(ngModel)]="customer"></ion-input>
+        <ion-input type="text" [(ngModel)]="articleFilter"></ion-input>
     </ion-row>
 
     <ion-grid class="main-container">
@@ -18,13 +18,13 @@
                         </ion-col>
                     </ion-row>
 
-                    <ion-row class="table-row" *ngFor="let item of items">
+                    <ion-row class="table-row" *ngFor="let article of articles; let i = index" (click)="onSelectArticle(i, $event.target)">
                         <ion-col col-4>
-                            {{item.articleID}}
+                            {{article.articleID}}
                         </ion-col>
 
                         <ion-col col-6>
-                            {{item.articleName}}
+                            {{article.articleName}}
                         </ion-col>
                     </ion-row>
                 </div>
@@ -48,7 +48,7 @@
                         </ion-col>
                     </ion-row>
 
-                    <ion-row class="table-row" *ngFor="let item of items">
+                    <ion-row class="table-row" *ngFor="let order of orders; let i = index" (click)="onSelectOrder(i, $event.target)">
                         <ion-col col-4>
                             great
                         </ion-col>
