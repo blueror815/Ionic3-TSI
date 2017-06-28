@@ -58,6 +58,9 @@ page-kunden {
                     ion-row.table-row:nth-child(odd) {
                         background-color: yellow !important;
                     }
+                    ion-row.selected {
+                        background-color: blue !important;
+                    }
                 }
                 ion-row.customer-button-container {
                     ion-col {

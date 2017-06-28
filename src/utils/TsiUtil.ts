@@ -135,6 +135,14 @@ export class TsiUtil {
         return result;
     }
 
+    public static formatDate(date, pattern) {
+        let newDate = new Date();
+        newDate.setUTCMilliseconds(date);
+
+        let datePipe = new DatePipe('en-US');
+        return datePipe.transform(newDate, pattern);
+    }
+
     // public static roundAndToString(number, digits) {
     //     let pattern = '0.';
     //     for (let i = 0;i < digits;i ++) {

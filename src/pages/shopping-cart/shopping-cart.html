@@ -1,5 +1,5 @@
 <ion-content padding>
-    <span class="alert">Bitte wählen Sie einen Kunden aus!</span>
+    <span class="alert" [(ngModel)]="customerName">Bitte wählen Sie einen Kunden aus!</span>
 
     <ion-grid class="main-container">
         <ion-row class="sub-container">
@@ -26,25 +26,25 @@
                         </ion-col>
                     </ion-row>
 
-                    <ion-row class="table-row" *ngFor="let item of items">
+                    <ion-row class="table-row" *ngFor="let article of articles; let i = index" (click)="onSelectArticle(i, $event.target)">
                         <ion-col col-2>
-                            great
+                            {{article.index}}
                         </ion-col>
 
                         <ion-col col-2>
-                            thanks
+                            {{article.name}}
                         </ion-col>
 
                         <ion-col col-3>
-                            mmm
+                            {{article.id}}
                         </ion-col>
 
                         <ion-col col-2>
-                            thanks
+                            {{article.count}}
                         </ion-col>
 
                         <ion-col col-3>
-                            mmm
+                            {{article.unit}}
                         </ion-col>
                     </ion-row>
                 </div>
@@ -57,14 +57,13 @@
 
                     <ion-col col-6>
                         <div class="price" [ngClass]="{active: is_active}">
-                            <span>Gesamtpreis Auftrag: </span><span>{{price}} Euro</span> <span>VPE</span>
-                            <span>Menge: </span><span>{{amount}}</span>
+                            <span>{{overAllPrice}}</span>
                         </div>
                     </ion-col>
 
                     <ion-col col-5>
                         <div class="position-prize">
-                            <span>Positionspreis: {{prize}} Euro</span>
+                            <span>{{positionPrice}}</span>
                         </div>
                     </ion-col>
                 </ion-row>
@@ -75,7 +74,7 @@
                         <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>
                     </ion-col>
                     <ion-col col-4>
-                        <button ion-button full class="info-btn" (click)="savePad()">INFODETAILS ARTIKEL</button>
+                        <button ion-button full class="info-btn" (click)="onShowInfo()">INFODETAILS ARTIKEL</button>
                     </ion-col>
                 </ion-row>
                 <!-- <button ion-button full color="secondary" (click)="savePad()">Save</button> -->
@@ -94,7 +93,7 @@
                     <h6>Info</h6>
                 </ion-row>
                 <ion-row>
-                    <ion-textarea class="info-textarea" [(ngModel)]="info" name="comment"></ion-textarea>
+                    <ion-textarea class="info-textarea" [(ngModel)]="info" name="comment" [(ngChange)]="onChangeInfo()"></ion-textarea>
                 </ion-row>
 
                 <ion-row class="meeting-time">
@@ -103,7 +102,7 @@
                     </ion-col>
 
                     <ion-col col-10>
-                        <ion-input type="date" [(ngModel)]="meeting_time"></ion-input>
+                        <ion-input type="date" [(ngModel)]="meeting_time" [(ngChange)]="onChangeDate()"></ion-input>
                     </ion-col>
                 </ion-row>
 
@@ -113,12 +112,12 @@
                     </ion-col>
 
                     <ion-col col-4>
-                        <ion-input placeholder="000" type="text" [(ngModel)]="qty_vpe"></ion-input>
+                        <ion-input placeholder="000" type="text" [(ngModel)]="qty_vpe" [(ngChange)]="onChangeVPE()"></ion-input>
                     </ion-col>
 
                     <ion-col class="amount-btn-container" col-2>
-                        <div class="min-btn"></div>
-                        <div class="plus-btn"></div>
+                        <div class="min-btn" (click)="onVPESub()"></div>
+                        <div class="plus-btn" (click)="onVPEAdd()"></div>
                     </ion-col>
                 </ion-row>
 
@@ -128,21 +127,21 @@
                     </ion-col>
 
                     <ion-col col-4>
-                        <ion-input placeholder="000" type="text" [(ngModel)]="qty_pal"></ion-input>
+                        <ion-input placeholder="000" type="text" [(ngModel)]="qty_pal" [(ngChange)]="onChangePAL()"></ion-input>
                     </ion-col>
 
                     <ion-col class="amount-btn-container" col-2>
-                        <div class="min-btn"></div>
-                        <div class="plus-btn"></div>
+                        <div class="min-btn" (click)="onPALSub()"></div>
+                        <div class="plus-btn" (click)="onPALAdd()"></div>
                     </ion-col>
                 </ion-row>
 
                 <ion-row class="btn-container">
                     <ion-col>
-                        <button class="save-btn" ion-button full>SPEICHERN</button>
+                        <button class="save-btn" ion-button full (click)="onShoppingCartSave()">SPEICHERN</button>
                     </ion-col>
                     <ion-col>
-                        <button class="ship-btn" ion-button full>VERSENDEN</button>
+                        <button class="ship-btn" ion-button full (click)="onSendOrder()">VERSENDEN</button>
                     </ion-col>
                 </ion-row>
             </ion-col>
