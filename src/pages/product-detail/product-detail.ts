@@ -27,4 +27,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
  		console.log('ionViewDidLoad ProductDetailPage');
  	}
 
+	onBack() {
+		this.navCtrl.pop();
+	}
+
  }

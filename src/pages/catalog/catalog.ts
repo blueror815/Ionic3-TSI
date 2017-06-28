@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { IonProductCellComponent } from '../../components/ion-product-cell/ion-product-cell';
 import { PRODUCTS } from '../../data/product';
+import { TsiDataServiceProvider } from '../../providers/tsi-data-service/tsi-data-service';
 
 /**
  * Generated class for the CatalogPage page.
@@ -21,7 +22,8 @@ import { PRODUCTS } from '../../data/product';
  	public selected_tab: string = "total";
  	public products = PRODUCTS;
 
- 	constructor(public navCtrl: NavController, public navParams: NavParams) {
+ 	constructor(public navCtrl: NavController, public navParams: NavParams, public dataService: TsiDataServiceProvider) {
+		 console.log('Catalog Headers', JSON.stringify(this.dataService.catalogTabHeaders));
  	}
 
  	ionViewDidLoad() {

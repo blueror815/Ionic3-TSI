@@ -572,7 +572,7 @@ export class TsiDataServiceProvider {
         else {
             let categories = this.getMainCategoriesAsVector();
             for (let category of categories) {
-                result.push(this.getArticlesAsVector(filter, category));
+                result.concat(this.getArticlesAsVector(filter, category));
             }
         }
 
@@ -616,13 +616,12 @@ export class TsiDataServiceProvider {
                 let numberLC = article.getArticleNumber().toLowerCase();
 
                 if (filter == null || filter.length == 0 || numberLC.indexOf(filter.toLowerCase()) >= 0 || nameLC.indexOf(filter.toLowerCase()) >= 0) {
-                    //articlesOfCategoryVector.push(article);
-                    articles.push(article);
+                    articlesOfCategoryVector.push(article);
                 }
             }
         }
 
-        //articles.push(articlesOfCategoryVector);
+        articles.concat(articlesOfCategoryVector);
 
         console.log('Articles', JSON.stringify(articles));
     }

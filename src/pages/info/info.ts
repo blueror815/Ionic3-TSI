@@ -25,4 +25,8 @@ export class InfoPage {
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad InfoPage');
 	}
+
+	onBack() {
+		this.navCtrl.pop();
+	}
 }

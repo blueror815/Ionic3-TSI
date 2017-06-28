@@ -243,7 +243,7 @@ export class ShoppingCartPage {
 		}
 		else {
 			this.customerName = 'Bitte wählen Sie einen Kunden aus!';
-
+			
 		}
 
 		if (customer) {
