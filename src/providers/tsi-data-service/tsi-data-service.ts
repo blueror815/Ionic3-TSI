@@ -635,8 +635,8 @@ export class TsiDataServiceProvider {
             for (let key of Object.keys(orderList)) {
                 let orders = orderList[key];
 
-
-                let str = TsiUtil.getOrderNameFromIds(key) + '( vom ' +   + ' ) ';
+                let value = orders[Object.keys(orders)[0]];
+                let str = TsiUtil.getOrderNameFromIds(key) + '( vom ' + TsiUtil.formatDate(value.getFakturDate(), "dd.MM.yyyy")  + ' ) ';
                 result.push(str);
             }
         }

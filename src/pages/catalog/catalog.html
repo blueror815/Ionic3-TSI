@@ -1,255 +1,255 @@
 <ion-scroll class="scroll-tab-container" scrollX="true">
-	<ion-segment [(ngModel)]="selected_tab">
-		<ion-segment-button value="total">
-			GESAMT
-		</ion-segment-button>
-		<ion-segment-button value="top50">
-			TOP 50
-		</ion-segment-button>
-		<ion-segment-button value="pwan_free">
-			PFANDFREI
-		</ion-segment-button>
-		<ion-segment-button value="with_pand">
-			MIT PFAND
-		</ion-segment-button>
-		<ion-segment-button value="new_hit">
-			NEUHEITEN
-		</ion-segment-button>
-		<ion-segment-button value="special">
-			SPEZIAL
-		</ion-segment-button>
-		<ion-segment-button value="outlet">
-			AUSLAUF
-		</ion-segment-button>
-		<ion-segment-button value="clearance">
-			RESTPOSTEN
-		</ion-segment-button>
-		<ion-segment-button value="customer_choice">
-			KUNDENAUSWAHL
-		</ion-segment-button>
-		<ion-segment-button value="season">
-			SAISON
-		</ion-segment-button>
-		<ion-segment-button value="halal">
-			HALAL
-		</ion-segment-button>
-		<ion-segment-button value="discount">
-			RABATTE
-		</ion-segment-button>
-	</ion-segment>
+    <ion-segment [(ngModel)]="selected_tab">
+        <ion-segment-button value="total">
+            GESAMT
+        </ion-segment-button>
+        <ion-segment-button value="top50">
+            TOP 50
+        </ion-segment-button>
+        <ion-segment-button value="pwan_free">
+            PFANDFREI
+        </ion-segment-button>
+        <ion-segment-button value="with_pand">
+            MIT PFAND
+        </ion-segment-button>
+        <ion-segment-button value="new_hit">
+            NEUHEITEN
+        </ion-segment-button>
+        <ion-segment-button value="special">
+            SPEZIAL
+        </ion-segment-button>
+        <ion-segment-button value="outlet">
+            AUSLAUF
+        </ion-segment-button>
+        <ion-segment-button value="clearance">
+            RESTPOSTEN
+        </ion-segment-button>
+        <ion-segment-button value="customer_choice">
+            KUNDENAUSWAHL
+        </ion-segment-button>
+        <ion-segment-button value="season">
+            SAISON
+        </ion-segment-button>
+        <ion-segment-button value="halal">
+            HALAL
+        </ion-segment-button>
+        <ion-segment-button value="discount">
+            RABATTE
+        </ion-segment-button>
+    </ion-segment>
 </ion-scroll>
 
 <ion-content>
-	<div class="seg-container" [ngSwitch]="selected_tab">
+    <div class="seg-container" [ngSwitch]="selected_tab">
 
-		<ion-list class="total-list-item" *ngSwitchCase="'total'">			
-			<ion-row class="total-list-row">
-				<ion-col col-2 ion-fixed class="no-scroll">
-					<!-- <ion-scroll scrollY="true"> -->
-						<button (click)="getProducts('total', '000')" class="catalog-list-btn" full ion-button>
+        <ion-list class="total-list-item" *ngSwitchCase="'total'">
+            <ion-row class="total-list-row">
+                <ion-col col-2 ion-fixed class="no-scroll">
+                    <!-- <ion-scroll scrollY="true"> -->
+                    <button (click)="getProducts('total', '000')" class="catalog-list-btn" full ion-button>
 							000 - NV
 						</button>
 
-						<button (click)="getProducts('total' ,'100')" class="catalog-list-btn" full ion-button>
+                    <button (click)="getProducts('total' ,'100')" class="catalog-list-btn" full ion-button>
 							100 - Gewurze
 						</button>
-					
-						<button (click)="getProducts('total' ,'200')" class="catalog-list-btn" full ion-button>
+
+                    <button (click)="getProducts('total' ,'200')" class="catalog-list-btn" full ion-button>
 							200 - Nahrmittel
 						</button>
 
-						<button (click)="getProducts('total' ,'300')" class="catalog-list-btn" full ion-button>
+                    <button (click)="getProducts('total' ,'300')" class="catalog-list-btn" full ion-button>
 							300 - Feinkost
 						</button>
 
-						<button (click)="getProducts('total' ,'400')" class="catalog-list-btn" full ion-button>
+                    <button (click)="getProducts('total' ,'400')" class="catalog-list-btn" full ion-button>
 							400 - Instant, Tee, Supungsmittel
 						</button>
 
-						<button (click)="getProducts('total' ,'500')" class="catalog-list-btn" full ion-button>
+                    <button (click)="getProducts('total' ,'500')" class="catalog-list-btn" full ion-button>
 							500 - Alkoholfreie Getranke / Getr.zubereitung
 						</button>
 
-						<button (click)="getProducts('total' ,'600')" class="catalog-list-btn" full ion-button>
+                    <button (click)="getProducts('total' ,'600')" class="catalog-list-btn" full ion-button>
 							600 - Alkoholische Getranke
 						</button>
 
-						<button (click)="getProducts('total' ,'700')" class="catalog-list-btn" full ion-button>
+                    <button (click)="getProducts('total' ,'700')" class="catalog-list-btn" full ion-button>
 							700 - Subwarenund Geback
 						</button>
 
-						<button (click)="getProducts('total' ,'800')" class="catalog-list-btn" ion-button full>
+                    <button (click)="getProducts('total' ,'800')" class="catalog-list-btn" ion-button full>
 							800 - Non Food
 						</button>
 
-						<button (click)="getProducts('total' ,'v00')" class="catalog-list-btn" ion-button full>
+                    <button (click)="getProducts('total' ,'v00')" class="catalog-list-btn" ion-button full>
 							V00 - Vending Fllprodukte
 						</button>
-					<!-- </ion-scroll> -->
-				</ion-col>
-				<ion-col col-10>
-					<ion-scroll class="product-list-scroll-view" scrollY="true">
-						<ion-row>
-							<ion-col class="product-cell" *ngFor="let product of products" col-6>
-								<ion-product-cell [product]="product"></ion-product-cell>
-							</ion-col>
-						</ion-row>
-					</ion-scroll>
-				</ion-col>
-			</ion-row>			
-		</ion-list>
+                    <!-- </ion-scroll> -->
+                </ion-col>
+                <ion-col col-10>
+                    <ion-scroll class="product-list-scroll-view" scrollY="true">
+                        <ion-row>
+                            <ion-col class="product-cell" *ngFor="let product of products" col-6>
+                                <ion-product-cell [product]="product"></ion-product-cell>
+                            </ion-col>
+                        </ion-row>
+                    </ion-scroll>
+                </ion-col>
+            </ion-row>
+        </ion-list>
 
-		<ion-list *ngSwitchCase="'top50'">
-			<ion-scroll class="product-list-scroll-view" scrollY="true">
-				<ion-row>
-					<ion-col class="product-cell" *ngFor="let product of products" col-4>
-						<ion-product-cell [product]="product"></ion-product-cell>
-					</ion-col>
-				</ion-row>
-			</ion-scroll>
-		</ion-list>
+        <ion-list *ngSwitchCase="'top50'">
+            <ion-scroll class="product-list-scroll-view" scrollY="true">
+                <ion-row>
+                    <ion-col class="product-cell" *ngFor="let product of products" col-4>
+                        <ion-product-cell [product]="product"></ion-product-cell>
+                    </ion-col>
+                </ion-row>
+            </ion-scroll>
+        </ion-list>
 
-		<ion-list *ngSwitchCase="'pwan_free'">
-			<ion-scroll class="product-list-scroll-view" scrollY="true">
-				<ion-row>
-					<ion-col class="product-cell" *ngFor="let product of products" col-4>
-						<ion-product-cell [product]="product"></ion-product-cell>
-					</ion-col>
-				</ion-row>
-			</ion-scroll>
-		</ion-list>
+        <ion-list *ngSwitchCase="'pwan_free'">
+            <ion-scroll class="product-list-scroll-view" scrollY="true">
+                <ion-row>
+                    <ion-col class="product-cell" *ngFor="let product of products" col-4>
+                        <ion-product-cell [product]="product"></ion-product-cell>
+                    </ion-col>
+                </ion-row>
+            </ion-scroll>
+        </ion-list>
 
-		<ion-list *ngSwitchCase="'with_pand'">
-			<ion-scroll class="product-list-scroll-view" scrollY="true">
-				<ion-row>
-					<ion-col class="product-cell" *ngFor="let product of products" col-4>
-						<ion-product-cell [product]="product"></ion-product-cell>
-					</ion-col>
-				</ion-row>
-			</ion-scroll>
-		</ion-list>
+        <ion-list *ngSwitchCase="'with_pand'">
+            <ion-scroll class="product-list-scroll-view" scrollY="true">
+                <ion-row>
+                    <ion-col class="product-cell" *ngFor="let product of products" col-4>
+                        <ion-product-cell [product]="product"></ion-product-cell>
+                    </ion-col>
+                </ion-row>
+            </ion-scroll>
+        </ion-list>
 
-		<ion-list *ngSwitchCase="'new_hit'">
-			<ion-scroll class="product-list-scroll-view" scrollY="true">
-				<ion-row>
-					<ion-col class="product-cell" *ngFor="let product of products" col-4>
-						<ion-product-cell [product]="product"></ion-product-cell>
-					</ion-col>
-				</ion-row>
-			</ion-scroll>
-		</ion-list>
+        <ion-list *ngSwitchCase="'new_hit'">
+            <ion-scroll class="product-list-scroll-view" scrollY="true">
+                <ion-row>
+                    <ion-col class="product-cell" *ngFor="let product of products" col-4>
+                        <ion-product-cell [product]="product"></ion-product-cell>
+                    </ion-col>
+                </ion-row>
+            </ion-scroll>
+        </ion-list>
 
-		<ion-list *ngSwitchCase="'special'">
-			<ion-scroll class="product-list-scroll-view" scrollY="true">
-				<ion-row>
-					<ion-col class="product-cell" *ngFor="let product of products" col-4>
-						<ion-product-cell [product]="product"></ion-product-cell>
-					</ion-col>
-				</ion-row>
-			</ion-scroll>
-		</ion-list>
+        <ion-list *ngSwitchCase="'special'">
+            <ion-scroll class="product-list-scroll-view" scrollY="true">
+                <ion-row>
+                    <ion-col class="product-cell" *ngFor="let product of products" col-4>
+                        <ion-product-cell [product]="product"></ion-product-cell>
+                    </ion-col>
+                </ion-row>
+            </ion-scroll>
+        </ion-list>
 
-		<ion-list *ngSwitchCase="'outlet'">
-			<ion-scroll class="product-list-scroll-view" scrollY="true">
-				<ion-row>
-					<ion-col class="product-cell" *ngFor="let product of products" col-4>
-						<ion-product-cell [product]="product"></ion-product-cell>
-					</ion-col>
-				</ion-row>
-			</ion-scroll>
-		</ion-list>
+        <ion-list *ngSwitchCase="'outlet'">
+            <ion-scroll class="product-list-scroll-view" scrollY="true">
+                <ion-row>
+                    <ion-col class="product-cell" *ngFor="let product of products" col-4>
+                        <ion-product-cell [product]="product"></ion-product-cell>
+                    </ion-col>
+                </ion-row>
+            </ion-scroll>
+        </ion-list>
 
-		<ion-list *ngSwitchCase="'clearance'">
-			<ion-scroll class="product-list-scroll-view" scrollY="true">
-				<ion-row>
-					<ion-col class="product-cell" *ngFor="let product of products" col-4>
-						<ion-product-cell [product]="product"></ion-product-cell>
-					</ion-col>
-				</ion-row>
-			</ion-scroll>
-		</ion-list>
+        <ion-list *ngSwitchCase="'clearance'">
+            <ion-scroll class="product-list-scroll-view" scrollY="true">
+                <ion-row>
+                    <ion-col class="product-cell" *ngFor="let product of products" col-4>
+                        <ion-product-cell [product]="product"></ion-product-cell>
+                    </ion-col>
+                </ion-row>
+            </ion-scroll>
+        </ion-list>
 
-		<ion-list class="total-list-item" *ngSwitchCase="'customer_choice'">
-			<ion-row class="total-list-row">
-				<ion-col col-2 ion-fixed class="no-scroll">
-					<!-- <ion-scroll scrollY="true"> -->
-						<button (click)="getProducts('customer', '000')" class="catalog-list-btn" full ion-button>
+        <ion-list class="total-list-item" *ngSwitchCase="'customer_choice'">
+            <ion-row class="total-list-row">
+                <ion-col col-2 ion-fixed class="no-scroll">
+                    <!-- <ion-scroll scrollY="true"> -->
+                    <button (click)="getProducts('customer', '000')" class="catalog-list-btn" full ion-button>
 							000 - NV
 						</button>
 
-						<button (click)="getProducts('customer' ,'100')" class="catalog-list-btn" full ion-button>
+                    <button (click)="getProducts('customer' ,'100')" class="catalog-list-btn" full ion-button>
 							100 - Gewurze
 						</button>
-					
-						<button (click)="getProducts('customer' ,'200')" class="catalog-list-btn" full ion-button>
+
+                    <button (click)="getProducts('customer' ,'200')" class="catalog-list-btn" full ion-button>
 							200 - Nahrmittel
 						</button>
 
-						<button (click)="getProducts('customer' ,'300')" class="catalog-list-btn" full ion-button>
+                    <button (click)="getProducts('customer' ,'300')" class="catalog-list-btn" full ion-button>
 							300 - Feinkost
 						</button>
 
-						<button (click)="getProducts('customer' ,'400')" class="catalog-list-btn" full ion-button>
+                    <button (click)="getProducts('customer' ,'400')" class="catalog-list-btn" full ion-button>
 							400 - Instant, Tee, Supungsmittel
 						</button>
 
-						<button (click)="getProducts('customer' ,'500')" class="catalog-list-btn" full ion-button>
+                    <button (click)="getProducts('customer' ,'500')" class="catalog-list-btn" full ion-button>
 							500 - Alkoholfreie Getranke / Getr.zubereitung
 						</button>
 
-						<button (click)="getProducts('customer' ,'600')" class="catalog-list-btn" full ion-button>
+                    <button (click)="getProducts('customer' ,'600')" class="catalog-list-btn" full ion-button>
 							600 - Alkoholische Getranke
 						</button>
 
-						<button (click)="getProducts('customer' ,'700')" class="catalog-list-btn" full ion-button>
+                    <button (click)="getProducts('customer' ,'700')" class="catalog-list-btn" full ion-button>
 							700 - Subwarenund Geback
 						</button>
 
-						<button (click)="getProducts('customer' ,'800')" class="catalog-list-btn" ion-button full>
+                    <button (click)="getProducts('customer' ,'800')" class="catalog-list-btn" ion-button full>
 							800 - Non Food
 						</button>
 
-						<button (click)="getProducts('customer' ,'v00')" class="catalog-list-btn" ion-button full>
+                    <button (click)="getProducts('customer' ,'v00')" class="catalog-list-btn" ion-button full>
 							V00 - Vending Fllprodukte
 						</button>
-					<!-- </ion-scroll> -->
-				</ion-col>
-				<ion-col col-10>
-					<ion-scroll class="product-list-scroll-view" scrollY="true">
-						<ion-row>
-							<ion-col class="product-cell" *ngFor="let product of products" col-6>
-								<ion-product-cell [product]="product"></ion-product-cell>
-							</ion-col>
-						</ion-row>
-					</ion-scroll>
-				</ion-col>
-			</ion-row>
-		</ion-list>
+                    <!-- </ion-scroll> -->
+                </ion-col>
+                <ion-col col-10>
+                    <ion-scroll class="product-list-scroll-view" scrollY="true">
+                        <ion-row>
+                            <ion-col class="product-cell" *ngFor="let product of products" col-6>
+                                <ion-product-cell [product]="product"></ion-product-cell>
+                            </ion-col>
+                        </ion-row>
+                    </ion-scroll>
+                </ion-col>
+            </ion-row>
+        </ion-list>
 
-		<ion-list *ngSwitchCase="'season'">
-			<ion-item>
-				<h2>season</h2>
-			</ion-item>
-		</ion-list>
+        <ion-list *ngSwitchCase="'season'">
+            <ion-item>
+                <h2>season</h2>
+            </ion-item>
+        </ion-list>
 
-		<ion-list *ngSwitchCase="'halal'">
-			<ion-scroll class="product-list-scroll-view" scrollY="true">
-				<ion-row>
-					<ion-col class="product-cell" *ngFor="let product of products" col-4>
-						<ion-product-cell [product]="product"></ion-product-cell>
-					</ion-col>
-				</ion-row>
-			</ion-scroll>
-		</ion-list>
+        <ion-list *ngSwitchCase="'halal'">
+            <ion-scroll class="product-list-scroll-view" scrollY="true">
+                <ion-row>
+                    <ion-col class="product-cell" *ngFor="let product of products" col-4>
+                        <ion-product-cell [product]="product"></ion-product-cell>
+                    </ion-col>
+                </ion-row>
+            </ion-scroll>
+        </ion-list>
 
-		<ion-list *ngSwitchCase="'discount'">
-			<ion-scroll class="product-list-scroll-view" scrollY="true">
-				<ion-row>
-					<ion-col class="product-cell" *ngFor="let product of products" col-4>
-						<ion-product-cell [product]="product"></ion-product-cell>
-					</ion-col>
-				</ion-row>
-			</ion-scroll>
-		</ion-list>
-	</div>
+        <ion-list *ngSwitchCase="'discount'">
+            <ion-scroll class="product-list-scroll-view" scrollY="true">
+                <ion-row>
+                    <ion-col class="product-cell" *ngFor="let product of products" col-4>
+                        <ion-product-cell [product]="product"></ion-product-cell>
+                    </ion-col>
+                </ion-row>
+            </ion-scroll>
+        </ion-list>
+    </div>
 </ion-content>

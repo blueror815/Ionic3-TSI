@@ -24,9 +24,8 @@ export class ShoppingCartPage {
 	public signature = '';
   	public isDrawing = false;
  	public is_active = false;
- 	public overAllPrice: string = "Gesamtpreis Auftrag: 0,00 Euro    VPE Menge: 0";
- 	public amount = 0;
- 	public positionPrice: string = "Positionspreis: 0,00 Euro";
+ 	public overAllPrice = "Gesamtpreis Auftrag: 0,00 Euro    VPE Menge: 0";
+ 	public positionPrice = "Positionspreis: 0,00 Euro";
 	public info = "";
  	public qty_vpe = "000";
  	public qty_pal = "000";
@@ -50,7 +49,7 @@ export class ShoppingCartPage {
   		console.log("this signature pad", this.signaturePad);
     	console.log('ionViewDidLoad ShoppingCartPage');
 
-
+		this.refreshGUI();
   	}
 
   	ionViewDidEnter() {
@@ -67,17 +66,21 @@ export class ShoppingCartPage {
   	drawStart() {
     	this.isDrawing = true;
   	}
+
+	onSelectArticle = (i, event) => {
+
+	}
  
-  	savePad() {
-    	this.signature = this.signaturePad.toDataURL();
-    	// this.storage.set('savedSignature', this.signature);
-    	this.signaturePad.clear();
-    	let toast = this.toastCtrl.create({
-      		message: 'New Signature saved.',
-      		duration: 3000
-    	});
-    	toast.present();
-  	}
+  	// savePad() {
+    // 	this.signature = this.signaturePad.toDataURL();
+    // 	// this.storage.set('savedSignature', this.signature);
+    // 	this.signaturePad.clear();
+    // 	let toast = this.toastCtrl.create({
+    //   		message: 'New Signature saved.',
+    //   		duration: 3000
+    // 	});
+    // 	toast.present();
+  	// }
  
   	clearPad() {
     	this.signaturePad.clear();
