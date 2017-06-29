@@ -1,6 +1,6 @@
 <ion-scroll class="scroll-tab-container" scrollX="true">
-    <ion-segment [(ngModel)]="selected_tab">
-        <ion-segment-button value="total">
+    <ion-segment [(ngModel)]="selected_tab" *ngFor="let button of buttons; let i = index">
+        <!--<ion-segment-button value="total">
             GESAMT
         </ion-segment-button>
         <ion-segment-button value="top50">
@@ -35,6 +35,9 @@
         </ion-segment-button>
         <ion-segment-button value="discount">
             RABATTE
+        </ion-segment-button>-->
+        <ion-segment-button value="{{button}}">
+            {{button}}
         </ion-segment-button>
     </ion-segment>
 </ion-scroll>
@@ -42,7 +45,7 @@
 <ion-content>
     <div class="seg-container" [ngSwitch]="selected_tab">
 
-        <ion-list class="total-list-item" *ngSwitchCase="'total'">
+        <ion-list class="total-list-item" *ngSwitchCase="'GESAMT'">
             <ion-row class="total-list-row">
                 <ion-col col-2 ion-fixed class="no-scroll">
                     <!-- <ion-scroll scrollY="true"> -->

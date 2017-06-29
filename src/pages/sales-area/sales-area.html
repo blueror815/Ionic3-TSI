@@ -106,8 +106,8 @@
 <ion-row class="sub-row">
     <ion-col sub-area col-2>
         <ion-row class="btn-container">
-            <button ion-button full>vorherige</button>
-            <button ion-button full>nächste</button>
+            <button ion-button full (click)="onNextTab()">vorherige</button>
+            <button ion-button full (click)="onPrevTab()">nächste</button>
         </ion-row>
     </ion-col>
 </ion-row>

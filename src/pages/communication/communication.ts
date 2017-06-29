@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { DatePage } from '../date/date';
+import { NamePage } from '../name/name';
 
 /**
  * Generated class for the CommunicationPage page.
@@ -19,6 +21,18 @@ export class CommunicationPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CommunicationPage');
+  }
+
+  onNextTab() {
+    console.log('Change Root');
+    //this.navCtrl.setRoot(DatePage);
+    this.navCtrl.parent.rootPage = 'DatePage';
+  }
+
+  onPrevTab() {
+    console.log('Change Root');
+    //this.navCtrl.setRoot(NamePage);
+    this.navCtrl.parent.rootPage = 'NamePage';
   }
 
 }

@@ -1,4 +1,4 @@
-<ion-content padding>
+<ion-content padding style="z-index: 100">
     <ion-grid main-grid>
         <ion-row main-row>
             <ion-col main-area col-10>
@@ -66,11 +66,11 @@
     </ion-grid>
 </ion-content>
 
-<ion-row class="sub-row">
-    <ion-col sub-area col-2>
+<ion-row class="sub-row" style="z-index: 1000;">
+    <ion-col style="z-index: 1000;" sub-area col-2>
         <ion-row class="btn-container">
-            <button ion-button full>vorherige</button>
-            <button ion-button full>nachste</button>
+            <button ion-button full (click)="onNextTab()">vorherige</button>
+            <button ion-button full (click)="onPrevTab()">nächste</button>
         </ion-row>
     </ion-col>
 </ion-row>

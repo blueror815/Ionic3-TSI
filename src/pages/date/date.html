@@ -1,79 +1,79 @@
 <ion-content padding>
-	<ion-row>
-		<ion-col col-10>
-			<ion-grid>
-				<ion-row class="control-data-row">
-					<h6>Steuerungsdaten</h6>
-					<span class="err-messasge">{{err_msg}}</span>
+    <ion-row>
+        <ion-col col-10>
+            <ion-grid>
+                <ion-row class="control-data-row">
+                    <h6>Steuerungsdaten</h6>
+                    <span class="err-messasge">{{err_msg}}</span>
 
-					<ion-grid>
-						<ion-row>
-							<ion-col col-2>
-								<ion-label>STEUERNUMMER</ion-label>
-							</ion-col>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col col-2>
+                                <ion-label>STEUERNUMMER</ion-label>
+                            </ion-col>
 
-							<ion-col col-10>
-								<ion-input [(ngModel)]="tax_number"></ion-input>
-							</ion-col>
-						</ion-row>
+                            <ion-col col-10>
+                                <ion-input [(ngModel)]="tax_number"></ion-input>
+                            </ion-col>
+                        </ion-row>
 
-						<ion-row>
-							<ion-col col-2>
-								<ion-label>USt-IdNr.</ion-label>
-							</ion-col>
+                        <ion-row>
+                            <ion-col col-2>
+                                <ion-label>USt-IdNr.</ion-label>
+                            </ion-col>
 
-							<ion-col col-10>
-								<ion-input [(ngModel)]="vat_no"></ion-input>
-							</ion-col>
-						</ion-row>
-					</ion-grid>
-				</ion-row>
+                            <ion-col col-10>
+                                <ion-input [(ngModel)]="vat_no"></ion-input>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-row>
 
-				<ion-row class="payment-section">
-					<h6>Zahlungverkehr</h6>
+                <ion-row class="payment-section">
+                    <h6>Zahlungverkehr</h6>
 
-					<ion-grid>
-						<ion-row>
-							<ion-col col-2>
-								<ion-label>IBAN</ion-label>
-							</ion-col>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col col-2>
+                                <ion-label>IBAN</ion-label>
+                            </ion-col>
 
-							<ion-col col-10>
-								<ion-input [(ngModel)]="iban"></ion-input>
-							</ion-col>
-						</ion-row>
+                            <ion-col col-10>
+                                <ion-input [(ngModel)]="iban"></ion-input>
+                            </ion-col>
+                        </ion-row>
 
-						<ion-row>
-							<ion-col col-2>
-								<ion-label>SWIFT CODE / BIC</ion-label>
-							</ion-col>
+                        <ion-row>
+                            <ion-col col-2>
+                                <ion-label>SWIFT CODE / BIC</ion-label>
+                            </ion-col>
 
-							<ion-col col-10>
-								<ion-input [(ngModel)]="swift_code_bic"></ion-input>
-							</ion-col>
-						</ion-row>
+                            <ion-col col-10>
+                                <ion-input [(ngModel)]="swift_code_bic"></ion-input>
+                            </ion-col>
+                        </ion-row>
 
-						<ion-row>
-							<ion-col col-2>
-								<ion-label>GLN</ion-label>
-							</ion-col>
+                        <ion-row>
+                            <ion-col col-2>
+                                <ion-label>GLN</ion-label>
+                            </ion-col>
 
-							<ion-col col-10>
-								<ion-input [(ngModel)]="gln"></ion-input>
-							</ion-col>
-						</ion-row>
-					</ion-grid>
-				</ion-row>
-			</ion-grid>
-		</ion-col>
-	</ion-row>
+                            <ion-col col-10>
+                                <ion-input [(ngModel)]="gln"></ion-input>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-row>
+            </ion-grid>
+        </ion-col>
+    </ion-row>
 </ion-content>
 
 <ion-row class="sub-row">
-	<ion-col sub-area col-2>
-		<ion-row class="btn-container">
-			<button ion-button full>vorherige</button>
-			<button ion-button full>nachste</button>
-		</ion-row>
-	</ion-col>
+    <ion-col sub-area col-2>
+        <ion-row class="btn-container">
+            <button ion-button full (click)="onNextTab()">vorherige</button>
+            <button ion-button full (click)="onPrevTab()">nächste</button>
+        </ion-row>
+    </ion-col>
 </ion-row>

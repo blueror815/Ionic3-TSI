@@ -20,15 +20,24 @@ import { TsiDataServiceProvider } from '../../providers/tsi-data-service/tsi-dat
  	@ViewChild(IonProductCellComponent) ionProductCell: IonProductCellComponent;
 
  	public selected_tab: string = "total";
+	public buttons = [];
  	public products = PRODUCTS;
 
  	constructor(public navCtrl: NavController, public navParams: NavParams, public dataService: TsiDataServiceProvider) {
-		 console.log('Catalog Headers', JSON.stringify(this.dataService.catalogTabHeaders));
+		 
  	}
 
  	ionViewDidLoad() {
  		
  	}
+
+	ionViewWillEnter() {
+		console.log('Catalog Headers', JSON.stringify(this.dataService.catalogTabHeaders));
+		this.buttons = this.dataService.catalogTabHeaders;
+		if (this.buttons) {
+			this.selected_tab = this.buttons[0];
+		}
+	}
 
  	// public viewDetail = (id: any) => {
  	// 	console.log("Product id is. ", id);
